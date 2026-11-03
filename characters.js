@@ -1,14 +1,14 @@
 /* V2 character art swap: edit this file, not the page layout.
-   Current frames are temporary layout stand-ins, not the approved canonical character art.
+   Knight V2 is owner-approved; Dex remains source-derived but awaiting a separate visual approval.
    Keep paths under assets/characters/ or point to existing site assets.
    Dimensions are in CSS pixels; they affect placement, not source-image resolution. */
 window.SiteCharacters = Object.freeze({
-  artworkRevision: "concept-standins-v1",
+  artworkRevision: "knight-v2-approved-dex-v1-provisional",
   knight: Object.freeze({
-    idle: "/assets/knight/knight-idle.png",
-    label: "Temporary purple knight illustration",
-    width: 252,
-    height: 325,
+    idle: "/assets/characters/v2/knight-idle.png",
+    label: "Owner-approved Purple Knight V2",
+    width: 260,
+    height: 292,
     offsetX: 0,
     offsetY: 0
   }),

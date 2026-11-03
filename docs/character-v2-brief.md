@@ -1,8 +1,8 @@
 # Character V2 — source fidelity gate
 
-**Status:** Art direction / source audit. No replacement sprites approved and no V2 character artwork published.
+**Status:** Purple Knight V2 approved by the site owner on 3 November 2026. Dex remains pending character-specific visual acceptance.
 
-The public homepage currently uses version `concept-standins-v1`. This branch is isolated from `main` and exists to develop replacements without changing the live characters.
+This branch holds the exact owner-approved knight master and web PNGs. They remain separate from the live site until the PR visual and deployment checks pass. Dex source frames stay unchanged.
 
 ## Original purple knight
 
@@ -47,3 +47,7 @@ No terrier proportions, tan/white recolouring, thin body, inappropriate hat or c
 - Preserve the existing SEO, publication links, professional title and original quote rotation.
 
 **Decision:** a concept that fails fidelity is rejected, even if the overall rendering is attractive.
+
+## Owner approval record
+
+The V2 review package containing the knight master, 240×263 web asset and desktop/mobile reconstructions was explicitly approved on 3 November 2026. Exact file integrity is enforced in `scripts/check_characters.py` (web SHA-256 `047736da82281cf6ecc0bada52a4b8939bf91897f286198c21e85f36cb1fd209`, master SHA-256 `6a1a70915f94f565014209531c327f2c21f3efdbb8c8bcba46177692a869c65c`). The layout of the existing site stays intact; only the knight image, dimensions and its direct HTML reference change. No approval is inferred for the placeholder Dex representation in the preview.
