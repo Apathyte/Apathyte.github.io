@@ -180,6 +180,23 @@ header nav a:last-child{color:#cba4fa}
   }
   .hero-theatre .dex-message{right:8px;bottom:105px;max-width:55%}
 }
+/* Responsive QA: deliberate two-column nav and safe heading at 320px. */
+@media(max-width:680px){
+  header nav{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    align-items:center;
+    column-gap:14px;
+    row-gap:10px;
+    width:100%;
+    justify-content:stretch;
+  }
+  header nav a{white-space:nowrap;letter-spacing:0;font-size:.65rem}
+  header nav a:last-child{display:none}
+}
+@media(max-width:420px){
+  .hero h1{font-size:clamp(3.2rem,16vw,4rem)}
+}
 @media(prefers-reduced-motion:reduce){
   .hero-theatre .dex-message{transition:none}
 }
