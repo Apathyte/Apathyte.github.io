@@ -50,15 +50,16 @@ header nav a:last-child{color:#cba4fa}
   animation:landing-breathe 5.4s ease-in-out infinite!important;pointer-events:none}
 .hero-theatre .night-knight img{width:100%;height:100%;object-fit:contain;
   image-rendering:pixelated;filter:drop-shadow(0 11px 8px rgba(0,0,0,.68))}
-.hero-theatre .dex-patrol{position:absolute!important;z-index:5;bottom:21px!important;left:63%!important;
-  width:var(--dex-width,195px)!important;height:var(--dex-height,137px)!important;
+.hero-theatre .dex-patrol{position:absolute!important;z-index:5;bottom:28px!important;left:58%!important;
+  width:var(--dex-width,220px)!important;height:var(--dex-height,153px)!important;
+  --dex-roam-start:12px;--dex-roam-distance:31px;
   border:none!important;background:transparent!important;transform-origin:center bottom;
-  animation:dex-patrol 17s linear infinite!important;cursor:pointer}
+  animation:dex-patrol 18s linear infinite!important;cursor:pointer}
 .hero-theatre .dex-patrol img{width:100%;height:100%;object-fit:contain;
-  image-rendering:pixelated;filter:drop-shadow(0 8px 6px rgba(0,0,0,.74))}
+  image-rendering:auto;filter:drop-shadow(0 6px 5px rgba(0,0,0,.65))}
 .hero-theatre .night-legend{top:15px;right:15px;z-index:6;font-size:.55rem;letter-spacing:.1em;
   color:#bdb0d1;opacity:.72}
-.hero-theatre .dex-message{z-index:8;bottom:165px;right:24px}
+
 .hero-theatre.offscreen .night-knight,.hero-theatre.offscreen .dex-patrol{animation-play-state:paused!important}
 @keyframes landing-breathe{0%,100%{translate:0 0}50%{translate:0 -3px}}
 /* Compact four-card landing overview. */
@@ -116,7 +117,7 @@ header nav a:last-child{color:#cba4fa}
  .hero.landing-hero{grid-template-columns:minmax(0,48%) minmax(0,52%);min-height:325px}
  .hero-theatre{height:305px}
  .hero-theatre .night-knight{left:11%!important;scale:.83;transform-origin:bottom left}
- .hero-theatre .dex-patrol{left:57%!important;scale:.8;transform-origin:bottom left}
+ .hero-theatre .dex-patrol{left:56%!important;scale:.82;transform-origin:bottom left;--dex-roam-distance:22px;--dex-roam-start:10px}
  .landing-cards{grid-template-columns:repeat(2,minmax(0,1fr))}
  .landing-card{min-height:220px}
  .landing-card h3{font-size:1.38rem}
@@ -134,7 +135,7 @@ header nav a:last-child{color:#cba4fa}
  .hero .lead{font-size:clamp(1rem,4vw,1.3rem)}
  .hero-theatre{height:244px;min-width:0;background-size:cover;background-position:center 62%;margin-top:8px}
  .hero-theatre .night-knight{left:19%!important;scale:.61}
- .hero-theatre .dex-patrol{left:59%!important;scale:.64}
+ .hero-theatre .dex-patrol{left:55%!important;scale:.69;--dex-roam-distance:14px;--dex-roam-start:7px}
  .hero-theatre .night-legend{font-size:.54rem}
  .landing-cards{grid-template-columns:1fr;gap:10px}
  .landing-card{min-height:176px;padding:18px 21px}
@@ -152,33 +153,25 @@ header nav a:last-child{color:#cba4fa}
  .landing-card,.open-project{transition:none}
 }
 
-/* Final vignette mechanics. Only the temporary art comes from the character manifest. */
+/* Dex presentation: original source frames, responsive ground contact and short-range roam. */
 .hero-theatre .night-legend{position:absolute;display:block;pointer-events:none}
 .hero-theatre .dex-message{
-  position:absolute;display:block;z-index:8;right:24px;bottom:169px;
-  min-height:1.4em;padding:8px 11px;border:1px solid #774aaf;
+  position:absolute;z-index:8;left:var(--dex-bubble-x,70%);
+  top:var(--dex-bubble-y,45%);right:auto;bottom:auto;
+  max-width:min(220px,85%);padding:8px 12px;border:1px solid #774aaf;
   background:#1c1328;color:#eee5f9;font:600 .79rem/1.4 var(--heading);
-  opacity:0;transform:translateY(7px);pointer-events:none;
+  opacity:0;transform:translate(-50%,7px);pointer-events:none;
   transition:opacity .17s ease,transform .17s ease
 }
-.hero-theatre .dex-message.visible{opacity:1;transform:translateY(0)}
+.hero-theatre .dex-message.visible{opacity:1;transform:translate(-50%,0)}
 .hero-theatre .dex-patrol:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.hero-theatre .dex-patrol.being-petted{animation-play-state:paused!important}
 @keyframes dex-patrol{
-  0%,7%{transform:translateX(35px) scaleX(1)}
-  43%,48%{transform:translateX(-52px) scaleX(1)}
-  51%,56%{transform:translateX(-52px) scaleX(-1)}
-  92%,96%{transform:translateX(35px) scaleX(-1)}
-  100%{transform:translateX(35px) scaleX(1)}
-}
-@media(max-width:680px){
-  @keyframes dex-patrol{
-    0%,7%{transform:translateX(14px) scaleX(1)}
-    43%,48%{transform:translateX(-20px) scaleX(1)}
-    51%,56%{transform:translateX(-20px) scaleX(-1)}
-    92%,96%{transform:translateX(14px) scaleX(-1)}
-    100%{transform:translateX(14px) scaleX(1)}
-  }
-  .hero-theatre .dex-message{right:8px;bottom:105px;max-width:55%}
+  0%,7%{transform:translateX(var(--dex-roam-start)) scaleX(1)}
+  44%,49%{transform:translateX(calc(0px - var(--dex-roam-distance))) scaleX(1)}
+  50%,55%{transform:translateX(calc(0px - var(--dex-roam-distance))) scaleX(-1)}
+  94%,99%{transform:translateX(var(--dex-roam-start)) scaleX(-1)}
+  100%{transform:translateX(var(--dex-roam-start)) scaleX(1)}
 }
 /* Responsive QA: deliberate two-column nav and safe heading at 320px. */
 @media(max-width:680px){
@@ -196,8 +189,8 @@ header nav a:last-child{color:#cba4fa}
 }
 @media(max-width:420px){
   .hero h1{font-size:clamp(3.2rem,16vw,4rem)}
-  /* Keep temporary Dex sprite inside the stage at narrow widths. */
-  .hero-theatre .dex-patrol{left:53%!important;scale:.58}
+  /* Keep the actual source art and its full hit target inside narrow stages. */
+  .hero-theatre .dex-patrol{left:44%!important;scale:.67;--dex-roam-distance:10px;--dex-roam-start:5px}
 }
 @media(prefers-reduced-motion:reduce){
   .hero-theatre .dex-message{transition:none}

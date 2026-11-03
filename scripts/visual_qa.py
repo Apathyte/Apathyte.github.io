@@ -272,6 +272,15 @@ def main():
                         page.locator("#preview-quote").text_content()
                         == page.locator("#notebook-quote").text_content()
                     )
+                checks["dex_stage_framing"] = page.evaluate("""() => {
+                  const stage = document.querySelector('#night-stage').getBoundingClientRect();
+                  const dog = document.querySelector('#dex-patrol').getBoundingClientRect();
+                  const image = document.querySelector('#dex-frame');
+                  const style = getComputedStyle(image);
+                  return style.imageRendering === 'auto'
+                    && dog.left >= stage.left - 2 && dog.right <= stage.right + 2
+                    && dog.top >= stage.top - 2 && dog.bottom <= stage.bottom + 2;
+                }""")
                 checks["no_script_errors"] = not errors
                 checks["no_missing_site_assets"] = not missing_assets
                 report["script_errors"] = errors

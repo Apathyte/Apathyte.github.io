@@ -42,15 +42,31 @@
       primed = true;
     }
     timer = window.setInterval(() => {
-      frame = (frame + 1) % frames.length;
-      picture.src = frames[frame];
+      if (!dex.classList.contains("being-petted")) {
+        frame = (frame + 1) % frames.length;
+        picture.src = frames[frame];
+      }
     }, frameMs);
   }
   dex.addEventListener("click", () => {
+    // Position the message relative to Dex's actual transformed hit target.
+    const stageBox = stage.getBoundingClientRect();
+    const dogBox = dex.getBoundingClientRect();
+    const margin = Math.min(78, stageBox.width / 3);
+    const x = Math.max(margin, Math.min(stageBox.width - margin,
+      dogBox.left + dogBox.width / 2 - stageBox.left));
+    const y = Math.max(28, dogBox.top - stageBox.top - 37);
+    stage.style.setProperty("--dex-bubble-x", x + "px");
+    stage.style.setProperty("--dex-bubble-y", y + "px");
     response.textContent = "Good dog, Dex.";
     response.classList.add("visible");
+    dex.classList.add("being-petted");
+    picture.src = frames[0];
     if (messageTimer !== null) window.clearTimeout(messageTimer);
-    messageTimer = window.setTimeout(() => response.classList.remove("visible"), 2600);
+    messageTimer = window.setTimeout(() => {
+      response.classList.remove("visible");
+      dex.classList.remove("being-petted");
+    }, 2600);
   });
   document.addEventListener("visibilitychange", update);
   if (reduceMotion.addEventListener) reduceMotion.addEventListener("change", update);
