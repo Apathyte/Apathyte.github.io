@@ -113,11 +113,14 @@ header nav a:last-child{color:#cba4fa}
   .landing-card{padding:20px 19px}
   .hero h1{font-size:clamp(4.3rem,8vw,6.9rem)}
 }
+@media(min-width:961px) and (max-width:1250px){
+ .hero-theatre .dex-patrol{left:52%!important;--dex-roam-start:10px}
+}
 @media(max-width:960px){
  .hero.landing-hero{grid-template-columns:minmax(0,48%) minmax(0,52%);min-height:325px}
  .hero-theatre{height:305px}
  .hero-theatre .night-knight{left:11%!important;scale:.83;transform-origin:bottom left}
- .hero-theatre .dex-patrol{left:56%!important;scale:.82;transform-origin:bottom left;--dex-roam-distance:22px;--dex-roam-start:10px}
+ .hero-theatre .dex-patrol{left:48%!important;scale:.82;transform-origin:bottom left;--dex-roam-distance:22px;--dex-roam-start:10px}
  .landing-cards{grid-template-columns:repeat(2,minmax(0,1fr))}
  .landing-card{min-height:220px}
  .landing-card h3{font-size:1.38rem}
