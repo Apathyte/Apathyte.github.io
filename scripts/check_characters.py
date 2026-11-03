@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Validate sprite slots and build a review sheet; never imply artistic approval."""
 import argparse
+import hashlib
 from datetime import datetime, timezone
 import json
 from pathlib import Path
@@ -46,6 +47,12 @@ def main():
     asset_paths = [("knight", knight_path)] + [
         ("dex-" + str(i), p) for i, p in enumerate(dex_paths)
     ]
+    if revision.startswith("knight-v2-approved"):
+        master = root / "assets/characters/v2/knight-master.png"
+        if not master.is_file():
+            problems.append("Approved master knight source is missing")
+        elif hashlib.sha256(master.read_bytes()).hexdigest() != "6a1a70915f94f565014209531c327f2c21f3efdbb8c8bcba46177692a869c65c":
+            problems.append("Approved master knight source differs from owner-approved V2")
     previews = []
     for label, path in asset_paths:
         candidate = (root / path.lstrip("/")).resolve()
@@ -55,6 +62,10 @@ def main():
         if not candidate.is_file():
             problems.append(label + ": missing " + path)
             continue
+        if label == "knight" and revision.startswith("knight-v2-approved"):
+            actual = hashlib.sha256(candidate.read_bytes()).hexdigest()
+            if actual != "047736da82281cf6ecc0bada52a4b8939bf91897f286198c21e85f36cb1fd209":
+                problems.append("Approved knight web image differs from owner-approved V2")
         try:
             with Image.open(candidate) as original:
                 original.load()
@@ -107,7 +118,9 @@ def main():
     report = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "artwork_revision": revision,
-        "artwork_approved": False,
+        "artwork_approved": False,  # Dex still awaits owner approval.
+        "knight_owner_approved": revision.startswith("knight-v2-approved"),
+        "dex_owner_approved": False,
         "art_approval_note": "Image validity cannot establish visual identity. Owner review is required.",
         "asset_checks_passed": not problems,
         "issues": problems, "files": details,
