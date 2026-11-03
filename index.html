@@ -56,6 +56,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&amp;family=IBM+Plex+Sans:wght@400;500;600;700&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/nightwatch.css">
   <style>
 
     :root {
@@ -201,6 +202,12 @@
               <p>Free, unbranded working templates for making meaning, authority, evidence and exceptions explicit across industrial systems.</p>
               <a href="https://github.com/Apathyte/operational-authority-toolkit" target="_blank" rel="noopener noreferrer">Explore the public toolkit ↗</a>
             </article>
+            <article class="work-tile" aria-labelledby="memory-model-title">
+              <span class="work-label">Open work / AI governance</span>
+              <h3 id="memory-model-title">AI Memory Operating Model</h3>
+              <p>A practical governance model for deciding what assistant context may persist, expire, or acquire authority. Classification is not authorisation.</p>
+              <a href="https://github.com/Apathyte/ai-memory-operating-model" target="_blank" rel="noopener noreferrer">Explore the public repository ↗</a>
+            </article>
           </div>
           <!-- PODCAST: Add only after an official episode page and recording are publicly available. -->
         </div>
@@ -235,6 +242,24 @@
           <span class="quote-provenance" id="quote-provenance">RAW</span>
           <blockquote id="notebook-quote" aria-live="off">Alignment doesn&#39;t start a motor.</blockquote>
         </figure>
+      </section>
+      <section class="sections" id="night-watch" aria-labelledby="night-title">
+        <h2 id="night-title">05 / Night watch</h2>
+        <div>
+          <p class="night-intro">Someone has to keep watch when the machines go quiet.</p>
+          <div class="night-scene offscreen" id="night-stage">
+            <div class="night-horizon" aria-hidden="true"></div>
+            <span class="night-legend" aria-hidden="true">Je maintiendrai.</span>
+            <div class="night-knight">
+              <img src="/assets/knight/knight-idle.png" width="80" height="100" loading="lazy" alt="A small purple knight in angular armor, carrying a sword and a golden lion emblem">
+            </div>
+            <button class="dex-patrol" type="button" id="dex-patrol" aria-label="Give Dex a little attention" title="Say hello to Dex">
+              <img id="dex-frame" src="/assets/dex/trot-0.png" width="184" height="128" loading="lazy" alt="Dex, a charcoal-and-brindle dog with a mustard bandana">
+            </button>
+            <output class="dex-message" id="dex-response" aria-live="polite"></output>
+          </div>
+          <p class="night-source">Dex is adapted from the public <a href="https://github.com/Apathyte/HatchPetOnDesktop" target="_blank" rel="noopener noreferrer">Dex Desktop Pet</a> hobby project. Original sprite artwork by Apathyte.</p>
+        </div>
       </section>
     </main>
     <footer>
@@ -399,5 +424,6 @@
     render();
   })();
   </script>
+  <script defer src="/nightwatch.js"></script>
 </body>
 </html>

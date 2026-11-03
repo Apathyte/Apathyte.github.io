@@ -1,0 +1,56 @@
+
+/* Night Watch — an isolated, progressively enhanced character vignette. */
+.night-intro{max-width:710px;margin:0 0 17px;color:var(--body)}
+.night-scene{position:relative;isolation:isolate;height:288px;overflow:hidden;border:1px solid var(--line);
+ background:linear-gradient(0deg,#120E21 0,#151027 52%,#0F0C1B 100%)}
+.night-scene::before{content:"";pointer-events:none;position:absolute;inset:0;
+ background-image:linear-gradient(rgba(156,111,221,.065) 1px,transparent 1px),
+ linear-gradient(90deg,rgba(156,111,221,.065) 1px,transparent 1px);
+ background-size:33px 33px;opacity:.8}
+.night-scene::after{content:"";pointer-events:none;position:absolute;z-index:1;left:0;right:0;bottom:19px;height:3px;
+ background:linear-gradient(90deg,transparent 0%,#56377E 15%,#8F56D1 50%,#56377E 84%,transparent 100%);opacity:.65}
+.night-horizon{position:absolute;pointer-events:none;bottom:23px;height:75px;left:0;right:0;
+ background:linear-gradient(0deg,rgba(27,20,45,.7),transparent);z-index:0}
+.night-knight{position:absolute;left:13%;bottom:24px;height:206px;width:165px;z-index:2;animation:knight-guard 4.8s ease-in-out infinite}
+.night-knight img{display:block;height:100%;width:100%;object-fit:contain;image-rendering:pixelated;filter:drop-shadow(3px 4px 0 #05040b)}
+.dex-patrol{position:absolute;bottom:22px;left:62%;width:184px;height:128px;z-index:3;
+ background:none;border:0;padding:0;margin:0;cursor:pointer;touch-action:manipulation;
+ animation:dex-patrol 17s linear infinite;transform-origin:center bottom}
+.dex-patrol img{display:block;width:100%;height:100%;object-fit:contain;image-rendering:pixelated;filter:drop-shadow(3px 4px 0 #05040b)}
+.dex-patrol:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+.night-legend{position:absolute;top:20px;right:22px;font:500 .68rem/1.5 var(--mono);
+ letter-spacing:.11em;text-transform:uppercase;color:var(--muted)}
+.dex-message{position:absolute;bottom:163px;right:24px;z-index:4;
+ padding:7px 11px;background:var(--surface);border:1px solid var(--knight);
+ color:var(--text);font:600 .78rem/1.4 var(--heading);
+ opacity:0;transform:translateY(6px);transition:opacity .2s ease,transform .2s ease;pointer-events:none}
+.dex-message.visible{opacity:1;transform:translateY(0)}
+.night-source{margin:13px 0 0!important;font-size:.82rem;color:var(--muted)!important}
+.night-source a{color:var(--accent)}
+.night-scene.offscreen .dex-patrol,.night-scene.offscreen .night-knight{animation-play-state:paused}
+@keyframes knight-guard{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@keyframes dex-patrol{
+ 0%,8%{transform:translateX(45px) scaleX(1)}
+ 43%,48%{transform:translateX(-60px) scaleX(1)}
+ 51%,55%{transform:translateX(-60px) scaleX(-1)}
+ 92%,96%{transform:translateX(45px) scaleX(-1)}
+ 100%{transform:translateX(45px) scaleX(1)}
+}
+@media(max-width:760px){
+ .night-scene{height:243px}
+ .night-knight{left:3%;bottom:25px;width:122px;height:154px}
+ .dex-patrol{left:56%;bottom:23px;width:126px;height:88px}
+ .dex-message{right:12px;bottom:132px;max-width:55%;font-size:.72rem}
+ .night-legend{top:13px;right:12px;font-size:.58rem}
+ @keyframes dex-patrol{
+  0%,8%{transform:translateX(14px) scaleX(1)}
+  43%,48%{transform:translateX(-22px) scaleX(1)}
+  51%,55%{transform:translateX(-22px) scaleX(-1)}
+  92%,96%{transform:translateX(14px) scaleX(-1)}
+  100%{transform:translateX(14px) scaleX(1)}
+ }
+}
+@media(prefers-reduced-motion:reduce){
+ .night-knight,.dex-patrol{animation:none!important}
+ .dex-message{transition:none}
+}
