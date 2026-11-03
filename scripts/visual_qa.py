@@ -104,7 +104,22 @@ def main():
                     landingCards:document.querySelectorAll('.landing-card').length,
                     openProjects:document.querySelectorAll('.open-project').length,
                     verified:Boolean(document.querySelector('meta[name="google-site-verification"]')),
-                    canonical:document.querySelector('link[rel="canonical"]')?.getAttribute('href')
+                    canonical:document.querySelector('link[rel="canonical"]')?.getAttribute('href'),
+                    identity:(() => {
+                      try {
+                        const data = JSON.parse(document.querySelector('script[type="application/ld+json"]').textContent);
+                        const person = data.mainEntity || {};
+                        return {name:person.name,jobTitle:person.jobTitle,worksFor:person.worksFor?.name};
+                      } catch {return null;}
+                    })(),
+                    publicEvidence:{
+                      primary:Boolean(document.querySelector('a[href*="cybersecurity-smart-factories-when-trust"]')),
+                      interview:Boolean(document.querySelector('a[href*="wtbe.nl/nieuws/interview-met-tim-boersma"]')),
+                      regional:Boolean(document.querySelector('a[href*="it.linkedin.com/posts/ats-global-italy"]')),
+                      project:Boolean(document.querySelector('a[href*="operational-authority-toolkit"]')),
+                    },
+                    protagonistText:document.querySelector('#page-title')?.textContent,
+                    heroOrg:document.querySelector('.hero-org')?.textContent
                   };
                 }""")
                 report["measurements"] = dims
@@ -116,6 +131,19 @@ def main():
                 checks["three_projects"] = dims["openProjects"] == 3
                 checks["search_metadata"] = (
                     dims["verified"] and dims["canonical"] == "https://apathyte.github.io/"
+                )
+                person = dims.get("identity") or {}
+                evidence = dims.get("publicEvidence") or {}
+                checks["identity_is_attributable"] = (
+                    person.get("name") == "Tim Boersma"
+                    and "Operational Technology" in (person.get("jobTitle") or "")
+                    and person.get("worksFor") == "ATS Global"
+                    and "Tim" in (dims.get("protagonistText") or "")
+                    and "Boersma" in (dims.get("protagonistText") or "")
+                    and "ATS Global" in (dims.get("heroOrg") or "")
+                )
+                checks["public_evidence_preserved"] = (
+                    all(evidence.get(x) for x in ("primary","interview","regional","project"))
                 )
                 checks["character_images"] = (
                     len(dims["images"]) == 2 and all(i["loaded"] for i in dims["images"])
