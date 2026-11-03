@@ -4,7 +4,7 @@
   <meta name="google-site-verification" content="ta1U8MveUPrMkXl5fDQ8DGIkyxTKfWbM2q5fxApQDwE" />
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#111418">
+  <meta name="theme-color" content="#0B0913">
   <meta name="robots" content="index, follow">
   <title>Tim Boersma | Principal Consultant Operational Technology | ATS Global</title>
   <meta name="description" content="Tim Boersma is Principal Consultant – Operational Technology at ATS Global in the Netherlands. Industrial architecture, manufacturing systems, interoperability, operational authority, published writing and technical work.">
@@ -52,56 +52,94 @@
     }
   }
   </script>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&amp;family=IBM+Plex+Sans:wght@400;500;600;700&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
   <style>
-    :root { color-scheme: dark; --bg:#111418; --surface:#191e23; --text:#f4f1e9; --muted:#acb2b4; --line:#373d42; --accent:#c9e5b9; }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body { margin:0; background:var(--bg); color:var(--text); font:16px/1.65 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
-    body:before { content:""; position:fixed; z-index:-1; inset:0; opacity:.15; background-image:linear-gradient(90deg,transparent 98%,#a1b0ae 99%),linear-gradient(0deg,transparent 98%,#a1b0ae 99%);background-size:75px 75px; mask-image:linear-gradient(to bottom,black,transparent 65%); }
-    a { color:inherit; text-decoration-thickness:1px; text-underline-offset:4px; }
-    a:hover { color:var(--accent); }
-    .wrap { max-width:1020px; padding:0 32px; margin:0 auto; }
-    header { display:flex; align-items:center; justify-content:space-between; padding:34px 0; border-bottom:1px solid var(--line); }
-    .mark { font-size:.83rem; font-weight:800; letter-spacing:.16em; }
-    header nav { display:flex; gap:25px; font-size:.88rem; color:var(--muted); }
-    header nav a {text-decoration:none}
-    .hero { padding:112px 0 100px; max-width:880px; }
-    .eyebrow { color:var(--accent); letter-spacing:.19em; font-size:.77rem; text-transform:uppercase; font-weight:750; }
-    h1 { font-size:clamp(4rem,11vw,8rem); line-height:.98; letter-spacing:-.074em; margin:23px 0 33px; font-weight:650; }
-    h1 span { color:var(--accent); }
-    .lead { max-width:685px; color:#d7dbd8; font-size:clamp(1.18rem,2.5vw,1.57rem);line-height:1.48; }
-    .lead strong {color:var(--text)}
-    .chips { display:flex; flex-wrap:wrap; gap:9px; margin-top:36px; }
-    .chips span { border:1px solid var(--line); border-radius:100px; padding:6px 13px; font-size:.78rem; color:var(--muted); }
-    .sections { display:grid; grid-template-columns:230px 1fr; gap:20px; padding:52px 0; border-top:1px solid var(--line); }
-    h2 { font-size:.78rem; letter-spacing:.16em; text-transform:uppercase; color:var(--accent); margin:8px 0; }
-    .sections p { color:#c9cdcb; margin:0 0 17px; max-width:670px; }
-    .refs { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:5px; }
-    .ref { display:block; min-height:154px; text-decoration:none; border:1px solid var(--line); background:var(--surface); padding:20px; transition:transform .15s, border-color .15s; }
-    .ref:hover { transform:translateY(-2px); border-color:var(--accent); }
-    .ref small {display:block; color:var(--accent); letter-spacing:.11em; text-transform:uppercase; font-size:.68rem; font-weight:700; margin-bottom:18px;}
-    .ref strong {display:block; font-size:1.06rem; line-height:1.35; font-weight:650;}
-    .ref em {display:block; color:var(--muted); font-size:.8rem; font-style:normal; margin-top:11px;}
-    .quote { font-family:Georgia,"Times New Roman",serif; font-size:clamp(1.4rem,4.5vw,2.7rem); font-style:italic; line-height:1.26; letter-spacing:-.035em; color:var(--text); }
-    footer { border-top:1px solid var(--line); padding:30px 0 48px; display:flex; justify-content:space-between; gap:30px; color:var(--muted); font-size:.79rem; }
-    footer p {margin:0; max-width:560px}
-    @media (max-width:700px){.wrap{padding:0 22px}header{padding:25px 0}.hero{padding:75px 0}.sections{display:block;padding:38px 0}.sections h2{margin:0 0 22px}.refs{grid-template-columns:1fr}footer{display:block}footer p{margin-bottom:13px}header nav{gap:14px}header nav a:nth-child(1){display:none}}
-    @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.ref{transition:none}}
 
-    :focus-visible {outline:2px solid var(--accent);outline-offset:4px}
-    .feature {grid-column:1 / -1;min-height:170px;background:linear-gradient(110deg,#222b2a,var(--surface));}
-    .feature strong {font-size:1.35rem;max-width:650px}
-    .group-title {margin:26px 0 12px!important;font-size:.73rem!important;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)!important}
-    .source-note {color:var(--muted)!important;font-size:.86rem}
-    .media-layout {display:grid;grid-template-columns:1fr;gap:20px;max-width:720px}
-    .video-embed {display:block;width:100%;height:680px;border:1px solid var(--line);background:var(--surface);overflow:hidden}
-    .video-embed iframe {display:block;width:100%;height:100%;border:0}
-    .work-tile {border:1px solid var(--line);padding:26px 30px;background:var(--surface)}
-    .work-tile .work-label {color:var(--accent);letter-spacing:.12em;text-transform:uppercase;font-size:.66rem}
-    .work-tile h3 {font-size:1.4rem;line-height:1.24;margin:12px 0 10px}
-    .work-tile p {font-size:.87rem}
-    .work-tile a {color:var(--accent);font-size:.85rem}
-    @media(max-width:700px){.video-embed{height:570px}.work-tile{padding:22px}}
+    :root {
+      color-scheme:dark; --bg:#0B0913; --surface:#1C1729; --surface2:#20182E;
+      --text:#F1ECF8; --muted:#B8AEC8; --body:#D6D0DF; --line:#3C3051;
+      --royal:#5F2EBB; --knight:#6D38D5; --accent:#C6A3FF; --display:#9653F2;
+      --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+      --heading:"Space Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;
+      --mono:"IBM Plex Mono",ui-monospace,"Cascadia Code",monospace;
+    }
+    *,*::before,*::after{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--bg);color:var(--text);font:400 16px/1.68 var(--sans)}
+    body::before{content:"";pointer-events:none;position:absolute;inset:0 0 auto;height:950px;
+      background-image:linear-gradient(90deg,rgba(121,89,162,.11) 1px,transparent 1px),
+      linear-gradient(rgba(121,89,162,.11) 1px,transparent 1px);background-size:76px 76px;
+      mask-image:linear-gradient(to bottom,#000,transparent 95%);-webkit-mask-image:linear-gradient(to bottom,#000,transparent 95%)}
+    a{color:inherit;text-decoration-color:#9366DC;text-underline-offset:4px}
+    a:hover{color:var(--accent)}
+    :focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+    .wrap{max-width:1100px;padding:0 clamp(22px,4.5vw,55px);margin:0 auto;position:relative}
+    header{display:flex;align-items:center;justify-content:space-between;gap:22px;padding:29px 0;border-bottom:1px solid var(--line)}
+    .mark{text-decoration:none;font:600 .78rem/1.3 var(--mono);letter-spacing:.12em}
+    header nav{display:flex;flex-wrap:wrap;gap:clamp(12px,2.6vw,29px);color:var(--muted);font-size:.86rem}
+    header nav a{text-decoration:none}
+    .hero{padding:clamp(85px,11vw,156px) 0 clamp(88px,10vw,132px);position:relative;max-width:950px}
+    .hero::before{content:"";position:absolute;top:clamp(85px,11vw,156px);left:-22px;width:5px;height:106px;background:var(--knight)}
+    .eyebrow,h2,.ref small,.group-title,.video-demo .small-label,.work-tile .work-label{
+      font:500 .71rem/1.5 var(--mono);letter-spacing:.11em;text-transform:uppercase;color:var(--accent)}
+    h1{font:600 clamp(4.3rem,11vw,8.8rem)/.92 var(--heading);letter-spacing:-.075em;margin:26px 0 35px}
+    h1 span{color:var(--display)}
+    .lead{max-width:770px;color:var(--body);font-size:clamp(1.14rem,2.35vw,1.46rem);line-height:1.54}
+    .lead strong{color:var(--text);font-weight:600}
+    .chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:34px}
+    .chips span{border:1px solid var(--line);background:rgba(21,16,34,.8);padding:7px 12px;font:500 .72rem/1.5 var(--mono);color:var(--muted)}
+    .sections{display:grid;grid-template-columns:minmax(145px,210px) minmax(0,1fr);gap:31px;padding:59px 0 76px;border-top:1px solid var(--line)}
+    h2{margin:4px 0 0}
+    .sections p{color:var(--body);margin:0 0 18px;max-width:740px}
+    .sections p:last-child{margin-bottom:0}
+    .sections .group-title{color:var(--muted);margin:34px 0 13px}
+    .refs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .ref{display:block;min-height:166px;text-decoration:none;padding:25px;background:var(--surface);border:1px solid var(--line);transition:border-color .18s ease}
+    .ref:hover{border-color:var(--display)}
+    .ref small{display:block}
+    .ref strong{display:block;margin:17px 0 11px;font:600 1.1rem/1.31 var(--heading);letter-spacing:-.014em}
+    .ref em{display:block;font-size:.86rem;font-style:normal;color:var(--muted);line-height:1.52}
+    .feature{grid-column:1/-1;min-height:184px;padding:32px;background:linear-gradient(110deg,var(--surface2),var(--surface));border-color:#6546A0;position:relative}
+    .feature::before{content:"";position:absolute;top:0;bottom:0;left:0;width:3px;background:var(--knight)}
+    .feature strong{font-size:clamp(1.32rem,2.4vw,1.8rem);max-width:620px;margin:19px 0 11px}
+    .media-layout{display:grid;grid-template-columns:1fr;gap:18px;max-width:730px;margin-top:23px}
+    .video-demo{background:var(--surface);border:1px solid var(--line)}
+    .video-demo:hover,.work-tile:hover{border-color:var(--display)}
+    .demo-intro{padding:30px 30px 24px}
+    .video-demo .small-label{display:block}
+    .video-demo h3,.work-tile h3{font:600 clamp(1.6rem,3vw,2.15rem)/1.15 var(--heading);letter-spacing:-.035em;margin:13px 0}
+    .video-demo p{margin:0}
+    .signal-flow{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin:0 30px;padding:17px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+    .signal-flow span{font:500 .73rem/1.55 var(--mono);color:#D1BEEE}
+    .signal-flow b{font:500 .86rem var(--mono);color:var(--display)}
+    .demo-points{list-style:none;padding:0;margin:24px 30px;color:var(--body);font-size:.93rem}
+    .demo-points li{position:relative;padding-left:18px;margin:11px 0;line-height:1.58}
+    .demo-points li::before{content:"";position:absolute;top:.65em;left:0;width:5px;height:5px;background:var(--knight)}
+    .demo-link{border-top:1px solid var(--line);padding:20px 30px}
+    .demo-link a,.work-tile a{font:600 .9rem/1.4 var(--heading);text-decoration:none;color:var(--text)}
+    .demo-link a:hover,.work-tile a:hover{color:var(--accent)}
+    .work-tile{border:1px solid var(--line);padding:30px;background:var(--surface)}
+    .work-tile .work-label{display:block}
+    .work-tile h3{font-size:1.45rem}
+    .work-tile p{margin:0 0 18px}
+    .quote{font:italic clamp(1.7rem,4vw,3rem)/1.3 Georgia,"Times New Roman",serif;letter-spacing:-.035em}
+    .quote::first-letter{color:var(--display)}
+    footer{border-top:1px solid var(--line);padding:30px 0 55px;display:flex;justify-content:space-between;gap:35px;color:var(--muted);font-size:.82rem}
+    footer p{margin:0;max-width:660px}
+    @media(max-width:760px){
+      header{padding:22px 0}header nav{gap:13px;font-size:.79rem}header nav a:last-child{display:none}
+      .hero{padding:92px 0 82px}.hero::before{top:30px;left:0;width:3px;height:41px}
+      .sections{grid-template-columns:1fr;gap:24px;padding:45px 0 54px}
+      .refs{grid-template-columns:1fr}.ref{min-height:auto}.feature{grid-column:auto}
+      .demo-intro{padding:24px 22px}.signal-flow{margin:0 22px}
+      .demo-points{margin:21px 22px}.demo-link{padding:18px 22px}.work-tile{padding:25px 22px}
+      footer{flex-direction:column;gap:14px}
+    }
+    @media(max-width:430px){header nav a:first-child{display:none}.chips span{font-size:.69rem}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.ref{transition:none}}
   </style>
 </head>
 <body>
@@ -112,18 +150,54 @@
     </header>
     <main id="top">
       <section class="hero" aria-labelledby="page-title">
-        <div class="eyebrow">People · Data · Machines</div>
+        <div class="eyebrow">People / Data / Machines</div>
         <h1 id="page-title">Tim<br><span>Boersma.</span></h1>
         <p class="lead">I am a <strong>Principal Consultant – Operational Technology at <a href="https://www.ats-global.com/">ATS Global</a></strong> in the Netherlands, connecting industrial systems, operational reality and the decisions that make technology useful.</p>
         <div class="chips" aria-label="Areas of focus"><span>Industrial architecture</span><span>Manufacturing operations</span><span>Interoperability</span><span>Operational AI governance</span></div>
       </section>
       <section class="sections" id="about" aria-labelledby="about-title">
-        <h2 id="about-title">About</h2>
+        <h2 id="about-title">01 / About</h2>
         <div>
           <p>My work spans manufacturing execution, industrial information architecture, requirements and governance. The recurring question is simple: when systems disagree, who has the authority to decide what happens next?</p>
           <p>I'm interested in the space between enterprise promises and shop-floor truth, especially where people, software and machines must agree before action becomes safe and useful.</p>
           <p>Looking for Tim at ATS Global? I’m Tim Boersma. My professional work sits between operational technology, the systems that support manufacturing, and the people responsible for what happens on the shop floor.</p>
           <p>This is my independently maintained professional page. For my current employment history and ongoing writing, see <a href="https://nl.linkedin.com/in/tboersma" rel="me noopener noreferrer">LinkedIn</a>.</p>
+        </div>
+      </section>
+      <section class="sections" id="work" aria-labelledby="work-title">
+        <h2 id="work-title">02 / In the field</h2>
+        <div>
+          <p>Some of the work is easier to explain when there's something to point at.</p>
+          <div class="media-layout">
+            <article class="video-demo" aria-labelledby="demokit-title">
+              <div class="demo-intro">
+                <span class="small-label">Technical demonstration / Manufacturing sandbox</span>
+                <h3 id="demokit-title">Industrial DemoKit</h3>
+                <p>A portable, vendor-neutral sandbox for exploring technology, architecture and operational behaviour.</p>
+              </div>
+              <div class="signal-flow" aria-label="Interaction flow">
+                <span>Physical interactions</span><b aria-hidden="true">→</b>
+                <span>Operational events</span><b aria-hidden="true">→</b>
+                <span>Shared meaning</span><b aria-hidden="true">→</b>
+                <span>Application response</span>
+              </div>
+              <ul class="demo-points">
+                <li>Operators, machines, materials, orders, decisions and exceptions share one operational reality.</li>
+                <li>Explore the same scenario through different technologies and visualisations.</li>
+                <li>Recent work extends into 3D visualisation and a browser companion for recorded actions.</li>
+              </ul>
+              <div class="demo-link">
+                <a href="https://www.linkedin.com/feed/update/urn:li:activity:7520846598814494721/" target="_blank" rel="noopener noreferrer">View the DemoKit post on LinkedIn ↗</a>
+              </div>
+            </article>
+            <article class="work-tile" aria-labelledby="toolkit-title">
+              <span class="work-label">Open working material / CC0</span>
+              <h3 id="toolkit-title">Operational Authority Toolkit</h3>
+              <p>Free, unbranded working templates for making meaning, authority, evidence and exceptions explicit across industrial systems.</p>
+              <a href="https://github.com/Apathyte/operational-authority-toolkit" target="_blank" rel="noopener noreferrer">Explore the public toolkit ↗</a>
+            </article>
+          </div>
+          <!-- PODCAST: Add only after an official episode page and recording are publicly available. -->
         </div>
       </section>
       <section class="sections" id="evidence" aria-labelledby="evidence-title">
@@ -150,32 +224,8 @@
           </div>
         </div>
       </section>
-      <section class="sections" id="work" aria-labelledby="work-title">
-        <h2 id="work-title">In the field</h2>
-        <div>
-          <p>Designs and decisions are easier to discuss when the work is visible. A public toolkit and a technical video provide a more concrete view.</p>
-          <div class="media-layout">
-            <div class="video-embed" aria-label="LinkedIn video demonstration: Tim Boersma's industrial DemoKit">
-              <iframe
-                src="https://www.linkedin.com/embed/feed/update/urn:li:activity:7520846598814494721"
-                title="Tim Boersma — industrial DemoKit demonstration on LinkedIn"
-                loading="lazy"
-                allow="fullscreen; encrypted-media; picture-in-picture"
-                referrerpolicy="strict-origin-when-cross-origin"
-                allowfullscreen></iframe>
-            </div>
-            <div class="work-tile">
-              <span class="work-label">Open working material · CC0</span>
-              <h3>Operational Authority Toolkit</h3>
-              <p>Free, unbranded templates for making meaning, authority, evidence and exceptions explicit across industrial systems.</p>
-              <a href="https://github.com/Apathyte/operational-authority-toolkit" target="_blank" rel="noopener noreferrer">Explore the public toolkit ↗</a>
-            </div>
-          </div>
-          <!-- PODCAST: Add only after an official episode page and recording are publicly available. -->
-        </div>
-      </section>
       <section class="sections" aria-label="Personal principle">
-        <h2>In practice</h2>
+        <h2>04 / In practice</h2>
         <div class="quote">“Capability is not authority.”</div>
       </section>
     </main>
