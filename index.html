@@ -109,6 +109,16 @@
     .work-tile p {font-size:.87rem}
     .work-tile a {color:var(--accent);font-size:.85rem}
     @media(max-width:700px){.media-layout{grid-template-columns:1fr}.feature{grid-column:auto}.video-art{min-height:205px}}
+
+    .video-expander {margin-top:16px;border-top:1px solid var(--line);padding-top:12px}
+    .video-expander summary {cursor:pointer;display:inline-block;color:var(--accent);font-size:.9rem;font-weight:650;list-style:none}
+    .video-expander summary::-webkit-details-marker {display:none}
+    .video-expander summary:after {content:"  ▸"}
+    .video-expander[open] summary:after {content:"  ▾"}
+    .video-embed-wrap {margin-top:15px;background:#111418;max-width:100%;border:1px solid var(--line);overflow:hidden}
+    .video-embed-wrap iframe {display:block;width:100%;height:520px;border:0}
+    .video-fallback {display:inline-block;color:var(--muted);font-size:.83rem;margin-top:15px}
+    @media(max-width:700px){.video-embed-wrap iframe{height:440px}}
   </style>
 </head>
 <body>
@@ -162,10 +172,27 @@
         <div>
           <p>Designs and decisions are easier to discuss when the work is visible. A public toolkit and a technical video provide a more concrete view.</p>
           <div class="media-layout">
-            <a class="video-tile" href="https://www.linkedin.com/feed/update/urn:li:activity:7520846598814494721/" target="_blank" rel="noopener noreferrer" aria-label="Watch the technical video on LinkedIn">
+            <div class="video-tile" aria-labelledby="demo-video-title">
               <div class="video-art" aria-hidden="true"><span class="play">▶</span></div>
-              <div class="media-copy"><small>Technical video · LinkedIn</small><strong>Industrial technology in motion</strong><p>Watch the technical video on LinkedIn ↗</p></div>
-            </a>
+              <div class="media-copy">
+                <small>Technical video · LinkedIn</small>
+                <strong id="demo-video-title">Industrial technology in motion</strong>
+                <p>Technical video demonstration. Open the embedded player below, or view the original post on LinkedIn.</p>
+                <details class="video-expander">
+                  <summary>Play embedded video</summary>
+                  <div class="video-embed-wrap">
+                    <iframe
+                      src="https://www.linkedin.com/embed/feed/update/urn:li:activity:7520846598814494721"
+                      title="Technical video from Tim Boersma on LinkedIn"
+                      loading="lazy"
+                      allow="fullscreen; encrypted-media; picture-in-picture"
+                      referrerpolicy="strict-origin-when-cross-origin"
+                      allowfullscreen></iframe>
+                  </div>
+                </details>
+                <a class="video-fallback" href="https://www.linkedin.com/feed/update/urn:li:activity:7520846598814494721/" target="_blank" rel="noopener noreferrer">View original on LinkedIn ↗</a>
+              </div>
+            </div>
             <div class="work-tile">
               <span class="work-label">Open working material · CC0</span>
               <h3>Operational Authority Toolkit</h3>
