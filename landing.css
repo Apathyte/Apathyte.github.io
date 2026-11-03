@@ -196,6 +196,8 @@ header nav a:last-child{color:#cba4fa}
 }
 @media(max-width:420px){
   .hero h1{font-size:clamp(3.2rem,16vw,4rem)}
+  /* Keep temporary Dex sprite inside the stage at narrow widths. */
+  .hero-theatre .dex-patrol{left:53%!important;scale:.58}
 }
 @media(prefers-reduced-motion:reduce){
   .hero-theatre .dex-message{transition:none}
