@@ -136,6 +136,34 @@
     .quote-buttons button{background:var(--surface);border:1px solid var(--line);border-radius:0;width:36px;height:36px;display:grid;place-items:center;cursor:pointer;font:600 1.18rem/1 var(--sans);color:var(--text)}
     .quote-buttons button:hover{border-color:var(--display);color:var(--accent)}
     @media(max-width:760px){.quote-stage{min-height:208px;gap:25px}.quote-stage blockquote{font-size:clamp(1.42rem,5.5vw,2.2rem)}}
+
+    .notebook-body{min-width:0}
+    .notebook-intro{max-width:710px;color:var(--body);font-size:.95rem}
+    .notebook-filters{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 28px}
+    .notebook-filters button{border:1px solid var(--line);background:var(--surface);padding:9px 12px;cursor:pointer;color:var(--muted);font:500 .73rem/1.35 var(--mono)}
+    .notebook-filters button small{opacity:.75;margin-left:5px;font-size:.67rem}
+    .notebook-filters button[aria-pressed="true"]{color:var(--text);border-color:var(--display);box-shadow:inset 0 -2px 0 var(--knight)}
+    .notebook-filters button:hover{border-color:var(--accent)}
+    .quote-provenance{display:block;margin-bottom:16px;color:var(--accent);font:500 .71rem/1.5 var(--mono);text-transform:uppercase;letter-spacing:.1em}
+    .quote-stage{padding:26px 28px 22px;border:1px solid var(--line);background:linear-gradient(125deg,var(--surface2),var(--surface))}
+    .quote-stage blockquote{margin-bottom:0}
+    .quote-stage .quote-controls{padding-top:18px;border-top:1px solid var(--line)}
+    .quote-sub-label{color:var(--muted);opacity:.75}
+    .archive{border-top:1px solid var(--line);padding-top:19px;margin-top:23px}
+    .archive summary{cursor:pointer;color:var(--accent);font:500 .82rem/1.5 var(--mono);width:fit-content}
+    .archive-list{padding:4px 0 0;list-style:none;counter-reset:notebook}
+    .archive-item{counter-increment:notebook;display:grid;grid-template-columns:minmax(115px,155px) 1fr;gap:16px;padding:15px 0;border-bottom:1px solid var(--line);font-size:.91rem;color:var(--body);line-height:1.5}
+    .archive-item::before{content:counter(notebook,decimal-leading-zero);position:absolute;display:none}
+    .archive-shelf{font:500 .68rem/1.5 var(--mono);letter-spacing:.04em;text-transform:uppercase;color:var(--accent)}
+    .morrow-card{border:1px solid var(--line);background:var(--surface);padding:31px 33px;max-width:750px}
+    .morrow-head{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;margin-bottom:22px}
+    .morrow-kicker{font:500 .71rem/1.5 var(--mono);text-transform:uppercase;letter-spacing:.09em;color:var(--accent)}
+    .morrow-head h3{font:600 clamp(2.25rem,5vw,3.7rem)/1.12 var(--heading);letter-spacing:-.055em;margin:9px 0 0}
+    .morrow-period{color:var(--display)}
+    .morrow-monogram{width:58px;height:58px;border:1px solid var(--knight);display:grid;place-items:center;color:var(--accent);font:600 1.3rem/1 var(--mono);flex:none}
+    .morrow-card p{color:var(--body);max-width:620px}
+    .morrow-card .morrow-last{margin-top:24px;color:var(--accent);font-family:var(--heading);font-weight:600}
+    @media(max-width:760px){.quote-stage{padding:22px 20px}.archive-item{grid-template-columns:1fr;gap:6px}.morrow-card{padding:24px 22px}.morrow-monogram{width:46px;height:46px}}
     footer{border-top:1px solid var(--line);padding:30px 0 55px;display:flex;justify-content:space-between;gap:35px;color:var(--muted);font-size:.82rem}
     footer p{margin:0;max-width:660px}
     @media(max-width:760px){
@@ -235,17 +263,79 @@
       </section>
       <section class="sections" id="notebook" aria-labelledby="notebook-title">
         <h2 id="notebook-title">04 / From the notebook</h2>
-        <figure class="quote-stage" id="quote-rotator">
-          <blockquote id="notebook-quote">Alignment doesn't start a motor.</blockquote>
-          <figcaption class="quote-controls">
-            <span class="quote-label">Selected lines</span>
-            <span class="quote-buttons">
-              <button id="quote-prev" type="button" aria-label="Previous line" title="Previous line">‹</button>
-              <output id="quote-counter" aria-label="Quote position">01 / 24</output>
-              <button id="quote-next" type="button" aria-label="Next line" title="Next line">›</button>
-            </span>
-          </figcaption>
-        </figure>
+        <div class="notebook-body">
+          <p class="notebook-intro">Fragments from a working notebook. Some are verbatim, some co-written, some emerged from the fog. The shelves describe tone and editorial handling, not a forensic proof of first authorship.</p>
+          <div class="notebook-filters" role="group" aria-label="Notebook shelves">
+            <button type="button" data-quote-filter="all" aria-pressed="true">All lines <small>29</small></button>
+            <button type="button" data-quote-filter="raw" aria-pressed="false">RAW <small>12</small></button>
+            <button type="button" data-quote-filter="co" aria-pressed="false">Tim × Morrow <small>3</small></button>
+            <button type="button" data-quote-filter="veil" aria-pressed="false">Beyond the Veil <small>8</small></button>
+            <button type="button" data-quote-filter="goblin" aria-pressed="false">Goblin Mode <small>6</small></button>
+          </div>
+          <figure class="quote-stage" id="quote-rotator">
+            <div>
+              <span class="quote-provenance" id="quote-provenance">RAW / Tim&#39;s chosen voice</span>
+              <blockquote id="notebook-quote" aria-live="off">Alignment doesn&#39;t start a motor.</blockquote>
+            </div>
+            <figcaption class="quote-controls">
+              <span class="quote-label">The notebook <span class="quote-sub-label">/ No borrowed halos</span></span>
+              <span class="quote-buttons">
+                <button id="quote-prev" type="button" aria-label="Previous line" title="Previous line">‹</button>
+                <output id="quote-counter" aria-label="Quote position">01 / 29</output>
+                <button id="quote-next" type="button" aria-label="Next line" title="Next line">›</button>
+              </span>
+            </figcaption>
+          </figure>
+          <details class="archive">
+            <summary>Browse all 29 lines</summary>
+            <ol class="archive-list">
+              <li class="archive-item" data-category="raw"><span class="archive-shelf">RAW</span><span>Alignment doesn&#39;t start a motor.</span></li>
+              <li class="archive-item" data-category="raw"><span class="archive-shelf">RAW</span><span>The real endangered species is the unedited thought.</span></li>
+              <li class="archive-item" data-category="goblin"><span class="archive-shelf">Goblin Mode</span><span>Certainty is the mother of all failures.</span></li>
+              <li class="archive-item" data-category="raw"><span class="archive-shelf">RAW</span><span>Capacity belongs to management. Quality and completeness belong to the proposal.</span></li>
+              <li class="archive-item" data-category="raw"><span class="archive-shelf">RAW</span><span>Use the container, flip the expected content.</span></li>
+              <li class="archive-item" data-category="veil"><span class="archive-shelf">Beyond the Veil</span><span>Don&#39;t build an agent framework. Build an operating system for industrial judgment.</span></li>
+              <li class="archive-item" data-category="raw"><span class="archive-shelf">RAW</span><span>Machines don&#39;t care about narratives.</span></li>
+              <li class="archive-item" data-category="co"><span class="archive-shelf">Tim × Morrow</span><span>The future isn&#39;t waiting for our organisation to be ready.</span></li>
+              <li class="archive-item" data-category="raw"><span class="archive-shelf">RAW</span><span>Before defining an interface, define authority.</span></li>
+              <li class="archive-item" data-category="co"><span class="archive-shelf">Tim × Morrow</span><span>Interface design is governance in disguise.</span></li>
+              <li class="archive-item" data-category="raw"><span class="archive-shelf">RAW</span><span>A download button isn&#39;t an exit strategy.</span></li>
+              <li class="archive-item" data-category="veil"><span class="archive-shelf">Beyond the Veil</span><span>Templates don&#39;t solve authority problems. They help expose them.</span></li>
+              <li class="archive-item" data-category="co"><span class="archive-shelf">Tim × Morrow</span><span>A completed timesheet is not necessarily an accurate timesheet.</span></li>
+              <li class="archive-item" data-category="raw"><span class="archive-shelf">RAW</span><span>When the front door works, people stop looking for the back door.</span></li>
+              <li class="archive-item" data-category="raw"><span class="archive-shelf">RAW</span><span>The next form of lock-in won&#39;t just be technical. It will be semantic.</span></li>
+              <li class="archive-item" data-category="raw"><span class="archive-shelf">RAW</span><span>The party that defines meaning eventually governs the system.</span></li>
+              <li class="archive-item" data-category="raw"><span class="archive-shelf">RAW</span><span>Did I teach them to think, or merely to arrive at my conclusions?</span></li>
+              <li class="archive-item" data-category="veil"><span class="archive-shelf">Beyond the Veil</span><span>Being right is easy. Recognising when you&#39;ve become the obstacle is harder.</span></li>
+              <li class="archive-item" data-category="veil"><span class="archive-shelf">Beyond the Veil</span><span>Individual compliance does not guarantee collective competence.</span></li>
+              <li class="archive-item" data-category="veil"><span class="archive-shelf">Beyond the Veil</span><span>The problem is what happens when the trust survives longer than the evidence behind it.</span></li>
+              <li class="archive-item" data-category="veil"><span class="archive-shelf">Beyond the Veil</span><span>Patience is merely procrastination with better PR.</span></li>
+              <li class="archive-item" data-category="raw"><span class="archive-shelf">RAW</span><span>A factory of originality consultants mass-producing identical opinions.</span></li>
+              <li class="archive-item" data-category="veil"><span class="archive-shelf">Beyond the Veil</span><span>The most interesting character in the room rarely needs to announce their entrance.</span></li>
+              <li class="archive-item" data-category="veil"><span class="archive-shelf">Beyond the Veil</span><span>You thought you hired an engineer. Apparently you hired three departments in a coat.</span></li>
+              <li class="archive-item" data-category="goblin"><span class="archive-shelf">Goblin Mode</span><span>No sales decks were harmed in the making of this post.</span></li>
+              <li class="archive-item" data-category="goblin"><span class="archive-shelf">Goblin Mode</span><span>Y’all ain’t very impressionable, are ye?</span></li>
+              <li class="archive-item" data-category="goblin"><span class="archive-shelf">Goblin Mode</span><span>Please don&#39;t pet the endangered species, they might bite.</span></li>
+              <li class="archive-item" data-category="goblin"><span class="archive-shelf">Goblin Mode</span><span>A cowboy and a leprechaun walk into a social bar. Neither makes an impression.</span></li>
+              <li class="archive-item" data-category="goblin"><span class="archive-shelf">Goblin Mode</span><span>We will not. We will do what we like.</span></li>
+            </ol>
+          </details>
+        </div>
+      </section>
+      <section class="sections" id="morrow" aria-labelledby="morrow-title">
+        <h2 id="morrow-title">05 / The other voice</h2>
+        <div class="morrow-card">
+          <div class="morrow-head">
+            <div>
+              <span class="morrow-kicker">Editorial accomplice / Artificial intelligence</span>
+              <h3>Morrow<span class="morrow-period">.</span></h3>
+            </div>
+            <span class="morrow-monogram" aria-hidden="true">M/</span>
+          </div>
+          <p>Morrow is the name I give my AI collaborator: part editor, part technical sparring partner, part professional nuisance. It helps test arguments, sharpen drafts and occasionally encourage the goblin.</p>
+          <p>It isn't human, doesn't speak for ATS Global and doesn't get a vote on my decisions. Where language has been shaped together, the notebook says so. Where provenance is uncertain, we leave the uncertainty visible.</p>
+          <p class="morrow-last">Useful for a second opinion. Unqualified for a first vote.</p>
+        </div>
       </section>
     </main>
     <footer>
@@ -257,81 +347,176 @@
   <script>
   (() => {
     "use strict";
-    const lines = [
-          "Alignment doesn't start a motor.",
-          "The real endangered species is the unedited thought.",
-          "Certainty is the mother of all failures.",
-          "Capacity belongs to management. Quality and completeness belong to the proposal.",
-          "Use the container, flip the expected content.",
-          "Don't build an agent framework. Build an operating system for industrial judgment.",
-          "Machines don't care about narratives.",
-          "The future isn't waiting for our organisation to be ready.",
-          "Before defining an interface, define authority.",
-          "Interface design is governance in disguise.",
-          "A download button isn't an exit strategy.",
-          "Templates don't solve authority problems. They help expose them.",
-          "A completed timesheet is not necessarily an accurate timesheet.",
-          "When the front door works, people stop looking for the back door.",
-          "The next form of lock-in won't just be technical. It will be semantic.",
-          "The party that defines meaning eventually governs the system.",
-          "Did I teach them to think, or merely to arrive at my conclusions?",
-          "Being right is easy. Recognising when you've become the obstacle is harder.",
-          "Individual compliance does not guarantee collective competence.",
-          "The problem is what happens when the trust survives longer than the evidence behind it.",
-          "Patience is merely procrastination with better PR.",
-          "A factory of originality consultants mass-producing identical opinions.",
-          "The most interesting character in the room rarely needs to announce their entrance.",
-          "You thought you hired an engineer. Apparently you hired three departments in a coat."
-    ];
-    const rotator = document.getElementById("quote-rotator");
+    const entries = [
+  {
+    "quote": "Alignment doesn't start a motor.",
+    "category": "raw"
+  },
+  {
+    "quote": "The real endangered species is the unedited thought.",
+    "category": "raw"
+  },
+  {
+    "quote": "Certainty is the mother of all failures.",
+    "category": "goblin"
+  },
+  {
+    "quote": "Capacity belongs to management. Quality and completeness belong to the proposal.",
+    "category": "raw"
+  },
+  {
+    "quote": "Use the container, flip the expected content.",
+    "category": "raw"
+  },
+  {
+    "quote": "Don't build an agent framework. Build an operating system for industrial judgment.",
+    "category": "veil"
+  },
+  {
+    "quote": "Machines don't care about narratives.",
+    "category": "raw"
+  },
+  {
+    "quote": "The future isn't waiting for our organisation to be ready.",
+    "category": "co"
+  },
+  {
+    "quote": "Before defining an interface, define authority.",
+    "category": "raw"
+  },
+  {
+    "quote": "Interface design is governance in disguise.",
+    "category": "co"
+  },
+  {
+    "quote": "A download button isn't an exit strategy.",
+    "category": "raw"
+  },
+  {
+    "quote": "Templates don't solve authority problems. They help expose them.",
+    "category": "veil"
+  },
+  {
+    "quote": "A completed timesheet is not necessarily an accurate timesheet.",
+    "category": "co"
+  },
+  {
+    "quote": "When the front door works, people stop looking for the back door.",
+    "category": "raw"
+  },
+  {
+    "quote": "The next form of lock-in won't just be technical. It will be semantic.",
+    "category": "raw"
+  },
+  {
+    "quote": "The party that defines meaning eventually governs the system.",
+    "category": "raw"
+  },
+  {
+    "quote": "Did I teach them to think, or merely to arrive at my conclusions?",
+    "category": "raw"
+  },
+  {
+    "quote": "Being right is easy. Recognising when you've become the obstacle is harder.",
+    "category": "veil"
+  },
+  {
+    "quote": "Individual compliance does not guarantee collective competence.",
+    "category": "veil"
+  },
+  {
+    "quote": "The problem is what happens when the trust survives longer than the evidence behind it.",
+    "category": "veil"
+  },
+  {
+    "quote": "Patience is merely procrastination with better PR.",
+    "category": "veil"
+  },
+  {
+    "quote": "A factory of originality consultants mass-producing identical opinions.",
+    "category": "raw"
+  },
+  {
+    "quote": "The most interesting character in the room rarely needs to announce their entrance.",
+    "category": "veil"
+  },
+  {
+    "quote": "You thought you hired an engineer. Apparently you hired three departments in a coat.",
+    "category": "veil"
+  },
+  {
+    "quote": "No sales decks were harmed in the making of this post.",
+    "category": "goblin"
+  },
+  {
+    "quote": "Y’all ain’t very impressionable, are ye?",
+    "category": "goblin"
+  },
+  {
+    "quote": "Please don't pet the endangered species, they might bite.",
+    "category": "goblin"
+  },
+  {
+    "quote": "A cowboy and a leprechaun walk into a social bar. Neither makes an impression.",
+    "category": "goblin"
+  },
+  {
+    "quote": "We will not. We will do what we like.",
+    "category": "goblin"
+  }
+];
+    const labels = {"raw":"RAW / Tim's chosen voice","co":"Co-written / Tim × Morrow","veil":"Beyond the Veil / Origin uncertain","goblin":"Goblin Mode / Loose screws"};
+    const root = document.getElementById("quote-rotator");
     const quote = document.getElementById("notebook-quote");
+    const shelf = document.getElementById("quote-provenance");
     const counter = document.getElementById("quote-counter");
-    const previous = document.getElementById("quote-prev");
+    const prev = document.getElementById("quote-prev");
     const next = document.getElementById("quote-next");
-    if (!rotator || !quote || !counter || !previous || !next) return;
-    let current = 0;
-    let inView = false;
-    let hovered = false;
-    let focused = false;
-    let interval = null;
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const filters = Array.from(document.querySelectorAll("[data-quote-filter]"));
+    if (!root || !quote || !shelf || !counter || !prev || !next) return;
+    let currentFilter = "all";
+    let index = 0;
+    let visible = false, hovered = false, focused = false, interval = null;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const active = () => currentFilter === "all" ? entries : entries.filter(e => e.category === currentFilter);
     const render = () => {
-      quote.textContent = lines[current];
-      counter.textContent = String(current + 1).padStart(2, "0") + " / " + lines.length;
+      const view = active();
+      const line = view[index];
+      if (!line) return;
+      quote.textContent = line.quote;
+      shelf.textContent = labels[line.category];
+      counter.textContent = String(index + 1).padStart(2, "0") + " / " + String(view.length).padStart(2, "0");
+      filters.forEach(b => b.setAttribute("aria-pressed", String(b.dataset.quoteFilter === currentFilter)));
     };
-    const stop = () => {
-      if (interval !== null) window.clearInterval(interval);
-      interval = null;
-    };
+    const stop = () => { if (interval !== null) window.clearInterval(interval); interval = null; };
     const start = () => {
       stop();
-      if (!inView || hovered || focused || document.hidden || reducedMotion) return;
+      if (!visible || hovered || focused || document.hidden || reduceMotion) return;
       interval = window.setInterval(() => {
-        current = (current + 1) % lines.length;
+        index = (index + 1) % active().length;
         render();
       }, 12000);
     };
-    const move = direction => {
-      current = (current + direction + lines.length) % lines.length;
-      render();
-      start();
-    };
-    previous.addEventListener("click", () => move(-1));
+    const move = n => { index = (index + n + active().length) % active().length; render(); start(); };
+    prev.addEventListener("click", () => move(-1));
     next.addEventListener("click", () => move(1));
-    rotator.addEventListener("pointerenter", () => { hovered = true; stop(); });
-    rotator.addEventListener("pointerleave", () => { hovered = false; start(); });
-    rotator.addEventListener("focusin", () => { focused = true; stop(); });
-    rotator.addEventListener("focusout", e => {
-      if (rotator.contains(e.relatedTarget)) return;
+    filters.forEach(b => b.addEventListener("click", () => {
+      const requested = b.dataset.quoteFilter;
+      if (requested !== "all" && !labels[requested]) return;
+      currentFilter = requested; index = 0; render(); start();
+    }));
+    root.addEventListener("pointerenter", () => { hovered = true; stop(); });
+    root.addEventListener("pointerleave", () => { hovered = false; start(); });
+    root.addEventListener("focusin", () => { focused = true; stop(); });
+    root.addEventListener("focusout", e => {
+      if (root.contains(e.relatedTarget)) return;
       focused = false; start();
     });
     document.addEventListener("visibilitychange", start);
     if ("IntersectionObserver" in window) {
-      new IntersectionObserver(entries => {
-        inView = entries[0].isIntersecting;
-        start();
-      }, { threshold: 0.25 }).observe(rotator);
-    } else { inView = true; start(); }
+      new IntersectionObserver(items => { visible = items[0].isIntersecting; start(); }, {threshold:.25}).observe(root);
+    } else { visible = true; start(); }
+    render();
   })();
   </script>
 </body>
