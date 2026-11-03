@@ -28,6 +28,9 @@ jobs:
           python -m pip install --disable-pip-version-check "playwright==1.64.1" "Pillow>=11.0,<12.0"
           python -m playwright install --with-deps chromium
 
+      - name: Validate character image assets
+        run: python scripts/check_characters.py --output-dir artifacts/site-qa
+
       - name: Render and test website
         run: |
           python -m http.server 8765 --bind 127.0.0.1 > "$RUNNER_TEMP/site-server.log" 2>&1 &

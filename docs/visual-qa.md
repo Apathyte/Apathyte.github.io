@@ -6,7 +6,7 @@ The workflow serves the checked-out static site locally and runs real Chromium P
 
 Assertions cover horizontal overflow, navigation anchors, unique IDs, hero typography, loaded character assets, the four overview cards, three public projects, canonical URL, Search Console verification, JavaScript errors, Dex click interaction, five-second quote rotation and reduced-motion support.
 
-Each workflow run uploads the **visual-qa** artifact containing images, a contact sheet and results.json. If a check fails, the artifact is still uploaded.
+Each workflow run uploads the **visual-qa** artifact containing images, a contact sheet, a character sprite-sheet and results.json. The character preflight validates transparent PNGs and consistent frame dimensions but **never grants artwork approval**. If a check fails, the artifact is still uploaded.
 
 The browser test has no access to personal accounts or credentials. External font loading is best effort; site assets and content are the hard assertions.
 
