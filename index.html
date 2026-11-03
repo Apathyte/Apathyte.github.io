@@ -86,7 +86,8 @@
     .eyebrow,h2,.ref small,.group-title,.video-demo .small-label,.work-tile .work-label{
       font:500 .71rem/1.5 var(--mono);letter-spacing:.11em;text-transform:uppercase;color:var(--accent)}
     h1{font:600 clamp(4.3rem,11vw,8.8rem)/.92 var(--heading);letter-spacing:-.075em;margin:26px 0 35px}
-    h1 span{color:var(--display)}
+    h1 .given-name{color:var(--text);letter-spacing:0.015em;font-kerning:normal;font-variant-ligatures:none}
+    h1 .family-name{color:var(--display);letter-spacing:-.045em}
     .lead{max-width:770px;color:var(--body);font-size:clamp(1.14rem,2.35vw,1.46rem);line-height:1.54}
     .lead strong{color:var(--text);font-weight:600}
     .chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:34px}
@@ -125,8 +126,16 @@
     .work-tile .work-label{display:block}
     .work-tile h3{font-size:1.45rem}
     .work-tile p{margin:0 0 18px}
-    .quote{font:italic clamp(1.7rem,4vw,3rem)/1.3 Georgia,"Times New Roman",serif;letter-spacing:-.035em}
-    .quote::first-letter{color:var(--display)}
+    .quote-stage{margin:0;min-height:180px;display:flex;flex-direction:column;justify-content:space-between;gap:32px}
+    .quote-stage blockquote{margin:0;max-width:740px;font:500 clamp(1.55rem,3.2vw,2.45rem)/1.33 var(--heading);letter-spacing:-.03em;color:var(--text);text-wrap:balance}
+    .quote-stage blockquote::before{content:"“";color:var(--display);margin-right:.12em}
+    .quote-stage blockquote::after{content:"”";color:var(--display);margin-left:.05em}
+    .quote-controls{display:flex;align-items:center;gap:11px;justify-content:space-between;max-width:740px}
+    .quote-controls .quote-label,.quote-controls output{font:500 .71rem/1.4 var(--mono);text-transform:uppercase;letter-spacing:.09em;color:var(--muted)}
+    .quote-buttons{display:flex;align-items:center;gap:9px}
+    .quote-buttons button{background:var(--surface);border:1px solid var(--line);border-radius:0;width:36px;height:36px;display:grid;place-items:center;cursor:pointer;font:600 1.18rem/1 var(--sans);color:var(--text)}
+    .quote-buttons button:hover{border-color:var(--display);color:var(--accent)}
+    @media(max-width:760px){.quote-stage{min-height:208px;gap:25px}.quote-stage blockquote{font-size:clamp(1.42rem,5.5vw,2.2rem)}}
     footer{border-top:1px solid var(--line);padding:30px 0 55px;display:flex;justify-content:space-between;gap:35px;color:var(--muted);font-size:.82rem}
     footer p{margin:0;max-width:660px}
     @media(max-width:760px){
@@ -151,7 +160,7 @@
     <main id="top">
       <section class="hero" aria-labelledby="page-title">
         <div class="eyebrow">People / Data / Machines</div>
-        <h1 id="page-title">Tim<br><span>Boersma.</span></h1>
+        <h1 id="page-title"><span class="given-name">Tim</span><br><span class="family-name">Boersma.</span></h1>
         <p class="lead">I am a <strong>Principal Consultant – Operational Technology at <a href="https://www.ats-global.com/">ATS Global</a></strong> in the Netherlands, connecting industrial systems, operational reality and the decisions that make technology useful.</p>
         <div class="chips" aria-label="Areas of focus"><span>Industrial architecture</span><span>Manufacturing operations</span><span>Interoperability</span><span>Operational AI governance</span></div>
       </section>
@@ -224,9 +233,19 @@
           </div>
         </div>
       </section>
-      <section class="sections" aria-label="Personal principle">
-        <h2>04 / In practice</h2>
-        <div class="quote">“Capability is not authority.”</div>
+      <section class="sections" id="notebook" aria-labelledby="notebook-title">
+        <h2 id="notebook-title">04 / From the notebook</h2>
+        <figure class="quote-stage" id="quote-rotator">
+          <blockquote id="notebook-quote">Alignment doesn't start a motor.</blockquote>
+          <figcaption class="quote-controls">
+            <span class="quote-label">Selected lines</span>
+            <span class="quote-buttons">
+              <button id="quote-prev" type="button" aria-label="Previous line" title="Previous line">‹</button>
+              <output id="quote-counter" aria-label="Quote position">01 / 24</output>
+              <button id="quote-next" type="button" aria-label="Next line" title="Next line">›</button>
+            </span>
+          </figcaption>
+        </figure>
       </section>
     </main>
     <footer>
@@ -234,5 +253,86 @@
       <p>© 2026 Tim Boersma</p>
     </footer>
   </div>
+
+  <script>
+  (() => {
+    "use strict";
+    const lines = [
+          "Alignment doesn't start a motor.",
+          "The real endangered species is the unedited thought.",
+          "Certainty is the mother of all failures.",
+          "Capacity belongs to management. Quality and completeness belong to the proposal.",
+          "Use the container, flip the expected content.",
+          "Don't build an agent framework. Build an operating system for industrial judgment.",
+          "Machines don't care about narratives.",
+          "The future isn't waiting for our organisation to be ready.",
+          "Before defining an interface, define authority.",
+          "Interface design is governance in disguise.",
+          "A download button isn't an exit strategy.",
+          "Templates don't solve authority problems. They help expose them.",
+          "A completed timesheet is not necessarily an accurate timesheet.",
+          "When the front door works, people stop looking for the back door.",
+          "The next form of lock-in won't just be technical. It will be semantic.",
+          "The party that defines meaning eventually governs the system.",
+          "Did I teach them to think, or merely to arrive at my conclusions?",
+          "Being right is easy. Recognising when you've become the obstacle is harder.",
+          "Individual compliance does not guarantee collective competence.",
+          "The problem is what happens when the trust survives longer than the evidence behind it.",
+          "Patience is merely procrastination with better PR.",
+          "A factory of originality consultants mass-producing identical opinions.",
+          "The most interesting character in the room rarely needs to announce their entrance.",
+          "You thought you hired an engineer. Apparently you hired three departments in a coat."
+    ];
+    const rotator = document.getElementById("quote-rotator");
+    const quote = document.getElementById("notebook-quote");
+    const counter = document.getElementById("quote-counter");
+    const previous = document.getElementById("quote-prev");
+    const next = document.getElementById("quote-next");
+    if (!rotator || !quote || !counter || !previous || !next) return;
+    let current = 0;
+    let inView = false;
+    let hovered = false;
+    let focused = false;
+    let interval = null;
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const render = () => {
+      quote.textContent = lines[current];
+      counter.textContent = String(current + 1).padStart(2, "0") + " / " + lines.length;
+    };
+    const stop = () => {
+      if (interval !== null) window.clearInterval(interval);
+      interval = null;
+    };
+    const start = () => {
+      stop();
+      if (!inView || hovered || focused || document.hidden || reducedMotion) return;
+      interval = window.setInterval(() => {
+        current = (current + 1) % lines.length;
+        render();
+      }, 12000);
+    };
+    const move = direction => {
+      current = (current + direction + lines.length) % lines.length;
+      render();
+      start();
+    };
+    previous.addEventListener("click", () => move(-1));
+    next.addEventListener("click", () => move(1));
+    rotator.addEventListener("pointerenter", () => { hovered = true; stop(); });
+    rotator.addEventListener("pointerleave", () => { hovered = false; start(); });
+    rotator.addEventListener("focusin", () => { focused = true; stop(); });
+    rotator.addEventListener("focusout", e => {
+      if (rotator.contains(e.relatedTarget)) return;
+      focused = false; start();
+    });
+    document.addEventListener("visibilitychange", start);
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(entries => {
+        inView = entries[0].isIntersecting;
+        start();
+      }, { threshold: 0.25 }).observe(rotator);
+    } else { inView = true; start(); }
+  })();
+  </script>
 </body>
 </html>
