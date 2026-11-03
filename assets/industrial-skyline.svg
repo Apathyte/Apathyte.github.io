@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 440" role="img" aria-label="Decorative night-time industrial skyline">
+<defs>
+  <linearGradient id="sky" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#141029"/><stop offset=".63" stop-color="#22153c"/><stop offset="1" stop-color="#100b20"/></linearGradient>
+  <radialGradient id="halo"><stop stop-color="#c1a0ef" stop-opacity=".19"/><stop offset="1" stop-color="#c1a0ef" stop-opacity="0"/></radialGradient>
+  <linearGradient id="moon" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#dbbfff"/><stop offset=".58" stop-color="#ab89e4"/><stop offset="1" stop-color="#7555a9"/></linearGradient>
+  <linearGradient id="factory" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#211934"/><stop offset="1" stop-color="#080612"/></linearGradient>
+</defs>
+<rect width="920" height="440" fill="url(#sky)" opacity=".01"/>
+<circle cx="656" cy="160" r="166" fill="url(#halo)"/>
+<circle cx="656" cy="160" r="102" fill="url(#moon)" opacity=".95"/>
+<g fill="#8565b9" opacity=".24">
+ <path d="M609 107h31v12h-18v14h-12zm76 12h35v15h-18v18h-20v-14h-12v-12h15z"/>
+ <path d="M590 177h43v12h-17v13h-19zM656 213h47v14h-11v12h-25v-11h-11z"/>
+ <path d="M638 74h26v13h-11v13h-18v-15h3z"/>
+ <path d="M706 179h22v15h-12v11h-10zM591 144h18v11h-18z"/>
+</g>
+<g fill="#261a3b" opacity=".72"><path d="M25 355v-69h68v23h42v46h32v-90h53v38h24v52h56v-55h24v55h70v-35h72v35h48v-52h27v52h64v-62h41v62h52v-86h51v86h48v-58h42v58h32v85H0v-85z"/></g>
+<g fill="url(#factory)" stroke="#3e265e" stroke-width="2">
+ <path d="M0 369h59v-64h34v-39h47v103h30v-83h38v83h34v-110h55v110h62v-48h63v48h33v-112h50v112h56v-86h54v86h39v-62h78v62h68v-99h73v99h35v-58h61v58h53v71H0z"/>
+ <rect x="130" y="172" width="14" height="134"/><rect x="179" y="203" width="14" height="88"/>
+ <rect x="485" y="139" width="16" height="128"/><rect x="706" y="188" width="18" height="87"/>
+</g>
+<g fill="#0a0716" opacity=".96">
+ <path d="M0 386h920v54H0z"/>
+ <path d="M44 346h76v40H44zm176 11h106v29H220zm192-34h104v63H412zm202-11h73v74h-73zm155 19h112v55H769z"/>
+</g>
+<g fill="none" stroke="#7951a9" stroke-width="3" opacity=".6">
+ <path d="M100 302v-45h112v29h100m185-35h144v40h119m-624 54v-19h113v19m461-61h98v32"/>
+ <path d="M127 221h65v-35h73m256-22h84v47h57m46-7h60v63"/>
+</g>
+<g fill="#c78c57" opacity=".6">
+ <rect x="180" y="338" width="7" height="9"/><rect x="192" y="338" width="7" height="9"/>
+ <rect x="253" y="362" width="10" height="7"/><rect x="271" y="362" width="10" height="7"/>
+ <rect x="462" y="350" width="8" height="10"/><rect x="475" y="350" width="8" height="10"/>
+ <rect x="560" y="338" width="8" height="8"/><rect x="573" y="338" width="8" height="8"/>
+ <rect x="809" y="347" width="8" height="10"/><rect x="823" y="347" width="8" height="10"/>
+</g>
+<g stroke="#5a3c7d" stroke-width="2" opacity=".74">
+ <path d="M11 387h896M86 319v64m187-53v54m242-72v75m222-45v45"/>
+</g>
+</svg>

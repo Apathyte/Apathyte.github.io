@@ -56,7 +56,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&amp;family=IBM+Plex+Sans:wght@400;500;600;700&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/nightwatch.css">
+  
   <style>
 
     :root {
@@ -147,20 +147,78 @@
     @media(max-width:430px){header nav a:first-child{display:none}.chips span{font-size:.69rem}}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.ref{transition:none}}
   </style>
+  <link rel="stylesheet" href="/landing.css">
 </head>
 <body>
   <div class="wrap">
-    <header>
-      <a class="mark" href="#top" aria-label="Tim Boersma home">TB / OT</a>
-      <nav aria-label="Primary navigation"><a href="#about">About</a><a href="#work">Work</a><a href="#evidence">Sources</a><a href="https://nl.linkedin.com/in/tboersma" rel="me noopener noreferrer">LinkedIn ↗</a></nav>
+    <header class="landing-header">
+      <a class="mark" href="#top" aria-label="Tim Boersma home"><span class="mark-tb">TB</span><span class="mark-sep" aria-hidden="true">|</span><span class="mark-name">Tim Boersma</span></a>
+      <nav aria-label="Primary navigation"><a href="#about">01 About</a><a href="#work">02 In the field</a><a href="#evidence">03 Public sources</a><a href="#notebook">04 From the notebook</a><a href="https://github.com/Apathyte" target="_blank" rel="noopener noreferrer">GitHub ↗</a></nav>
     </header>
     <main id="top">
-      <section class="hero" aria-labelledby="page-title">
-        <div class="eyebrow">People / Data / Machines</div>
-        <h1 id="page-title"><span class="given-name">Tim</span><br><span class="family-name">Boersma.</span></h1>
-        <p class="lead">I am a <strong>Principal Consultant – Operational Technology at <a href="https://www.ats-global.com/">ATS Global</a></strong> in the Netherlands, connecting industrial systems, operational reality and the decisions that make technology useful.</p>
-        <div class="chips" aria-label="Areas of focus"><span>Industrial architecture</span><span>Manufacturing operations</span><span>Interoperability</span><span>Operational AI governance</span></div>
+      <section class="hero landing-hero" aria-labelledby="page-title">
+        <div class="hero-copy">
+          <div class="eyebrow">People / Data / Machines</div>
+          <h1 id="page-title"><span class="given-name">Tim</span><br><span class="family-name">Boersma.</span></h1>
+          <p class="lead">Principal Consultant — <strong>Operational Technology</strong></p>
+          <p class="hero-org"><a href="https://www.ats-global.com/" target="_blank" rel="noopener noreferrer">ATS Global</a> · Netherlands</p>
+        </div>
+        <div class="hero-theatre offscreen" id="night-stage" aria-label="Night Watch character vignette">
+          <span class="night-legend" aria-hidden="true">Je maintiendrai.</span>
+          <div class="night-knight"><img id="knight-art" src="/assets/knight/knight-idle.png" width="80" height="100" alt="Purple-and-gold pixel-art knight standing guard"></div>
+          <button class="dex-patrol" id="dex-patrol" type="button" aria-label="Give Dex a little attention" title="Say hello to Dex"><img id="dex-frame" src="/assets/dex/trot-0.png" width="184" height="128" alt="Dex, a charcoal-and-brindle companion dog"></button>
+          <output class="dex-message" id="dex-response" aria-live="polite"></output>
+        </div>
       </section>
+      <div class="landing-overview" aria-label="Site sections">
+        <div class="landing-cards">
+          <a class="landing-card" href="#about">
+            <h2><b>01</b> / About</h2>
+            <h3>From shop floor to system design.</h3>
+            <p>Manufacturing technology where people, data and machines have to make sense together.</p>
+            <span class="card-link">Read more ↗</span>
+          </a>
+          <a class="landing-card" href="#work">
+            <h2><b>02</b> / In the field</h2>
+            <h3>Work that meets operational reality.</h3>
+            <p>Industrial architecture, interoperability, technical experiments and governance of intelligent systems.</p>
+            <span class="card-link">See the work ↗</span>
+          </a>
+          <a class="landing-card landing-card-sources" href="#evidence">
+            <h2><b>03</b> / Public sources</h2>
+            <span class="source-mini"><span>ATS Global · Article</span><span>↗</span></span>
+            <span class="source-mini"><span>WtbE · Interview</span><span>↗</span></span>
+            <span class="source-mini"><span>Operational Truth · Essay</span><span>↗</span></span>
+          </a>
+          <a class="landing-card landing-card-quote" href="#notebook" id="preview-notebook">
+            <h2><b>04</b> / From the notebook</h2>
+            <span class="preview-category" id="preview-category">RAW</span>
+            <blockquote id="preview-quote">Alignment doesn't start a motor.</blockquote>
+          </a>
+        </div>
+      </div>
+      <section class="open-work" aria-labelledby="open-work-title">
+        <div class="open-work-head">
+          <h2 id="open-work-title">Open projects</h2>
+          <p>Selected public work. Practical templates, governance experiments and the occasional unruly desktop companion.</p>
+          <a class="github-link" href="https://github.com/Apathyte" target="_blank" rel="noopener noreferrer">Explore GitHub ↗</a>
+        </div>
+        <div class="open-projects">
+          <a class="open-project" href="https://github.com/Apathyte/operational-authority-toolkit" target="_blank" rel="noopener noreferrer">
+            <span class="project-kicker">Operational architecture</span>
+            <h3>Operational Authority Toolkit</h3><p>Open templates for operational meaning, interface decisions, evidence and exceptions.</p><span class="project-arrow" aria-hidden="true">↗</span>
+          </a>
+          <a class="open-project" href="https://github.com/Apathyte/ai-memory-operating-model" target="_blank" rel="noopener noreferrer">
+            <span class="project-kicker">AI governance</span>
+            <h3>AI Memory Operating Model</h3><p>A practical approach to persistent assistant context, lifecycle and authority boundaries.</p><span class="project-arrow" aria-hidden="true">↗</span>
+          </a>
+          <a class="open-project" href="https://github.com/Apathyte/HatchPetOnDesktop" target="_blank" rel="noopener noreferrer">
+            <span class="project-kicker">Personal engineering</span>
+            <h3>Dex Desktop Pet</h3><p>A playful Python and browser desktop-pet prototype with original character artwork.</p><span class="project-arrow" aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </section>
+      <div class="detail-transition" aria-hidden="true"></div>
       <section class="sections" id="about" aria-labelledby="about-title">
         <h2 id="about-title">01 / About</h2>
         <div>
@@ -242,24 +300,6 @@
           <span class="quote-provenance" id="quote-provenance">RAW</span>
           <blockquote id="notebook-quote" aria-live="off">Alignment doesn&#39;t start a motor.</blockquote>
         </figure>
-      </section>
-      <section class="sections" id="night-watch" aria-labelledby="night-title">
-        <h2 id="night-title">05 / Night watch</h2>
-        <div>
-          <p class="night-intro">Someone has to keep watch when the machines go quiet.</p>
-          <div class="night-scene offscreen" id="night-stage">
-            <div class="night-horizon" aria-hidden="true"></div>
-            <span class="night-legend" aria-hidden="true">Je maintiendrai.</span>
-            <div class="night-knight">
-              <img src="/assets/knight/knight-idle.png" width="80" height="100" loading="lazy" alt="A small purple knight in angular armor, carrying a sword and a golden lion emblem">
-            </div>
-            <button class="dex-patrol" type="button" id="dex-patrol" aria-label="Give Dex a little attention" title="Say hello to Dex">
-              <img id="dex-frame" src="/assets/dex/trot-0.png" width="184" height="128" loading="lazy" alt="Dex, a charcoal-and-brindle dog with a mustard bandana">
-            </button>
-            <output class="dex-message" id="dex-response" aria-live="polite"></output>
-          </div>
-          <p class="night-source">Dex is adapted from the public <a href="https://github.com/Apathyte/HatchPetOnDesktop" target="_blank" rel="noopener noreferrer">Dex Desktop Pet</a> hobby project. Original sprite artwork by Apathyte.</p>
-        </div>
       </section>
     </main>
     <footer>
@@ -393,19 +433,27 @@
     const root = document.getElementById("quote-rotator");
     const quote = document.getElementById("notebook-quote");
     const label = document.getElementById("quote-provenance");
+    const preview = document.getElementById("preview-notebook");
+    const previewQuote = document.getElementById("preview-quote");
+    const previewLabel = document.getElementById("preview-category");
     if (!root || !quote || !label || entries.length === 0) return;
     let index = 0;
     let visible = false;
+    let visibleNotebook = false;
+    let visiblePreview = false;
     let timer = null;
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     const render = () => {
       const current = entries[index];
       quote.textContent = current.quote;
       label.textContent = labels[current.category];
+      if (previewQuote) previewQuote.textContent = current.quote;
+      if (previewLabel) previewLabel.textContent = labels[current.category];
     };
     const stop = () => { if (timer !== null) clearInterval(timer); timer = null; };
     const update = () => {
       stop();
+      visible = visibleNotebook || visiblePreview;
       if (!visible || document.hidden || reduceMotion.matches) return;
       timer = setInterval(() => {
         index = (index + 1) % entries.length;
@@ -416,14 +464,19 @@
     if (reduceMotion.addEventListener) reduceMotion.addEventListener("change", update);
     if ("IntersectionObserver" in window) {
       const observer = new IntersectionObserver((observations) => {
-        visible = observations[0].isIntersecting;
+        observations.forEach(item => {
+          if (item.target === root) visibleNotebook = item.isIntersecting;
+          if (item.target === preview) visiblePreview = item.isIntersecting;
+        });
         update();
       }, {threshold:0.15});
       observer.observe(root);
-    } else { visible = true; update(); }
+      if (preview) observer.observe(preview);
+    } else { visibleNotebook = true; update(); }
     render();
   })();
   </script>
+  <script defer src="/characters.js"></script>
   <script defer src="/nightwatch.js"></script>
 </body>
 </html>

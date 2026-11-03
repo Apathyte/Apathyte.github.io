@@ -1,0 +1,185 @@
+/* Landing V2: layout from the approved purple portfolio concept.
+   Character images are intentionally provisional and configured in characters.js. */
+:root{
+  --layout-ink:#F1EDF7; --layout-muted:#BEB0D0;
+  --landing-line:#604183; --landing-purple:#AE60FE;
+}
+html{scroll-padding-top:22px}
+body{background:
+  radial-gradient(ellipse at 77% 7%,rgba(100,42,166,.2),transparent 32%),
+  linear-gradient(180deg,#0d091b 0%,#0a0716 75%,#090713 100%);
+  color:var(--layout-ink)}
+body::before{height:1030px;background-size:70px 70px;
+  background-image:linear-gradient(90deg,rgba(145,86,195,.075) 1px,transparent 1px),
+  linear-gradient(rgba(145,86,195,.075) 1px,transparent 1px)}
+.wrap{max-width:1540px;padding:0 clamp(20px,2.6vw,46px)}
+header{padding:15px 0 17px;gap:26px;border-bottom:1px solid #472563;flex-wrap:wrap}
+.mark{display:inline-flex;align-items:center;gap:17px;text-decoration:none;white-space:nowrap;
+  font:600 1.18rem/1.1 var(--heading);letter-spacing:-.025em}
+.mark .mark-tb{font:700 2rem/1 var(--heading);letter-spacing:-.055em;color:#f3edff}
+.mark .mark-tb::first-letter{color:#bd72ff}
+.mark .mark-sep{font:400 1.6rem/1 var(--heading);color:#8e66b2}
+.mark .mark-name{font:600 1.08rem/1.2 var(--heading);color:#eee7fb}
+header nav{margin-left:auto;display:flex;justify-content:flex-end;flex-wrap:wrap;gap:clamp(13px,2.1vw,32px);
+  font:600 .72rem/1.4 var(--mono);text-transform:uppercase;letter-spacing:.095em;color:#ded0ef}
+header nav a:hover{color:var(--landing-purple)}
+header nav a:last-child{color:#cba4fa}
+/* Hero copy and illustrated stage share the first viewport, like the approved concept. */
+.hero.landing-hero{max-width:none;display:grid;grid-template-columns:minmax(0,44%) minmax(0,56%);
+  gap:0;align-items:center;padding:25px 0 13px;min-height:365px;overflow:hidden}
+.landing-hero::before{display:none!important}
+.hero-copy{position:relative;z-index:6;padding:18px 0 20px clamp(13px,2.2vw,36px);
+  border-left:4px solid var(--landing-purple)}
+.hero .eyebrow{font:500 .82rem/1.4 var(--mono);letter-spacing:.13em;color:#d5b9fd}
+.hero h1{font:700 clamp(4.7rem,7.8vw,8rem)/.93 var(--heading);
+  margin:23px 0 18px;letter-spacing:-.068em}
+.hero h1 .given-name{letter-spacing:0!important;color:#f2ebf8}
+.hero h1 .family-name{letter-spacing:-.05em!important;color:#a752f5}
+.hero .lead{font:500 clamp(1rem,1.8vw,1.6rem)/1.37 var(--heading);color:#f0e9f9;margin:0}
+.hero .lead strong{font-weight:600}
+.hero .lead a{border:0;text-decoration:none}
+.hero-org{margin:7px 0 0;color:#bca2d6;font:500 clamp(.88rem,1.3vw,1.1rem)/1.4 var(--sans);letter-spacing:.025em}
+.hero-theatre{position:relative;height:350px;width:100%;isolation:isolate;
+  background:linear-gradient(90deg,#0d091b 0%,transparent 14%,transparent 97%),
+    url("/assets/industrial-skyline.svg") center bottom/cover no-repeat}
+.hero-theatre::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(90deg,#0d091b 0%,transparent 24%,transparent 88%,#0d091b 100%)}
+.hero-theatre .night-knight{position:absolute!important;z-index:4;bottom:18px!important;left:19%!important;
+  width:var(--knight-width,252px)!important;height:var(--knight-height,325px)!important;
+  transform:translate(var(--knight-x,0px),var(--knight-y,0px));
+  animation:landing-breathe 5.4s ease-in-out infinite!important;pointer-events:none}
+.hero-theatre .night-knight img{width:100%;height:100%;object-fit:contain;
+  image-rendering:pixelated;filter:drop-shadow(0 11px 8px rgba(0,0,0,.68))}
+.hero-theatre .dex-patrol{position:absolute!important;z-index:5;bottom:21px!important;left:63%!important;
+  width:var(--dex-width,195px)!important;height:var(--dex-height,137px)!important;
+  border:none!important;background:transparent!important;transform-origin:center bottom;
+  animation:dex-patrol 17s linear infinite!important;cursor:pointer}
+.hero-theatre .dex-patrol img{width:100%;height:100%;object-fit:contain;
+  image-rendering:pixelated;filter:drop-shadow(0 8px 6px rgba(0,0,0,.74))}
+.hero-theatre .night-legend{top:15px;right:15px;z-index:6;font-size:.55rem;letter-spacing:.1em;
+  color:#bdb0d1;opacity:.72}
+.hero-theatre .dex-message{z-index:8;bottom:165px;right:24px}
+.hero-theatre.offscreen .night-knight,.hero-theatre.offscreen .dex-patrol{animation-play-state:paused!important}
+@keyframes landing-breathe{0%,100%{translate:0 0}50%{translate:0 -3px}}
+/* Compact four-card landing overview. */
+.landing-overview{margin:4px 0 0}
+.landing-cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px}
+.landing-card{position:relative;display:flex;flex-direction:column;min-height:244px;
+  padding:23px 24px 21px;border:1px solid #61507f;border-radius:9px;
+  background:linear-gradient(145deg,rgba(28,18,47,.9),rgba(15,11,27,.96));
+  text-decoration:none;overflow:hidden;transition:border-color .2s,background .2s}
+.landing-card:hover{border-color:#ad66f9}
+.landing-card h2{font:600 .76rem/1.5 var(--mono);text-transform:uppercase;
+  letter-spacing:.1em;color:#efebf6;margin:0 0 23px}
+.landing-card h2 b{color:#b75eff}
+.landing-card h3{font:700 clamp(1.15rem,1.7vw,1.62rem)/1.19 var(--heading);letter-spacing:-.028em;
+  margin:0 0 12px;color:#f3edf9}
+.landing-card p{font:400 .91rem/1.49 var(--sans);color:#c9bfd8;margin:0 0 15px}
+.landing-card .card-link{margin-top:auto;color:#bc72fc;font:600 .86rem/1.2 var(--heading)}
+.landing-card-sources{display:flex;flex-direction:column}
+.landing-card-sources .source-mini{font:.82rem/1.2 var(--sans);color:#e9e3f1;padding:10px 0;
+  display:flex;align-items:center;justify-content:space-between;gap:8px;border-top:1px solid #443455}
+.landing-card-sources .source-mini:first-of-type{margin-top:1px}
+.landing-card-sources .source-mini span:last-child{color:#c378ff}
+.landing-card-quote{border-color:#934cce}
+.landing-card-quote .preview-category{display:inline-block;align-self:flex-start;padding:5px 10px;
+  border-radius:6px;background:#49206f;color:#f3e5ff;font:600 .69rem/1.3 var(--mono);
+  text-transform:uppercase;letter-spacing:.07em;margin-bottom:11px}
+.landing-card-quote blockquote{margin:0;font:600 italic clamp(1rem,1.35vw,1.32rem)/1.38 var(--heading);
+  color:#f0e8fb;text-wrap:pretty}
+/* Public projects: real, selected repositories only. */
+.open-work{border-top:1px solid #7543a5;margin:39px 0 54px;padding-top:25px}
+.open-work-head{display:grid;grid-template-columns:minmax(0,265px) 1fr auto;gap:23px;align-items:center;margin-bottom:23px}
+.open-work-head h2{font:600 .84rem/1.4 var(--mono);letter-spacing:.17em;text-transform:uppercase;
+  color:#f0e8f9;margin:0;padding-left:15px;border-left:3px solid #9250db}
+.open-work-head p{font:.9rem/1.5 var(--sans);color:#c5b8d3;margin:0;max-width:680px}
+.open-work-head .github-link{color:#c07aff;font:.82rem/1.3 var(--heading);white-space:nowrap}
+.open-projects{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.open-project{display:flex;flex-direction:column;min-height:163px;text-decoration:none;padding:22px;
+  border:1px solid #594975;border-radius:9px;
+  background:linear-gradient(155deg,#18102a 0%,#100c1e 100%);transition:border-color .2s}
+.open-project:hover{border-color:#ad66f9}
+.open-project .project-kicker{font:500 .67rem/1.4 var(--mono);color:#c68aff;letter-spacing:.1em;text-transform:uppercase}
+.open-project h3{font:700 1.15rem/1.3 var(--heading);margin:10px 0 8px}
+.open-project p{color:#c9c0d8;font:.83rem/1.5 var(--sans);margin:0 0 11px}
+.open-project .project-arrow{align-self:flex-end;margin-top:auto;color:#b96efb;font:600 1.3rem/1 var(--heading)}
+.detail-transition{border-top:1px solid #30233f;margin:0 0 1px}
+/* Existing long-form sections remain below the new landing composition. */
+.sections{border-top:1px solid #372648}
+.sections[id="evidence"] .feature{background:linear-gradient(125deg,#241632,var(--surface))}
+@media(max-width:1250px){
+  header nav{gap:16px;font-size:.66rem}
+  .landing-card{padding:20px 19px}
+  .hero h1{font-size:clamp(4.3rem,8vw,6.9rem)}
+}
+@media(max-width:960px){
+ .hero.landing-hero{grid-template-columns:minmax(0,48%) minmax(0,52%);min-height:325px}
+ .hero-theatre{height:305px}
+ .hero-theatre .night-knight{left:11%!important;scale:.83;transform-origin:bottom left}
+ .hero-theatre .dex-patrol{left:57%!important;scale:.8;transform-origin:bottom left}
+ .landing-cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .landing-card{min-height:220px}
+ .landing-card h3{font-size:1.38rem}
+ .open-work-head{grid-template-columns:220px 1fr}
+ .open-work-head .github-link{grid-column:2;justify-self:start}
+}
+@media(max-width:680px){
+ header{flex-direction:row;align-items:center}
+ .mark .mark-tb{font-size:1.65rem}.mark .mark-name{font-size:.93rem}
+ header nav{width:100%;margin:0;justify-content:space-between;gap:8px;letter-spacing:0;font-size:.65rem}
+ header nav a:last-child{display:none}
+ .hero.landing-hero{display:flex;flex-direction:column;align-items:stretch;min-height:0;padding:38px 0 0;overflow:visible}
+ .hero-copy{padding-left:18px;border-width:3px}
+ .hero h1{font-size:clamp(3.95rem,15vw,6.35rem);margin:19px 0}
+ .hero .lead{font-size:clamp(1rem,4vw,1.3rem)}
+ .hero-theatre{height:244px;min-width:0;background-size:cover;background-position:center 62%;margin-top:8px}
+ .hero-theatre .night-knight{left:19%!important;scale:.61}
+ .hero-theatre .dex-patrol{left:59%!important;scale:.64}
+ .hero-theatre .night-legend{font-size:.54rem}
+ .landing-cards{grid-template-columns:1fr;gap:10px}
+ .landing-card{min-height:176px;padding:18px 21px}
+ .landing-card h2{margin-bottom:12px}
+ .landing-card h3{font-size:1.36rem}
+ .landing-card-quote{min-height:200px}
+ .open-work{margin:27px 0 39px}
+ .open-work-head{grid-template-columns:1fr;gap:10px}
+ .open-work-head .github-link{grid-column:1}
+ .open-projects{grid-template-columns:1fr;gap:10px}
+ .open-project{min-height:125px}
+}
+@media(prefers-reduced-motion:reduce){
+ .hero-theatre .night-knight,.hero-theatre .dex-patrol{animation:none!important}
+ .landing-card,.open-project{transition:none}
+}
+
+/* Final vignette mechanics. Only the temporary art comes from the character manifest. */
+.hero-theatre .night-legend{position:absolute;display:block;pointer-events:none}
+.hero-theatre .dex-message{
+  position:absolute;display:block;z-index:8;right:24px;bottom:169px;
+  min-height:1.4em;padding:8px 11px;border:1px solid #774aaf;
+  background:#1c1328;color:#eee5f9;font:600 .79rem/1.4 var(--heading);
+  opacity:0;transform:translateY(7px);pointer-events:none;
+  transition:opacity .17s ease,transform .17s ease
+}
+.hero-theatre .dex-message.visible{opacity:1;transform:translateY(0)}
+.hero-theatre .dex-patrol:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+@keyframes dex-patrol{
+  0%,7%{transform:translateX(35px) scaleX(1)}
+  43%,48%{transform:translateX(-52px) scaleX(1)}
+  51%,56%{transform:translateX(-52px) scaleX(-1)}
+  92%,96%{transform:translateX(35px) scaleX(-1)}
+  100%{transform:translateX(35px) scaleX(1)}
+}
+@media(max-width:680px){
+  @keyframes dex-patrol{
+    0%,7%{transform:translateX(14px) scaleX(1)}
+    43%,48%{transform:translateX(-20px) scaleX(1)}
+    51%,56%{transform:translateX(-20px) scaleX(-1)}
+    92%,96%{transform:translateX(14px) scaleX(-1)}
+    100%{transform:translateX(14px) scaleX(1)}
+  }
+  .hero-theatre .dex-message{right:8px;bottom:105px;max-width:55%}
+}
+@media(prefers-reduced-motion:reduce){
+  .hero-theatre .dex-message{transition:none}
+}
