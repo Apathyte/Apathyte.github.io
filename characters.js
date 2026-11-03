@@ -20,9 +20,9 @@ window.SiteCharacters = Object.freeze({
       "/assets/dex/trot-3.png"
     ]),
     frameMs: 270,
-    label: "Temporary Dex animation",
-    width: 195,
-    height: 137,
+    label: "Source-derived Dex; presentation pass, canonical approval pending",
+    width: 220,
+    height: 153,
     offsetX: 0,
     offsetY: 0
   })
