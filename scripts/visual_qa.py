@@ -119,7 +119,72 @@ def main():
                       project:Boolean(document.querySelector('a[href*="operational-authority-toolkit"]')),
                     },
                     protagonistText:document.querySelector('#page-title')?.textContent,
-                    heroOrg:document.querySelector('.hero-org')?.textContent
+                    heroOrg:document.querySelector('.hero-org')?.textContent,
+                    alignment:(() => {
+                      const box = selector => {
+                        const el = document.querySelector(selector);
+                        if (!el) return null;
+                        const r = el.getBoundingClientRect();
+                        return {left:r.left,right:r.right,top:r.top,bottom:r.bottom,
+                          width:r.width,height:r.height,centerX:(r.left+r.right)/2,
+                          centerY:(r.top+r.bottom)/2};
+                      };
+                      const root = document.querySelector('.wrap');
+                      const bounds = root.getBoundingClientRect();
+                      const style = getComputedStyle(root);
+                      const rails = {
+                        left:bounds.left+parseFloat(style.paddingLeft),
+                        right:bounds.right-parseFloat(style.paddingRight)
+                      };
+                      const major = Object.fromEntries([
+                        ['header','header'],['hero','.landing-hero'],
+                        ['overview','.landing-overview'],['projects','.open-work'],
+                        ['about','#about'],['field','#work'],
+                        ['sources','#evidence'],['notebook','#notebook'],
+                        ['footer','footer']
+                      ].map(([name,selector]) => [name,box(selector)]));
+                      const panels = Object.fromEntries([
+                        ['work',box('#work')?.right],
+                        ['demo',box('#work .media-layout')?.right],
+                        ['sources',box('#evidence')?.right],
+                        ['refs',box('#evidence .refs')?.right],
+                        ['notebook',box('#notebook')?.right],
+                        ['quote',box('#quote-rotator')?.right]
+                      ]);
+                      const quote = document.getElementById('notebook-quote');
+                      const panel = box('#quote-rotator');
+                      const quotation = box('#notebook-quote');
+                      const label = box('#quote-provenance');
+                      let sample = {count:0,maxVerticalDeviation:0,
+                        maxHorizontalDeviation:0,overlapCount:0,heightVariation:0,
+                        textAlign:getComputedStyle(quote).textAlign};
+                      const source = [...document.querySelectorAll('script')]
+                        .map(node => node.textContent)
+                        .find(source => source.includes('const entries ='));
+                      const match = source?.match(/const entries = (\[[\s\S]*?\]);/);
+                      if (match && quote && panel && label) {
+                        try {
+                          const lines = JSON.parse(match[1]);
+                          const original = quote.textContent;
+                          const heights = [];
+                          for (const entry of lines) {
+                            quote.textContent = entry.quote;
+                            const rect = quote.getBoundingClientRect();
+                            const stage = document.getElementById('quote-rotator').getBoundingClientRect();
+                            sample.maxVerticalDeviation=Math.max(sample.maxVerticalDeviation,
+                              Math.abs((rect.top+rect.bottom-stage.top-stage.bottom)/2));
+                            sample.maxHorizontalDeviation=Math.max(sample.maxHorizontalDeviation,
+                              Math.abs((rect.left+rect.right-stage.left-stage.right)/2));
+                            if(rect.top<label.bottom+6) sample.overlapCount++;
+                            heights.push(stage.height);
+                          }
+                          quote.textContent=original;
+                          sample.count=lines.length;
+                          sample.heightVariation=Math.max(...heights)-Math.min(...heights);
+                        } catch (e) {sample.error=String(e);}
+                      }
+                      return {rails,major,panels,panel,quotation,label,sample};
+                    })()
                   };
                 }""")
                 report["measurements"] = dims
@@ -144,6 +209,36 @@ def main():
                 )
                 checks["public_evidence_preserved"] = (
                     all(evidence.get(x) for x in ("primary","interview","regional","project"))
+                )
+                alignment = dims.get("alignment") or {}
+                rails = alignment.get("rails") or {}
+                major = alignment.get("major") or {}
+                panels = alignment.get("panels") or {}
+                expected_left = rails.get("left", -9999)
+                expected_right = rails.get("right", -9999)
+                checks["consistent_page_rails"] = (
+                    len(major) == 9 and all(
+                        rect is not None
+                        and abs(rect["left"] - expected_left) <= 2
+                        and abs(rect["right"] - expected_right) <= 2
+                        for rect in major.values()
+                    )
+                )
+                checks["functional_panels_fill_columns"] = (
+                    all(isinstance(panels.get(k), (int,float))
+                        for k in ("work","demo","sources","refs","notebook","quote"))
+                    and abs(panels["work"] - panels["demo"]) <= 2
+                    and abs(panels["sources"] - panels["refs"]) <= 2
+                    and abs(panels["notebook"] - panels["quote"]) <= 2
+                )
+                sample = alignment.get("sample") or {}
+                checks["quote_centered_all_lines"] = (
+                    sample.get("count") == 29
+                    and sample.get("textAlign") == "center"
+                    and sample.get("maxHorizontalDeviation", 999) <= 3
+                    and sample.get("maxVerticalDeviation", 999) <= 17
+                    and sample.get("overlapCount") == 0
+                    and sample.get("heightVariation", 999) <= 4
                 )
                 checks["character_images"] = (
                     len(dims["images"]) == 2 and all(i["loaded"] for i in dims["images"])

@@ -4,7 +4,7 @@ Runs automatically on main and pull requests; also available via **Actions → W
 
 The workflow serves the checked-out static site locally and runs real Chromium Playwright tests at **1440, 1024, 768, 390 and 320 pixels**, capturing an above-the-fold screenshot and full-page screenshot at each width.
 
-Assertions cover horizontal overflow, navigation anchors, unique IDs, hero typography, loaded character assets, the four overview cards, three public projects, canonical URL, Search Console verification, JavaScript errors, Dex click interaction, five-second quote rotation and reduced-motion support.
+Assertions cover common page rails, full-width functional panels, visual centering across every notebook line, horizontal overflow, navigation anchors, unique IDs, hero typography, loaded character assets, the four overview cards, three public projects, canonical URL, Search Console verification, JavaScript errors, Dex click interaction, five-second quote rotation and reduced-motion support.
 
 Each workflow run uploads the **visual-qa** artifact containing images, a contact sheet, a character sprite-sheet and results.json. The character preflight validates transparent PNGs and consistent frame dimensions but **never grants artwork approval**. If a check fails, the artifact is still uploaded.
 
