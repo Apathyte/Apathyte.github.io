@@ -202,3 +202,51 @@ header nav a:last-child{color:#cba4fa}
 @media(prefers-reduced-motion:reduce){
   .hero-theatre .dex-message{transition:none}
 }
+
+/* ISSUE 2 / LAYOUT RAILS — one centered outer grid, no accidental short panels. */
+.landing-hero,
+.landing-overview,
+.open-work,
+.detail-transition,
+.sections,
+footer { width:100%; }
+.sections > div { min-width:0; width:100%; }
+.sections .media-layout { max-width:none; width:100%; }
+.sections .refs,
+.sections .video-demo,
+.sections .work-tile,
+.sections .feature { width:100%; }
+
+/* Keep the provenance label discrete; center the quotation in the full panel. */
+.sections .quote-stage {
+  width:100%;
+  position:relative;
+  display:grid;
+  place-items:center;
+  min-height:260px;
+  gap:0;
+  padding:54px clamp(22px,3.5vw,42px) 38px;
+}
+.quote-stage .quote-provenance {
+  position:absolute;
+  inset:18px auto auto 26px;
+  margin:0;
+}
+.quote-stage blockquote {
+  display:block;
+  width:100%;
+  max-width:880px;
+  margin:0 auto;
+  text-align:center;
+  text-wrap:balance;
+}
+@media(max-width:760px){
+  .sections .quote-stage {
+    min-height:315px;
+    padding:58px 20px 38px;
+  }
+  .quote-stage .quote-provenance { left:19px; top:17px; }
+}
+@media(max-width:420px){
+  .sections .quote-stage { min-height:330px; padding:58px 16px 36px; }
+}
