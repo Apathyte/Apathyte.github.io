@@ -272,15 +272,25 @@ def main():
                         page.locator("#preview-quote").text_content()
                         == page.locator("#notebook-quote").text_content()
                     )
-                checks["dex_stage_framing"] = page.evaluate("""() => {
+                dex_geometry = page.evaluate("""() => {
                   const stage = document.querySelector('#night-stage').getBoundingClientRect();
                   const dog = document.querySelector('#dex-patrol').getBoundingClientRect();
                   const image = document.querySelector('#dex-frame');
-                  const style = getComputedStyle(image);
-                  return style.imageRendering === 'auto'
-                    && dog.left >= stage.left - 2 && dog.right <= stage.right + 2
-                    && dog.top >= stage.top - 2 && dog.bottom <= stage.bottom + 2;
+                  const rendering = getComputedStyle(image).imageRendering;
+                  const gap = {
+                    left: dog.left - stage.left,
+                    right: stage.right - dog.right,
+                    top: dog.top - stage.top,
+                    bottom: stage.bottom - dog.bottom
+                  };
+                  return {
+                    rendering, gap,
+                    stageWidth: stage.width, dogWidth: dog.width,
+                    fits: rendering === 'auto' && Object.values(gap).every(v => v >= -2)
+                  };
                 }""")
+                report["dex_geometry"] = dex_geometry
+                checks["dex_stage_framing"] = dex_geometry["fits"]
                 checks["no_script_errors"] = not errors
                 checks["no_missing_site_assets"] = not missing_assets
                 report["script_errors"] = errors
