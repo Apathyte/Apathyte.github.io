@@ -120,7 +120,7 @@ header nav a:last-child{color:#cba4fa}
  .hero.landing-hero{grid-template-columns:minmax(0,48%) minmax(0,52%);min-height:325px}
  .hero-theatre{height:305px}
  .hero-theatre .night-knight{left:11%!important;scale:.83;transform-origin:bottom left}
- .hero-theatre .dex-patrol{left:48%!important;scale:.82;transform-origin:bottom left;--dex-roam-distance:22px;--dex-roam-start:10px}
+ .hero-theatre .dex-patrol{left:42%!important;scale:.82;transform-origin:center bottom;--dex-roam-distance:22px;--dex-roam-start:10px}
  .landing-cards{grid-template-columns:repeat(2,minmax(0,1fr))}
  .landing-card{min-height:220px}
  .landing-card h3{font-size:1.38rem}
@@ -193,7 +193,7 @@ header nav a:last-child{color:#cba4fa}
 @media(max-width:420px){
   .hero h1{font-size:clamp(3.2rem,16vw,4rem)}
   /* Keep the actual source art and its full hit target inside narrow stages. */
-  .hero-theatre .dex-patrol{left:44%!important;scale:.67;--dex-roam-distance:10px;--dex-roam-start:5px}
+  .hero-theatre .dex-patrol{left:30%!important;scale:.67;--dex-roam-distance:10px;--dex-roam-start:5px}
 }
 @media(prefers-reduced-motion:reduce){
   .hero-theatre .dex-message{transition:none}

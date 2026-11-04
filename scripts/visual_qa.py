@@ -272,15 +272,38 @@ def main():
                         page.locator("#preview-quote").text_content()
                         == page.locator("#notebook-quote").text_content()
                     )
-                checks["dex_stage_framing"] = page.evaluate("""() => {
+                dex_geometry = page.evaluate("""() => {
                   const stage = document.querySelector('#night-stage').getBoundingClientRect();
-                  const dog = document.querySelector('#dex-patrol').getBoundingClientRect();
+                  const dog = document.querySelector('#dex-patrol');
                   const image = document.querySelector('#dex-frame');
-                  const style = getComputedStyle(image);
-                  return style.imageRendering === 'auto'
-                    && dog.left >= stage.left - 2 && dog.right <= stage.right + 2
-                    && dog.top >= stage.top - 2 && dog.bottom <= stage.bottom + 2;
+                  const rendering = getComputedStyle(image).imageRendering;
+                  const animation = dog.getAnimations().find(a => a.animationName === 'dex-patrol');
+                  const originalTime = animation?.currentTime ?? null;
+                  const wasRunning = animation?.playState === 'running';
+                  if (animation) animation.pause();
+                  const duration = animation ? Number(animation.effect.getComputedTiming().duration) : 0;
+                  const samples = (animation ? [0, .07, .44, .49, .50, .55, .94, .99] : [0]).map(fraction => {
+                    if (animation) animation.currentTime = fraction * duration;
+                    const rect = dog.getBoundingClientRect();
+                    const gap = {
+                      left: rect.left - stage.left,
+                      right: stage.right - rect.right,
+                      top: rect.top - stage.top,
+                      bottom: stage.bottom - rect.bottom
+                    };
+                    return {fraction, gap, fits: Object.values(gap).every(v => v >= -2)};
+                  });
+                  if (animation) {
+                    animation.currentTime = originalTime;
+                    if (wasRunning) animation.play();
+                  }
+                  return {
+                    rendering, animationSampled: Boolean(animation), stageWidth: stage.width,
+                    samples, fits: rendering === 'auto' && samples.every(s => s.fits)
+                  };
                 }""")
+                report["dex_geometry"] = dex_geometry
+                checks["dex_stage_framing"] = dex_geometry["fits"]
                 checks["no_script_errors"] = not errors
                 checks["no_missing_site_assets"] = not missing_assets
                 report["script_errors"] = errors
