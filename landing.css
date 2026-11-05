@@ -273,3 +273,55 @@ footer { width:100%; }
   .signal-thumb img,.demo-loop-art img{display:none}
   .signal-thumb::after,.demo-loop-art::after{content:attr(data-fallback);color:#be88ef;font:600 2.4rem/1 var(--heading)}
 }
+
+
+/* Larger motion pieces, with the Digital Privateer featured beside the Knight. */
+.hero.landing-hero{isolation:isolate;overflow:visible}
+.hero-gif{position:absolute;z-index:7;left:31.5%;top:20px;width:clamp(152px,13vw,192px);aspect-ratio:1;margin:0;padding:6px;
+  border:1px solid #a65ee8;border-radius:15px;background:#140a26;box-shadow:0 0 0 1px rgba(178,97,255,.16),0 13px 32px rgba(0,0,0,.43),0 0 28px rgba(126,47,187,.16);pointer-events:none}
+.hero-gif img{display:block;width:100%;height:100%;object-fit:cover;border-radius:10px}
+.hero-gif figcaption{position:absolute;top:11px;right:11px;color:#f4e8ff;background:rgba(16,9,30,.85);
+  border:1px solid #9e6bd6;border-radius:20px;padding:3px 7px;font:600 .58rem/1.1 var(--mono);letter-spacing:.1em}
+.signal-rail{padding-top:28px;padding-bottom:45px}
+.signal-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(14px,2vw,24px)}
+.signal-card{display:grid;grid-template-columns:minmax(0,52%) minmax(0,1fr);align-items:center;gap:clamp(16px,2.2vw,28px);
+  padding:clamp(13px,1.5vw,20px);min-height:260px}
+.signal-thumb{width:100%;max-width:330px;aspect-ratio:1;justify-self:center}
+.signal-card strong{font-size:clamp(1.16rem,1.65vw,1.6rem)}
+.signal-card small{margin-top:14px;font-size:.71rem}
+.demo-loop{gap:24px;padding:16px;align-items:center}
+.demo-loop-art{width:clamp(160px,19vw,230px);max-width:45%}
+.demo-loop figcaption strong{font-size:clamp(1.1rem,1.6vw,1.35rem)}
+@media(max-width:1150px){
+  .signal-thumb{width:100%;max-width:300px}
+  .hero-gif{left:31%;top:22px;width:clamp(130px,14.5vw,165px)}
+  .signal-card{grid-template-columns:minmax(0,48%) minmax(0,1fr);gap:14px;min-height:220px}
+  .signal-card strong{font-size:1.08rem}
+}
+@media(max-width:850px){
+  .hero-gif{left:32%;top:22px;width:128px}
+  .signal-grid{grid-template-columns:1fr}
+  .signal-card{grid-template-columns:minmax(0,240px) minmax(0,1fr);justify-content:start}
+  .signal-thumb{max-width:240px;width:100%}
+  .signal-card strong{font-size:1.25rem}
+}
+@media(max-width:680px){
+  .hero.landing-hero{overflow:visible}
+  .hero-gif{position:relative;left:auto;top:auto;align-self:flex-end;width:clamp(155px,43vw,205px);
+    margin:-12px 10px -26px 0;z-index:7}
+  .signal-card{grid-template-columns:minmax(0,45%) minmax(0,1fr);padding:12px;min-height:0}
+  .signal-thumb{max-width:260px;width:100%}
+  .demo-loop-art{width:clamp(130px,38vw,200px);max-width:47%}
+}
+@media(max-width:390px){
+  .signal-card{display:flex;flex-direction:column;align-items:stretch;gap:12px}
+  .signal-thumb{max-width:none;width:100%}
+  .signal-card figcaption{padding:3px 4px 6px}
+  .demo-loop{flex-direction:column;align-items:stretch}
+  .demo-loop-art{width:100%;max-width:none}
+}
+@media(prefers-reduced-motion:reduce){
+  .hero-gif img{display:none}
+  .hero-gif{background:linear-gradient(135deg,#28153d,#100b1d)}
+  .hero-gif::before{content:"⚑";display:grid;place-items:center;height:100%;color:#caa0fa;font:600 4rem/1 var(--heading)}
+}
