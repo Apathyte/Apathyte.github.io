@@ -146,6 +146,7 @@
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.ref{transition:none}}
   </style>
   <link rel="stylesheet" href="/landing.css">
+  <link rel="stylesheet" href="/mischief-carousel.css?v=20261105">
 </head>
 <body>
   <div class="wrap">
@@ -164,7 +165,7 @@
         <!-- Hero loop: swap this source to change the featured animation without altering the Knight or Dex. -->
         <figure class="hero-gif" aria-label="Digital privateering — animated personal illustration">
           <img src="/assets/gifs/privateer.gif?v=original-20261105" width="414" height="414" alt="Tim as a digital privateer, with an industrial treasure map" decoding="async">
-          <figcaption>LOOP / 01</figcaption>
+          
         </figure>
         <div class="hero-theatre offscreen" id="night-stage" aria-label="Night Watch character vignette">
           <span class="night-legend" aria-hidden="true">Je maintiendrai.</span>
@@ -222,23 +223,39 @@
         </div>
       </section>
 
-      <section class="signal-rail" aria-labelledby="signal-rail-title">
+      <section class="signal-rail" id="mischief" aria-labelledby="signal-rail-title">
         <div class="signal-rail-head">
           <div>
-            <span class="signal-kicker">SIDE CHANNELS / BIGGER LOOPS</span>
+            <span class="signal-kicker">SIDE CHANNELS / ANIMATED EXPERIMENTS</span>
             <h2 id="signal-rail-title">Industrial mischief.</h2>
           </div>
           <p>The occasional visual disturbance.</p>
         </div>
-        <div class="signal-grid">
-          <figure class="signal-card">
-            <span class="signal-thumb" data-fallback="✦"><img src="/assets/gifs/buzzwords.gif?v=original-20261105" width="412" height="412" loading="lazy" decoding="async" alt="Animated portrait dismissing corporate buzzword placards"></span>
-            <figcaption><strong>Buzzword disposal</strong><small>Exhibit 01</small></figcaption>
-          </figure>
-          <figure class="signal-card">
-            <span class="signal-thumb" data-fallback="✶"><img src="/assets/gifs/badger.gif?v=original-20261105" width="413" height="414" loading="lazy" decoding="async" alt="Animated portrait briefly taking on the feral expression of a honey badger"></span>
-            <figcaption><strong>Honey badger mode</strong><small>Exhibit 03</small></figcaption>
-          </figure>
+        <div class="signal-carousel" id="signal-carousel" aria-label="Industrial mischief animated gallery" tabindex="0">
+          <div class="signal-carousel-top">
+            <span class="signal-carousel-status" id="signal-status">01–03 / 20</span>
+            <div class="signal-carousel-controls">
+              <button type="button" id="signal-prev" aria-label="Previous animations">← Previous</button>
+              <button type="button" id="signal-pause" aria-pressed="false">Pause rotation</button>
+              <button type="button" id="signal-next" aria-label="Next animations">Next →</button>
+            </div>
+          </div>
+          <div class="signal-grid" id="signal-grid" role="group" aria-label="Animated GIFs">
+            <figure class="signal-card">
+              <span class="signal-thumb" data-fallback="✦"><img src="/assets/gifs/buzzwords.gif" width="412" height="412" loading="lazy" decoding="async" alt="Corporate buzzword placards get dismissed"></span>
+              <figcaption><strong>Buzzword disposal</strong><small>01 / 20</small></figcaption>
+            </figure>
+            <figure class="signal-card">
+              <span class="signal-thumb" data-fallback="✦"><img src="/assets/gifs/holographic-badger.gif" width="414" height="414" loading="lazy" decoding="async" alt="A holographic honey badger appears"></span>
+              <figcaption><strong>Holographic honey badger</strong><small>02 / 20</small></figcaption>
+            </figure>
+            <figure class="signal-card">
+              <span class="signal-thumb" data-fallback="✦"><img src="/assets/gifs/chess.gif" width="413" height="413" loading="lazy" decoding="async" alt="King and pawn on a chessboard"></span>
+              <figcaption><strong>The endgame</strong><small>03 / 20</small></figcaption>
+            </figure>
+          </div>
+          <p class="signal-carousel-hint">Original animated GIFs. Three at a time on desktop, one on mobile.</p>
+          <span id="signal-announcer" class="sr-only" role="status" aria-live="polite"></span>
         </div>
       </section>
       <div class="detail-transition" aria-hidden="true"></div>
@@ -505,5 +522,6 @@
   </script>
   <script defer src="/characters.js"></script>
   <script defer src="/nightwatch.js"></script>
+  <script defer src="/mischief-carousel.js?v=20261105"></script>
 </body>
 </html>
