@@ -26,5 +26,5 @@
 }
 @media(prefers-reduced-motion:reduce){
  .identity-home .hero-theatre .hero-gif img{display:none}
- .identity-home .hero-theatre .hero-gif::before{content:"";display:block;aspect-ratio:1;background:center/contain no-repeat url('/assets/characters/v2/knight-idle.png');opacity:.08}
+ .identity-home .hero-theatre .hero-gif::before{content:"";display:block;aspect-ratio:1;background:radial-gradient(circle at 40% 45%,#5e3c87,#1a1230 65%,#0c0919);opacity:.78}
 }
