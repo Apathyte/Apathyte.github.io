@@ -120,6 +120,13 @@ def main():
                     },
                     protagonistText:document.querySelector('#page-title')?.textContent,
                     heroOrg:document.querySelector('.hero-org')?.textContent,
+                    homeHeroGif:document.querySelector('.hero-gif img')?.getAttribute('src'),
+                    creativeLink:Boolean(document.querySelector('a[href="/purple-knight/"]')),
+                    knightAbsent:!document.getElementById('knight-art'),
+                    lastSectionId:[...document.querySelectorAll('main > section')].at(-1)?.id,
+                    endcapText:document.getElementById('notebook-quote')?.textContent,
+                    navFirstVisible:getComputedStyle(document.querySelector('header nav a:first-child')).display !== 'none',
+                    navLastVisible:getComputedStyle(document.querySelector('header nav a:last-child')).display !== 'none',
                     alignment:(() => {
                       const box = selector => {
                         const el = document.querySelector(selector);
@@ -232,16 +239,19 @@ def main():
                     and abs(panels["notebook"] - panels["quote"]) <= 2
                 )
                 sample = alignment.get("sample") or {}
-                checks["quote_centered_all_lines"] = (
-                    sample.get("count") == 29
+                checks["quote_endcap"] = (
+                    dims.get("lastSectionId") == "notebook"
                     and sample.get("textAlign") == "center"
-                    and sample.get("maxHorizontalDeviation", 999) <= 3
-                    and sample.get("maxVerticalDeviation", 999) <= 17
-                    and sample.get("overlapCount") == 0
-                    and sample.get("heightVariation", 999) <= 4
+                    and "Alignment doesn't start a motor" in (dims.get("endcapText") or "")
+                )
+                checks["primary_navigation_visible"] = dims.get("navFirstVisible") and dims.get("navLastVisible")
+                checks["creative_material_separated"] = (
+                    dims.get("creativeLink")
+                    and dims.get("knightAbsent")
+                    and dims.get("homeHeroGif") == "/assets/gifs/factory-hologram.gif"
                 )
                 checks["character_images"] = (
-                    len(dims["images"]) == 2 and all(i["loaded"] for i in dims["images"])
+                    len(dims["images"]) == 1 and all(i["loaded"] for i in dims["images"])
                 )
                 heading = dims["heading"]
                 checks["heading_fits"] = bool(
@@ -261,16 +271,12 @@ def main():
                     checks["dex_responds"] = (
                         page.locator("#dex-response").text_content() == "Good dog, Dex."
                     )
-                    page.locator("#preview-notebook").scroll_into_view_if_needed()
-                    page.wait_for_timeout(250)
-                    original = page.locator("#preview-quote").text_content()
-                    page.wait_for_timeout(5400)
-                    checks["notebook_rotates"] = (
-                        page.locator("#preview-quote").text_content() != original
+                    page.locator("#notebook").scroll_into_view_if_needed()
+                    checks["homepage_ends_on_quote"] = (
+                        "Alignment doesn't start a motor" in page.locator("#notebook-quote").text_content()
                     )
-                    checks["notebook_synced"] = (
-                        page.locator("#preview-quote").text_content()
-                        == page.locator("#notebook-quote").text_content()
+                    checks["curated_gallery_five"] = (
+                        " / 5" in page.locator("#signal-status").text_content()
                     )
                 dex_geometry = page.evaluate("""() => {
                   const stage = document.querySelector('#night-stage').getBoundingClientRect();
@@ -319,6 +325,82 @@ def main():
             reports.append(report)
             context.close()
 
+        # The separate collection must keep native Knight/Dex art, the original
+        # GIF archive, a functioning notebook, and its own structured data.
+        for label, width, height in (("creative-desktop", 1440, 900),
+                                     ("creative-mobile", 390, 844)):
+            context = browser.new_context(viewport={"width": width, "height": height})
+            page = context.new_page()
+            errors, missing_assets = [], []
+            page.on("pageerror", lambda err: errors.append(str(err)))
+            page.on("response", lambda response:
+                    missing_assets.append(str(response.status) + ": " + response.url)
+                    if response.status >= 400 and urlparse(response.url).netloc == urlparse(base_url).netloc
+                    else None)
+            report = {"viewport": label, "checks": {}}
+            try:
+                page.goto(base_url + "purple-knight/", wait_until="domcontentloaded", timeout=25000)
+                page.locator("#characters").wait_for(timeout=10000)
+                page.locator("#night-stage").scroll_into_view_if_needed()
+                page.wait_for_timeout(550)
+                measurements = page.evaluate("""() => {
+                  const graph = JSON.parse(document.querySelector('script[type="application/ld+json"]').textContent);
+                  const ids = [...document.querySelectorAll('[id]')].map(e => e.id);
+                  const images = [...document.querySelectorAll('#knight-art, #dex-frame')];
+                  return {
+                    scrollWidth:Math.max(document.documentElement.scrollWidth,document.body.scrollWidth),
+                    type:graph['@type'],
+                    canonical:document.querySelector('link[rel="canonical"]')?.href,
+                    characters:images.length === 2 && images.every(i => i.complete && i.naturalWidth > 0),
+                    privateer:!!document.querySelector('img[src*="privateer.gif"]'),
+                    archive:document.querySelector('#signal-status')?.textContent,
+                    notebookLast:[...document.querySelectorAll('main > section')].at(-1)?.id === 'notebook',
+                    quoteScript:[...document.querySelectorAll('script:not([src])')].some(s => s.textContent.includes('const entries =')),
+                    returnLink:!!document.querySelector('a[href="/"]'),
+                    firstNavVisible:getComputedStyle(document.querySelector('header nav a:first-child')).display !== 'none',
+                    duplicateIds:ids.filter((id,i) => ids.indexOf(id) !== i),
+                    brokenAnchors:[...document.querySelectorAll('a[href^="#"]')]
+                      .filter(a => !document.getElementById(a.getAttribute('href').slice(1))).length
+                  };
+                }""")
+                report["measurements"] = measurements
+                checks = report["checks"]
+                checks["no_horizontal_overflow"] = measurements["scrollWidth"] <= width + 2
+                checks["creative_schema"] = (
+                    measurements["type"] == "CollectionPage" and
+                    measurements["canonical"] == "https://apathyte.github.io/purple-knight/"
+                )
+                checks["knight_and_dex_preserved"] = measurements["characters"]
+                checks["privateer_preserved"] = measurements["privateer"]
+                checks["full_gif_archive"] = " / 20" in (measurements["archive"] or "")
+                checks["creative_notebook_last"] = measurements["notebookLast"] and measurements["quoteScript"]
+                checks["navigation_and_ids"] = measurements["returnLink"] and measurements["firstNavVisible"] and not measurements["duplicateIds"] and not measurements["brokenAnchors"]
+                checks["no_script_errors"] = not errors
+                checks["no_missing_site_assets"] = not missing_assets
+                if label == "creative-desktop" and not args.skip_interactions:
+                    page.locator("#dex-patrol").click(timeout=10000)
+                    checks["dex_responds"] = page.locator("#dex-response").text_content() == "Good dog, Dex."
+                    page.locator("#notebook").scroll_into_view_if_needed()
+                    original = page.locator("#notebook-quote").text_content()
+                    page.wait_for_timeout(5300)
+                    checks["creative_notebook_rotates"] = page.locator("#notebook-quote").text_content() != original
+                page.evaluate("window.scrollTo(0,0)")
+                page.wait_for_timeout(150)
+                page.screenshot(path=str(output / (label + "-abovefold.png")), animations="disabled", full_page=False)
+                page.screenshot(path=str(output / (label + "-full.png")), animations="disabled", full_page=True)
+                report["script_errors"] = errors
+                report["asset_errors"] = missing_assets
+                failures.extend(label + ": " + key for key, passed in checks.items() if not passed)
+            except Exception as err:
+                failures.append(label + ": " + str(err))
+                report["exception"] = str(err)
+                try:
+                    page.screenshot(path=str(output / (label + "-error.png")), full_page=True)
+                except Exception:
+                    pass
+            reports.append(report)
+            context.close()
+
         if not args.skip_interactions:
             context = browser.new_context(
                 viewport={"width": 1024, "height": 768}, reduced_motion="reduce"
@@ -326,11 +408,11 @@ def main():
             page = context.new_page()
             try:
                 page.goto(base_url, wait_until="domcontentloaded", timeout=25000)
-                animation = page.locator(".night-knight").evaluate(
+                animation = page.locator(".dex-patrol").evaluate(
                     "element => getComputedStyle(element).animationName"
                 )
                 if animation != "none":
-                    failures.append("reduced-motion: knight animation must be disabled")
+                    failures.append("reduced-motion: Dex animation must be disabled")
                 reports.append({"viewport": "reduced-motion", "animationName": animation})
             except Exception as err:
                 failures.append("reduced-motion: " + str(err))

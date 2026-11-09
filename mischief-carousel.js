@@ -2,7 +2,7 @@
 (() => {
   'use strict';
   const base = '/assets/gifs/';
-  const items = [
+  const allItems = [
     ['buzzwords.gif', 'Buzzword disposal', 'Corporate buzzword placards get dismissed'],
     ['holographic-badger.gif', 'Holographic honey badger', 'A fierce holographic honey badger appears'],
     ['chess.gif', 'The endgame', 'A king and pawn meet on a chessboard'],
@@ -26,6 +26,8 @@
   ];
 
   const root = document.getElementById('signal-carousel');
+  const technical = new Set(['agent-ducks.gif','excel-exorcist.gif','factory-hologram.gif','slide-peel.gif','demokit.gif']);
+  const items = root?.dataset.gallery === 'technical' ? allItems.filter(item => technical.has(item[0])) : allItems;
   const grid = document.getElementById('signal-grid');
   const previous = document.getElementById('signal-prev');
   const next = document.getElementById('signal-next');

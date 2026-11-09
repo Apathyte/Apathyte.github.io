@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#0B0913">
+  <title>The Purple Knight | Original creative work by Tim Boersma</title>
+  <meta name="description" content="The Purple Knight: original character art, animated industrial mischief and creative writing by Tim Boersma. A separate home for fiction and illustration.">
+  <link rel="canonical" href="https://apathyte.github.io/purple-knight/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="The Purple Knight | Original creative work">
+  <meta property="og:description" content="Fiction, original characters, animated experiments, and notebook fragments.">
+  <meta property="og:url" content="https://apathyte.github.io/purple-knight/">
+  <meta property="og:image" content="https://apathyte.github.io/assets/characters/v2/knight-idle.png">
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "@id": "https://apathyte.github.io/purple-knight/#collection",
+  "url": "https://apathyte.github.io/purple-knight/",
+  "name": "The Purple Knight — original creative work",
+  "description": "Original fictional characters, creative writing, illustrated experiments and animated work by Tim Boersma, presented separately from his professional biography.",
+  "isPartOf": {
+    "@type": "WebSite",
+    "url": "https://apathyte.github.io/"
+  },
+  "author": {
+    "@id": "https://apathyte.github.io/#tim-boersma"
+  },
+  "hasPart": [
+    {
+      "@type": "VisualArtwork",
+      "name": "The Purple Knight — original character artwork",
+      "image": "https://apathyte.github.io/assets/characters/v2/knight-idle.png"
+    },
+    {
+      "@type": "VisualArtwork",
+      "name": "Digital Privateer — animated illustration",
+      "image": "https://apathyte.github.io/assets/gifs/privateer.gif"
+    },
+    {
+      "@type": "CreativeWork",
+      "name": "From the notebook",
+      "genre": "Short-form original reflections"
+    }
+  ]
+}
+  </script>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&amp;family=IBM+Plex+Sans:wght@400;500;600;700&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+
+    :root {
+      color-scheme:dark; --bg:#0B0913; --surface:#1C1729; --surface2:#20182E;
+      --text:#F1ECF8; --muted:#B8AEC8; --body:#D6D0DF; --line:#3C3051;
+      --royal:#5F2EBB; --knight:#6D38D5; --accent:#C6A3FF; --display:#9653F2;
+      --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+      --heading:"Space Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;
+      --mono:"IBM Plex Mono",ui-monospace,"Cascadia Code",monospace;
+    }
+    *,*::before,*::after{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--bg);color:var(--text);font:400 16px/1.68 var(--sans)}
+    body::before{content:"";pointer-events:none;position:absolute;inset:0 0 auto;height:950px;
+      background-image:linear-gradient(90deg,rgba(121,89,162,.11) 1px,transparent 1px),
+      linear-gradient(rgba(121,89,162,.11) 1px,transparent 1px);background-size:76px 76px;
+      mask-image:linear-gradient(to bottom,#000,transparent 95%);-webkit-mask-image:linear-gradient(to bottom,#000,transparent 95%)}
+    a{color:inherit;text-decoration-color:#9366DC;text-underline-offset:4px}
+    a:hover{color:var(--accent)}
+    :focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+    .wrap{max-width:1100px;padding:0 clamp(22px,4.5vw,55px);margin:0 auto;position:relative}
+    header{display:flex;align-items:center;justify-content:space-between;gap:22px;padding:29px 0;border-bottom:1px solid var(--line)}
+    .mark{text-decoration:none;font:600 .78rem/1.3 var(--mono);letter-spacing:.12em}
+    header nav{display:flex;flex-wrap:wrap;gap:clamp(12px,2.6vw,29px);color:var(--muted);font-size:.86rem}
+    header nav a{text-decoration:none}
+    .hero{padding:clamp(85px,11vw,156px) 0 clamp(88px,10vw,132px);position:relative;max-width:950px}
+    .hero::before{content:"";position:absolute;top:clamp(85px,11vw,156px);left:-22px;width:5px;height:106px;background:var(--knight)}
+    .eyebrow,h2,.ref small,.group-title,.video-demo .small-label,.work-tile .work-label{
+      font:500 .71rem/1.5 var(--mono);letter-spacing:.11em;text-transform:uppercase;color:var(--accent)}
+    h1{font:600 clamp(4.3rem,11vw,8.8rem)/.92 var(--heading);letter-spacing:-.075em;margin:26px 0 35px}
+    h1 .given-name{color:var(--text);letter-spacing:0.015em;font-kerning:normal;font-variant-ligatures:none}
+    h1 .family-name{color:var(--display);letter-spacing:-.045em}
+    .lead{max-width:770px;color:var(--body);font-size:clamp(1.14rem,2.35vw,1.46rem);line-height:1.54}
+    .lead strong{color:var(--text);font-weight:600}
+    .chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:34px}
+    .chips span{border:1px solid var(--line);background:rgba(21,16,34,.8);padding:7px 12px;font:500 .72rem/1.5 var(--mono);color:var(--muted)}
+    .sections{display:grid;grid-template-columns:minmax(145px,210px) minmax(0,1fr);gap:31px;padding:59px 0 76px;border-top:1px solid var(--line)}
+    h2{margin:4px 0 0}
+    .sections p{color:var(--body);margin:0 0 18px;max-width:740px}
+    .sections p:last-child{margin-bottom:0}
+    .sections .group-title{color:var(--muted);margin:34px 0 13px}
+    .refs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .ref{display:block;min-height:166px;text-decoration:none;padding:25px;background:var(--surface);border:1px solid var(--line);transition:border-color .18s ease}
+    .ref:hover{border-color:var(--display)}
+    .ref small{display:block}
+    .ref strong{display:block;margin:17px 0 11px;font:600 1.1rem/1.31 var(--heading);letter-spacing:-.014em}
+    .ref em{display:block;font-size:.86rem;font-style:normal;color:var(--muted);line-height:1.52}
+    .feature{grid-column:1/-1;min-height:184px;padding:32px;background:linear-gradient(110deg,var(--surface2),var(--surface));border-color:#6546A0;position:relative}
+    .feature::before{content:"";position:absolute;top:0;bottom:0;left:0;width:3px;background:var(--knight)}
+    .feature strong{font-size:clamp(1.32rem,2.4vw,1.8rem);max-width:620px;margin:19px 0 11px}
+    .media-layout{display:grid;grid-template-columns:1fr;gap:18px;max-width:730px;margin-top:23px}
+    .video-demo{background:var(--surface);border:1px solid var(--line)}
+    .video-demo:hover,.work-tile:hover{border-color:var(--display)}
+    .demo-intro{padding:30px 30px 24px}
+    .video-demo .small-label{display:block}
+    .video-demo h3,.work-tile h3{font:600 clamp(1.6rem,3vw,2.15rem)/1.15 var(--heading);letter-spacing:-.035em;margin:13px 0}
+    .video-demo p{margin:0}
+    .signal-flow{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin:0 30px;padding:17px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+    .signal-flow span{font:500 .73rem/1.55 var(--mono);color:#D1BEEE}
+    .signal-flow b{font:500 .86rem var(--mono);color:var(--display)}
+    .demo-points{list-style:none;padding:0;margin:24px 30px;color:var(--body);font-size:.93rem}
+    .demo-points li{position:relative;padding-left:18px;margin:11px 0;line-height:1.58}
+    .demo-points li::before{content:"";position:absolute;top:.65em;left:0;width:5px;height:5px;background:var(--knight)}
+    .demo-link{border-top:1px solid var(--line);padding:20px 30px}
+    .demo-link a,.work-tile a{font:600 .9rem/1.4 var(--heading);text-decoration:none;color:var(--text)}
+    .demo-link a:hover,.work-tile a:hover{color:var(--accent)}
+    .work-tile{border:1px solid var(--line);padding:30px;background:var(--surface)}
+    .work-tile .work-label{display:block}
+    .work-tile h3{font-size:1.45rem}
+    .work-tile p{margin:0 0 18px}
+    .quote-stage{margin:0;min-height:195px;display:flex;flex-direction:column;justify-content:center;gap:18px;padding:29px 32px;border:1px solid var(--line);background:linear-gradient(125deg,var(--surface2),var(--surface))}
+    .quote-provenance{display:block;color:var(--accent);font:500 .72rem/1.5 var(--mono);letter-spacing:.1em;text-transform:uppercase}
+    .quote-stage blockquote{margin:0;max-width:760px;color:var(--text);font:500 clamp(1.5rem,3.25vw,2.5rem)/1.35 var(--heading);letter-spacing:-.03em;text-wrap:balance}
+    .quote-stage blockquote::before{content:"“";color:var(--display);margin-right:.1em}
+    .quote-stage blockquote::after{content:"”";color:var(--display);margin-left:.05em}
+    @media(max-width:760px){.quote-stage{min-height:220px;padding:23px 21px}.quote-stage blockquote{font-size:clamp(1.4rem,5.5vw,2.25rem)}}
+    footer{border-top:1px solid var(--line);padding:30px 0 55px;display:flex;justify-content:space-between;gap:35px;color:var(--muted);font-size:.82rem}
+    footer p{margin:0;max-width:660px}
+    @media(max-width:760px){
+      header{padding:22px 0}header nav{gap:13px;font-size:.79rem}header nav a:last-child{display:none}
+      .hero{padding:92px 0 82px}.hero::before{top:30px;left:0;width:3px;height:41px}
+      .sections{grid-template-columns:1fr;gap:24px;padding:45px 0 54px}
+      .refs{grid-template-columns:1fr}.ref{min-height:auto}.feature{grid-column:auto}
+      .demo-intro{padding:24px 22px}.signal-flow{margin:0 22px}
+      .demo-points{margin:21px 22px}.demo-link{padding:18px 22px}.work-tile{padding:25px 22px}
+      footer{flex-direction:column;gap:14px}
+    }
+    @media(max-width:430px){header nav a:first-child{display:none}.chips span{font-size:.69rem}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.ref{transition:none}}
+  </style>
+  <link rel="stylesheet" href="/landing.css">
+  <link rel="stylesheet" href="/mischief-carousel.css?v=20261105">
+  <link rel="stylesheet" href="/creative-site.css?v=20261109">
+</head>
+<body class="creative-page">
+ <div class="wrap">
+  <header class="landing-header">
+   <a class="mark" href="/" aria-label="Back to Tim Boersma's professional profile"><span class="mark-tb">TB</span><span class="mark-sep" aria-hidden="true">|</span><span class="mark-name">The Purple Knight</span></a>
+   <nav aria-label="Primary navigation"><a href="/">Professional profile</a><a href="#characters">01 The Knight</a><a href="#gallery">02 Animations</a><a href="#notebook">03 Notebook</a></nav>
+  </header>
+  <main id="top">
+   <section class="creative-intro" aria-labelledby="creative-title">
+    <div class="eyebrow">THE SIDE CHANNEL / FICTION &amp; ORIGINAL ART</div>
+    <h1 id="creative-title">The <span>Purple Knight.</span></h1>
+    <p>Some ideas are better expressed through characters, pictures and stories than another corporate slide deck. This is their territory.</p>
+    <p class="creative-disclaimer">Original creative work and visual experiments — separate from the professional biography and independent evidence on the <a href="/">main site</a>.</p>
+   </section>
+   <section class="creative-character" id="characters" aria-labelledby="characters-title">
+    <div class="creative-character-copy">
+     <span class="signal-kicker">01 / THE WATCH</span>
+     <h2 id="characters-title">A knight who knows when to hold the line.</h2>
+     <p>The Purple Knight has a pedestal of his own now. And yes, the dog still gets to wander.</p>
+     <p>Original character artwork, kept at its native fidelity.</p>
+    </div>
+    <div class="hero-theatre offscreen" id="night-stage" aria-label="Night Watch character vignette">
+          <span class="night-legend" aria-hidden="true">Je maintiendrai.</span>
+          <div class="night-knight"><img id="knight-art" src="/assets/characters/v2/knight-idle.png" width="240" height="263" alt="The Purple Knight standing guard in gold-trimmed purple armour, sealed helm and burgundy cloak"></div>
+          <button class="dex-patrol" id="dex-patrol" type="button" aria-label="Give Dex a little attention" title="Say hello to Dex"><img id="dex-frame" src="/assets/dex/trot-0.png" width="184" height="128" alt="Dex, a charcoal-and-brindle companion dog"></button>
+          <output class="dex-message" id="dex-response" aria-live="polite"></output>
+        </div>
+      
+   </section>
+   <section class="creative-feature" id="privateer" aria-labelledby="privateer-title">
+    <figure><img src="/assets/gifs/privateer.gif?v=original-20261105" width="414" height="414" alt="Original animated digital privateer with an industrial treasure map" loading="lazy" decoding="async"><figcaption>Original animated illustration</figcaption></figure>
+    <div>
+     <span class="signal-kicker">THE OTHER SHIFT / DIGITAL PRIVATEERING</span>
+     <h2 id="privateer-title">The occasional privateer.</h2>
+     <p>A little artistic license belongs somewhere. Here it doesn't have to compete with occupational claims, professional references or the evidence graph.</p>
+    </div>
+   </section>
+   <section class="creative-writing" id="writing" aria-labelledby="writing-title">
+    <span class="signal-kicker">WRITING / WORK IN PROGRESS</span>
+    <h2 id="writing-title">Creative notes and publications</h2>
+    <p>A dedicated place for original fiction, characters and reflections. Published material can be linked to its original source as it becomes available; unpublished work won't be presented as a publication.</p>
+   </section>
+   <section class="signal-rail" id="gallery" aria-labelledby="signal-rail-title">
+        <div class="signal-rail-head">
+          <div>
+            <span class="signal-kicker">SIDE CHANNELS / ANIMATED EXPERIMENTS</span>
+            <h2 id="signal-rail-title">Animated mischief.</h2>
+          </div>
+          <p>The occasional visual disturbance.</p>
+        </div>
+        <div class="signal-carousel" id="signal-carousel" data-gallery="all" aria-label="Industrial mischief animated gallery" tabindex="0">
+          <div class="signal-carousel-top">
+            <span class="signal-carousel-status" id="signal-status">01–03 / 20</span>
+            <div class="signal-carousel-controls">
+              <button type="button" id="signal-prev" aria-label="Previous animations">← Previous</button>
+              <button type="button" id="signal-pause" aria-pressed="false">Pause rotation</button>
+              <button type="button" id="signal-next" aria-label="Next animations">Next →</button>
+            </div>
+          </div>
+          <div class="signal-grid" id="signal-grid" role="group" aria-label="Animated GIFs">
+            <figure class="signal-card">
+              <span class="signal-thumb" data-fallback="✦"><img src="/assets/gifs/buzzwords.gif" width="412" height="412" loading="lazy" decoding="async" alt="Corporate buzzword placards get dismissed"></span>
+              <figcaption><strong>Buzzword disposal</strong><small>01 / 20</small></figcaption>
+            </figure>
+            <figure class="signal-card">
+              <span class="signal-thumb" data-fallback="✦"><img src="/assets/gifs/holographic-badger.gif" width="414" height="414" loading="lazy" decoding="async" alt="A holographic honey badger appears"></span>
+              <figcaption><strong>Holographic honey badger</strong><small>02 / 20</small></figcaption>
+            </figure>
+            <figure class="signal-card">
+              <span class="signal-thumb" data-fallback="✦"><img src="/assets/gifs/chess.gif" width="413" height="413" loading="lazy" decoding="async" alt="King and pawn on a chessboard"></span>
+              <figcaption><strong>The endgame</strong><small>03 / 20</small></figcaption>
+            </figure>
+          </div>
+          <p class="signal-carousel-hint">Original animated GIFs. Three at a time on desktop, one on mobile.</p>
+          <span id="signal-announcer" class="sr-only" role="status" aria-live="polite"></span>
+        </div>
+      </section>
+      <div class="detail-transition" aria-hidden="true"></div>
+      
+   <section class="sections" id="notebook" aria-labelledby="notebook-title">
+        <h2 id="notebook-title">04 / From the notebook</h2>
+        <figure class="quote-stage" id="quote-rotator">
+          <span class="quote-provenance" id="quote-provenance">RAW</span>
+          <blockquote id="notebook-quote" aria-live="off">Alignment doesn&#39;t start a motor.</blockquote>
+        </figure>
+      </section>
+  </main>
+  <footer>
+   <p>The Purple Knight is a fictional character in original creative work. Nothing here is an independent professional credential or an ATS Global publication.</p>
+   <p><a href="/">Return to the professional profile ↗</a></p>
+  </footer>
+ </div>
+   <script>
+  (() => {
+    "use strict";
+    const entries = [
+  {
+    "quote": "Alignment doesn't start a motor.",
+    "category": "raw"
+  },
+  {
+    "quote": "The real endangered species is the unedited thought.",
+    "category": "raw"
+  },
+  {
+    "quote": "Certainty is the mother of all failures.",
+    "category": "goblin"
+  },
+  {
+    "quote": "Capacity belongs to management. Quality and completeness belong to the proposal.",
+    "category": "raw"
+  },
+  {
+    "quote": "Use the container, flip the expected content.",
+    "category": "raw"
+  },
+  {
+    "quote": "Don't build an agent framework. Build an operating system for industrial judgment.",
+    "category": "veil"
+  },
+  {
+    "quote": "Machines don't care about narratives.",
+    "category": "raw"
+  },
+  {
+    "quote": "The future isn't waiting for our organisation to be ready.",
+    "category": "co"
+  },
+  {
+    "quote": "Before defining an interface, define authority.",
+    "category": "raw"
+  },
+  {
+    "quote": "Interface design is governance in disguise.",
+    "category": "co"
+  },
+  {
+    "quote": "A download button isn't an exit strategy.",
+    "category": "raw"
+  },
+  {
+    "quote": "Templates don't solve authority problems. They help expose them.",
+    "category": "veil"
+  },
+  {
+    "quote": "A completed timesheet is not necessarily an accurate timesheet.",
+    "category": "co"
+  },
+  {
+    "quote": "When the front door works, people stop looking for the back door.",
+    "category": "raw"
+  },
+  {
+    "quote": "The next form of lock-in won't just be technical. It will be semantic.",
+    "category": "raw"
+  },
+  {
+    "quote": "The party that defines meaning eventually governs the system.",
+    "category": "raw"
+  },
+  {
+    "quote": "Did I teach them to think, or merely to arrive at my conclusions?",
+    "category": "raw"
+  },
+  {
+    "quote": "Being right is easy. Recognising when you've become the obstacle is harder.",
+    "category": "veil"
+  },
+  {
+    "quote": "Individual compliance does not guarantee collective competence.",
+    "category": "veil"
+  },
+  {
+    "quote": "The problem is what happens when the trust survives longer than the evidence behind it.",
+    "category": "veil"
+  },
+  {
+    "quote": "Patience is merely procrastination with better PR.",
+    "category": "veil"
+  },
+  {
+    "quote": "A factory of originality consultants mass-producing identical opinions.",
+    "category": "raw"
+  },
+  {
+    "quote": "The most interesting character in the room rarely needs to announce their entrance.",
+    "category": "veil"
+  },
+  {
+    "quote": "You thought you hired an engineer. Apparently you hired three departments in a coat.",
+    "category": "veil"
+  },
+  {
+    "quote": "No sales decks were harmed in the making of this post.",
+    "category": "goblin"
+  },
+  {
+    "quote": "Y’all ain’t very impressionable, are ye?",
+    "category": "goblin"
+  },
+  {
+    "quote": "Please don't pet the endangered species, they might bite.",
+    "category": "goblin"
+  },
+  {
+    "quote": "A cowboy and a leprechaun walk into a social bar. Neither makes an impression.",
+    "category": "goblin"
+  },
+  {
+    "quote": "We will not. We will do what we like.",
+    "category": "goblin"
+  }
+];
+    const labels = {"raw":"RAW","co":"Tim × Morrow","veil":"Beyond the Veil","goblin":"Goblin Mode"};
+    const root = document.getElementById("quote-rotator");
+    const quote = document.getElementById("notebook-quote");
+    const label = document.getElementById("quote-provenance");
+    const preview = document.getElementById("preview-notebook");
+    const previewQuote = document.getElementById("preview-quote");
+    const previewLabel = document.getElementById("preview-category");
+    if (!root || !quote || !label || entries.length === 0) return;
+    let index = 0;
+    let visible = false;
+    let visibleNotebook = false;
+    let visiblePreview = false;
+    let timer = null;
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const render = () => {
+      const current = entries[index];
+      quote.textContent = current.quote;
+      label.textContent = labels[current.category];
+      if (previewQuote) previewQuote.textContent = current.quote;
+      if (previewLabel) previewLabel.textContent = labels[current.category];
+    };
+    const stop = () => { if (timer !== null) clearInterval(timer); timer = null; };
+    const update = () => {
+      stop();
+      visible = visibleNotebook || visiblePreview;
+      if (!visible || document.hidden || reduceMotion.matches) return;
+      timer = setInterval(() => {
+        index = (index + 1) % entries.length;
+        render();
+      }, 5000);
+    };
+    document.addEventListener("visibilitychange", update);
+    if (reduceMotion.addEventListener) reduceMotion.addEventListener("change", update);
+    if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver((observations) => {
+        observations.forEach(item => {
+          if (item.target === root) visibleNotebook = item.isIntersecting;
+          if (item.target === preview) visiblePreview = item.isIntersecting;
+        });
+        update();
+      }, {threshold:0.15});
+      observer.observe(root);
+      if (preview) observer.observe(preview);
+    } else { visibleNotebook = true; update(); }
+    render();
+  })();
+  </script>
+ <script defer src="/characters.js"></script>
+ <script defer src="/nightwatch.js"></script>
+ <script defer src="/mischief-carousel.js?v=20261105"></script>
+</body>
+</html>

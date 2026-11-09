@@ -34,6 +34,9 @@
       "@type": "Person",
       "@id": "https://apathyte.github.io/#tim-boersma",
       "name": "Tim Boersma",
+      "alternateName": "Apathyte",
+      "identifier": {"@type":"PropertyValue","propertyID":"GitHub username","value":"Apathyte","url":"https://github.com/Apathyte"},
+      "disambiguatingDescription": "Tim Boersma is a Netherlands-based Operational Technology consultant at ATS Global working in industrial manufacturing systems, MES/MOM, industrial interoperability and operational AI governance.",
       "jobTitle": "Principal Consultant – Operational Technology",
       "description": "Principal Consultant – Operational Technology at ATS Global, working on industrial architecture, manufacturing systems and operational governance.",
       "url": "https://apathyte.github.io/",
@@ -147,12 +150,13 @@
   </style>
   <link rel="stylesheet" href="/landing.css">
   <link rel="stylesheet" href="/mischief-carousel.css?v=20261105">
+  <link rel="stylesheet" href="/identity-site.css?v=20261109">
 </head>
-<body>
+<body class="identity-home">
   <div class="wrap">
     <header class="landing-header">
       <a class="mark" href="#top" aria-label="Tim Boersma home"><span class="mark-tb">TB</span><span class="mark-sep" aria-hidden="true">|</span><span class="mark-name">Tim Boersma</span></a>
-      <nav aria-label="Primary navigation"><a href="#about">01 About</a><a href="#work">02 In the field</a><a href="#evidence">03 Public sources</a><a href="#notebook">04 From the notebook</a><a href="https://github.com/Apathyte" target="_blank" rel="noopener noreferrer">GitHub ↗</a></nav>
+      <nav aria-label="Primary navigation"><a href="#about">01 About</a><a href="#work">02 In the field</a><a href="#evidence">03 Public sources</a><a href="#notebook">04 Field note</a><a href="/purple-knight/">The Purple Knight</a></nav>
     </header>
     <main id="top">
       <section class="hero landing-hero" aria-labelledby="page-title">
@@ -162,14 +166,12 @@
           <p class="lead">Principal Consultant — <strong>Operational Technology</strong></p>
           <p class="hero-org"><a href="https://www.ats-global.com/" target="_blank" rel="noopener noreferrer">ATS Global</a> · Netherlands</p>
         </div>
-        <!-- Hero loop: swap this source to change the featured animation without altering the Knight or Dex. -->
-        <figure class="hero-gif" aria-label="Digital privateering — animated personal illustration">
-          <img src="/assets/gifs/privateer.gif?v=original-20261105" width="414" height="414" alt="Tim as a digital privateer, with an industrial treasure map" decoding="async">
-          
-        </figure>
-        <div class="hero-theatre offscreen" id="night-stage" aria-label="Night Watch character vignette">
-          <span class="night-legend" aria-hidden="true">Je maintiendrai.</span>
-          <div class="night-knight"><img id="knight-art" src="/assets/characters/v2/knight-idle.png" width="240" height="263" alt="The Purple Knight standing guard in gold-trimmed purple armour, sealed helm and burgundy cloak"></div>
+        <!-- Original industrial illustration and independent Dex patrol; the fictional Knight lives on his own page. -->
+        <div class="hero-theatre dex-only offscreen" id="night-stage" aria-label="Animated industrial illustration and Dex patrol">
+          <figure class="hero-gif" aria-label="Animated industrial systems illustration">
+            <img src="/assets/gifs/factory-hologram.gif" width="414" height="414" alt="A factory hologram illustrating interconnected manufacturing systems" decoding="async">
+          </figure>
+          <span class="night-legend" aria-hidden="true">Dex / floor patrol</span>
           <button class="dex-patrol" id="dex-patrol" type="button" aria-label="Give Dex a little attention" title="Say hello to Dex"><img id="dex-frame" src="/assets/dex/trot-0.png" width="184" height="128" alt="Dex, a charcoal-and-brindle companion dog"></button>
           <output class="dex-message" id="dex-response" aria-live="polite"></output>
         </div>
@@ -194,10 +196,11 @@
             <span class="source-mini"><span>WtbE · Interview</span><span>↗</span></span>
             <span class="source-mini"><span>Operational Truth · Essay</span><span>↗</span></span>
           </a>
-          <a class="landing-card landing-card-quote" href="#notebook" id="preview-notebook">
-            <h2><b>04</b> / From the notebook</h2>
-            <span class="preview-category" id="preview-category">RAW</span>
-            <blockquote id="preview-quote">Alignment doesn't start a motor.</blockquote>
+          <a class="landing-card landing-card-quote" href="/purple-knight/">
+            <h2><b>04</b> / Creative work</h2>
+            <h3>The Purple Knight.</h3>
+            <p>A home for original characters, animated mischief and writing from beyond the workbench.</p>
+            <span class="card-link">Enter the side channel ↗</span>
           </a>
         </div>
       </div>
@@ -231,30 +234,21 @@
           </div>
           <p>The occasional visual disturbance.</p>
         </div>
-        <div class="signal-carousel" id="signal-carousel" aria-label="Industrial mischief animated gallery" tabindex="0">
+        <div class="signal-carousel" id="signal-carousel" data-gallery="technical" aria-label="Curated industrial mischief animated gallery" tabindex="0">
           <div class="signal-carousel-top">
-            <span class="signal-carousel-status" id="signal-status">01–03 / 20</span>
+            <span class="signal-carousel-status" id="signal-status">01–03 / 5</span>
             <div class="signal-carousel-controls">
               <button type="button" id="signal-prev" aria-label="Previous animations">← Previous</button>
               <button type="button" id="signal-pause" aria-pressed="false">Pause rotation</button>
               <button type="button" id="signal-next" aria-label="Next animations">Next →</button>
             </div>
           </div>
-          <div class="signal-grid" id="signal-grid" role="group" aria-label="Animated GIFs">
-            <figure class="signal-card">
-              <span class="signal-thumb" data-fallback="✦"><img src="/assets/gifs/buzzwords.gif" width="412" height="412" loading="lazy" decoding="async" alt="Corporate buzzword placards get dismissed"></span>
-              <figcaption><strong>Buzzword disposal</strong><small>01 / 20</small></figcaption>
-            </figure>
-            <figure class="signal-card">
-              <span class="signal-thumb" data-fallback="✦"><img src="/assets/gifs/holographic-badger.gif" width="414" height="414" loading="lazy" decoding="async" alt="A holographic honey badger appears"></span>
-              <figcaption><strong>Holographic honey badger</strong><small>02 / 20</small></figcaption>
-            </figure>
-            <figure class="signal-card">
-              <span class="signal-thumb" data-fallback="✦"><img src="/assets/gifs/chess.gif" width="413" height="413" loading="lazy" decoding="async" alt="King and pawn on a chessboard"></span>
-              <figcaption><strong>The endgame</strong><small>03 / 20</small></figcaption>
-            </figure>
+          <div class="signal-grid" id="signal-grid" role="group" aria-label="Animated engineering GIFs">
+            <figure class="signal-card"><span class="signal-thumb" data-fallback="✦"><img src="/assets/gifs/agent-ducks.gif" width="414" height="414" loading="lazy" decoding="async" alt="Three agent ducks work around an industrial network"></span><figcaption><strong>Kwik, Kwek &amp; Kwak</strong><small>01 / 5</small></figcaption></figure>
+            <figure class="signal-card"><span class="signal-thumb" data-fallback="✦"><img src="/assets/gifs/excel-exorcist.gif" width="414" height="414" loading="lazy" decoding="async" alt="An Excel screen receives an inventive intervention"></span><figcaption><strong>Excel intervention</strong><small>02 / 5</small></figcaption></figure>
+            <figure class="signal-card"><span class="signal-thumb" data-fallback="✦"><img src="/assets/gifs/factory-hologram.gif" width="414" height="414" loading="lazy" decoding="async" alt="A factory hologram comes into view"></span><figcaption><strong>Factory in hand</strong><small>03 / 5</small></figcaption></figure>
           </div>
-          <p class="signal-carousel-hint">Original animated GIFs. Three at a time on desktop, one on mobile.</p>
+          <p class="signal-carousel-hint">Original engineering GIFs. Three at a time on desktop, one on mobile.</p>
           <span id="signal-announcer" class="sr-only" role="status" aria-live="polite"></span>
         </div>
       </section>
@@ -339,11 +333,13 @@
         </div>
       </section>
       <section class="sections" id="notebook" aria-labelledby="notebook-title">
-        <h2 id="notebook-title">04 / From the notebook</h2>
-        <figure class="quote-stage" id="quote-rotator">
-          <span class="quote-provenance" id="quote-provenance">RAW</span>
-          <blockquote id="notebook-quote" aria-live="off">Alignment doesn&#39;t start a motor.</blockquote>
-        </figure>
+        <h2 id="notebook-title">04 / Last word</h2>
+        <div>
+          <figure class="quote-stage" id="quote-rotator">
+            <span class="quote-provenance" id="quote-provenance">FIELD NOTE</span>
+            <blockquote id="notebook-quote">Alignment doesn&#39;t start a motor.</blockquote>
+          </figure>
+        </div>
       </section>
     </main>
     <footer>
@@ -351,175 +347,6 @@
       <p>© 2026 Tim Boersma</p>
     </footer>
   </div>
-
-  <script>
-  (() => {
-    "use strict";
-    const entries = [
-  {
-    "quote": "Alignment doesn't start a motor.",
-    "category": "raw"
-  },
-  {
-    "quote": "The real endangered species is the unedited thought.",
-    "category": "raw"
-  },
-  {
-    "quote": "Certainty is the mother of all failures.",
-    "category": "goblin"
-  },
-  {
-    "quote": "Capacity belongs to management. Quality and completeness belong to the proposal.",
-    "category": "raw"
-  },
-  {
-    "quote": "Use the container, flip the expected content.",
-    "category": "raw"
-  },
-  {
-    "quote": "Don't build an agent framework. Build an operating system for industrial judgment.",
-    "category": "veil"
-  },
-  {
-    "quote": "Machines don't care about narratives.",
-    "category": "raw"
-  },
-  {
-    "quote": "The future isn't waiting for our organisation to be ready.",
-    "category": "co"
-  },
-  {
-    "quote": "Before defining an interface, define authority.",
-    "category": "raw"
-  },
-  {
-    "quote": "Interface design is governance in disguise.",
-    "category": "co"
-  },
-  {
-    "quote": "A download button isn't an exit strategy.",
-    "category": "raw"
-  },
-  {
-    "quote": "Templates don't solve authority problems. They help expose them.",
-    "category": "veil"
-  },
-  {
-    "quote": "A completed timesheet is not necessarily an accurate timesheet.",
-    "category": "co"
-  },
-  {
-    "quote": "When the front door works, people stop looking for the back door.",
-    "category": "raw"
-  },
-  {
-    "quote": "The next form of lock-in won't just be technical. It will be semantic.",
-    "category": "raw"
-  },
-  {
-    "quote": "The party that defines meaning eventually governs the system.",
-    "category": "raw"
-  },
-  {
-    "quote": "Did I teach them to think, or merely to arrive at my conclusions?",
-    "category": "raw"
-  },
-  {
-    "quote": "Being right is easy. Recognising when you've become the obstacle is harder.",
-    "category": "veil"
-  },
-  {
-    "quote": "Individual compliance does not guarantee collective competence.",
-    "category": "veil"
-  },
-  {
-    "quote": "The problem is what happens when the trust survives longer than the evidence behind it.",
-    "category": "veil"
-  },
-  {
-    "quote": "Patience is merely procrastination with better PR.",
-    "category": "veil"
-  },
-  {
-    "quote": "A factory of originality consultants mass-producing identical opinions.",
-    "category": "raw"
-  },
-  {
-    "quote": "The most interesting character in the room rarely needs to announce their entrance.",
-    "category": "veil"
-  },
-  {
-    "quote": "You thought you hired an engineer. Apparently you hired three departments in a coat.",
-    "category": "veil"
-  },
-  {
-    "quote": "No sales decks were harmed in the making of this post.",
-    "category": "goblin"
-  },
-  {
-    "quote": "Y’all ain’t very impressionable, are ye?",
-    "category": "goblin"
-  },
-  {
-    "quote": "Please don't pet the endangered species, they might bite.",
-    "category": "goblin"
-  },
-  {
-    "quote": "A cowboy and a leprechaun walk into a social bar. Neither makes an impression.",
-    "category": "goblin"
-  },
-  {
-    "quote": "We will not. We will do what we like.",
-    "category": "goblin"
-  }
-];
-    const labels = {"raw":"RAW","co":"Tim × Morrow","veil":"Beyond the Veil","goblin":"Goblin Mode"};
-    const root = document.getElementById("quote-rotator");
-    const quote = document.getElementById("notebook-quote");
-    const label = document.getElementById("quote-provenance");
-    const preview = document.getElementById("preview-notebook");
-    const previewQuote = document.getElementById("preview-quote");
-    const previewLabel = document.getElementById("preview-category");
-    if (!root || !quote || !label || entries.length === 0) return;
-    let index = 0;
-    let visible = false;
-    let visibleNotebook = false;
-    let visiblePreview = false;
-    let timer = null;
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const render = () => {
-      const current = entries[index];
-      quote.textContent = current.quote;
-      label.textContent = labels[current.category];
-      if (previewQuote) previewQuote.textContent = current.quote;
-      if (previewLabel) previewLabel.textContent = labels[current.category];
-    };
-    const stop = () => { if (timer !== null) clearInterval(timer); timer = null; };
-    const update = () => {
-      stop();
-      visible = visibleNotebook || visiblePreview;
-      if (!visible || document.hidden || reduceMotion.matches) return;
-      timer = setInterval(() => {
-        index = (index + 1) % entries.length;
-        render();
-      }, 5000);
-    };
-    document.addEventListener("visibilitychange", update);
-    if (reduceMotion.addEventListener) reduceMotion.addEventListener("change", update);
-    if ("IntersectionObserver" in window) {
-      const observer = new IntersectionObserver((observations) => {
-        observations.forEach(item => {
-          if (item.target === root) visibleNotebook = item.isIntersecting;
-          if (item.target === preview) visiblePreview = item.isIntersecting;
-        });
-        update();
-      }, {threshold:0.15});
-      observer.observe(root);
-      if (preview) observer.observe(preview);
-    } else { visibleNotebook = true; update(); }
-    render();
-  })();
-  </script>
   <script defer src="/characters.js"></script>
   <script defer src="/nightwatch.js"></script>
   <script defer src="/mischief-carousel.js?v=20261105"></script>
