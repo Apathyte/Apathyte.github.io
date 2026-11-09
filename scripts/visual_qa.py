@@ -125,6 +125,8 @@ def main():
                     knightAbsent:!document.getElementById('knight-art'),
                     lastSectionId:[...document.querySelectorAll('main > section')].at(-1)?.id,
                     endcapText:document.getElementById('notebook-quote')?.textContent,
+                    navFirstVisible:getComputedStyle(document.querySelector('header nav a:first-child')).display !== 'none',
+                    navLastVisible:getComputedStyle(document.querySelector('header nav a:last-child')).display !== 'none',
                     alignment:(() => {
                       const box = selector => {
                         const el = document.querySelector(selector);
@@ -242,6 +244,7 @@ def main():
                     and sample.get("textAlign") == "center"
                     and "Alignment doesn't start a motor" in (dims.get("endcapText") or "")
                 )
+                checks["primary_navigation_visible"] = dims.get("navFirstVisible") and dims.get("navLastVisible")
                 checks["creative_material_separated"] = (
                     dims.get("creativeLink")
                     and dims.get("knightAbsent")
@@ -354,6 +357,7 @@ def main():
                     notebookLast:[...document.querySelectorAll('main > section')].at(-1)?.id === 'notebook',
                     quoteScript:[...document.querySelectorAll('script:not([src])')].some(s => s.textContent.includes('const entries =')),
                     returnLink:!!document.querySelector('a[href="/"]'),
+                    firstNavVisible:getComputedStyle(document.querySelector('header nav a:first-child')).display !== 'none',
                     duplicateIds:ids.filter((id,i) => ids.indexOf(id) !== i),
                     brokenAnchors:[...document.querySelectorAll('a[href^="#"]')]
                       .filter(a => !document.getElementById(a.getAttribute('href').slice(1))).length
@@ -370,7 +374,7 @@ def main():
                 checks["privateer_preserved"] = measurements["privateer"]
                 checks["full_gif_archive"] = " / 20" in (measurements["archive"] or "")
                 checks["creative_notebook_last"] = measurements["notebookLast"] and measurements["quoteScript"]
-                checks["navigation_and_ids"] = measurements["returnLink"] and not measurements["duplicateIds"] and not measurements["brokenAnchors"]
+                checks["navigation_and_ids"] = measurements["returnLink"] and measurements["firstNavVisible"] and not measurements["duplicateIds"] and not measurements["brokenAnchors"]
                 checks["no_script_errors"] = not errors
                 checks["no_missing_site_assets"] = not missing_assets
                 if label == "creative-desktop" and not args.skip_interactions:
@@ -380,6 +384,8 @@ def main():
                     original = page.locator("#notebook-quote").text_content()
                     page.wait_for_timeout(5300)
                     checks["creative_notebook_rotates"] = page.locator("#notebook-quote").text_content() != original
+                page.evaluate("window.scrollTo(0,0)")
+                page.wait_for_timeout(150)
                 page.screenshot(path=str(output / (label + "-abovefold.png")), animations="disabled", full_page=False)
                 page.screenshot(path=str(output / (label + "-full.png")), animations="disabled", full_page=True)
                 report["script_errors"] = errors
