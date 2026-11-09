@@ -1,0 +1,42 @@
+/* Creative site: a distinct editorial environment, reusing original character art and GIFs. */
+.creative-page .wrap{max-width:1380px}
+.creative-page header nav a:last-child{color:#d4afff}
+.creative-intro{padding:75px 0 58px;border-bottom:1px solid var(--line)}
+.creative-intro .eyebrow{font:600 .73rem/1.5 var(--mono);letter-spacing:.13em;color:#cb94ff}
+.creative-intro h1{font:700 clamp(3.2rem,8vw,7.4rem)/.96 var(--heading);letter-spacing:-.065em;margin:16px 0 22px}
+.creative-intro h1 span{color:#a85bff}
+.creative-intro > p{max-width:730px;color:#e0d6eb;font-size:clamp(1rem,1.6vw,1.25rem)}
+.creative-intro .creative-disclaimer{color:#bfb0d0;font-size:.86rem;margin-top:25px}
+.creative-character{display:grid;grid-template-columns:minmax(0,40%) minmax(0,60%);align-items:center;gap:12px;padding:55px 0 60px}
+.creative-character-copy h2{color:#f6eefe;font:650 clamp(1.8rem,3vw,2.85rem)/1.16 var(--heading);letter-spacing:-.03em;text-transform:none;margin:15px 0 16px}
+.creative-character-copy p{color:#d4c5e2;max-width:440px}
+.creative-page .hero-theatre{height:390px;min-width:0;border:1px solid #4c326a;border-radius:14px}
+.creative-page .hero-theatre .night-knight{left:12%!important;bottom:0!important}
+.creative-page .hero-theatre .dex-patrol{left:58%!important;bottom:20px!important}
+.creative-feature{display:grid;grid-template-columns:minmax(0,250px) minmax(0,1fr);gap:40px;align-items:center;padding:40px 0 55px;border-top:1px solid var(--line)}
+.creative-feature figure{margin:0;max-width:250px;padding:10px;border:1px solid #61467e;border-radius:10px;background:#160c28}
+.creative-feature img{display:block;width:100%;height:auto;object-fit:contain}
+.creative-feature figcaption{color:#b9a7ca;font:.68rem/1.5 var(--mono);margin-top:8px}
+.creative-feature h2,.creative-writing h2{font:650 clamp(1.65rem,2.8vw,2.5rem)/1.18 var(--heading);color:#f6effc;letter-spacing:-.025em;text-transform:none}
+.creative-feature p,.creative-writing p{color:#d5c8e3;max-width:690px}
+.creative-writing{border-top:1px solid var(--line);padding:42px 0}
+.creative-page .signal-rail{border-top:1px solid var(--line);padding:36px 0}
+.creative-page #notebook{border-top:1px solid var(--line);padding-top:48px}
+.creative-page footer{margin-top:38px}
+@media(max-width:760px){
+ .creative-page header nav a:last-child{display:inline}
+ .creative-intro{padding:48px 0 40px}
+ .creative-intro h1{font-size:clamp(2.5rem,10vw,4.9rem)}
+ .creative-character{grid-template-columns:1fr;gap:24px;padding:35px 0 48px}
+ .creative-page .hero-theatre{height:300px}
+ .creative-page .hero-theatre .night-knight{left:13%!important;scale:.72}
+ .creative-page .hero-theatre .dex-patrol{left:52%!important;scale:.67}
+ .creative-feature{grid-template-columns:1fr;gap:18px}
+ .creative-feature figure{max-width:215px}
+}
+@media(max-width:420px){
+ .creative-page .hero-theatre{height:250px}
+ .creative-page .hero-theatre .night-knight{left:6%!important;scale:.56}
+ .creative-page .hero-theatre .dex-patrol{left:42%!important;scale:.54;--dex-roam-distance:8px}
+ .creative-intro h1{font-size:clamp(2.35rem,11vw,3.3rem)}
+}
