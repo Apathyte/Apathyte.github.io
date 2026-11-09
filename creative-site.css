@@ -24,7 +24,7 @@
 .creative-page #notebook{border-top:1px solid var(--line);padding-top:48px}
 .creative-page footer{margin-top:38px}
 @media(max-width:760px){
- .creative-page header nav a:last-child{display:inline}
+ .creative-page header nav a:first-child, .creative-page header nav a:last-child{display:inline}
  .creative-intro{padding:48px 0 40px}
  .creative-intro h1{font-size:clamp(2.5rem,10vw,4.9rem)}
  .creative-character{grid-template-columns:1fr;gap:24px;padding:35px 0 48px}
