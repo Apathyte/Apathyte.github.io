@@ -5,21 +5,23 @@
   const dex = document.getElementById("dex-patrol");
   const picture = document.getElementById("dex-frame");
   const response = document.getElementById("dex-response");
-  if (!stage || !knight || !dex || !picture || !response) return;
+  if (!stage || !dex || !picture || !response) return;
 
   // Intentionally only one place to configure replacement sprites and sizing.
   const characterAssets = window.SiteCharacters;
-  if (!characterAssets?.knight?.idle || !Array.isArray(characterAssets?.dex?.frames)) return;
+  if (!Array.isArray(characterAssets?.dex?.frames)) return;
   const frames = characterAssets.dex.frames;
   if (!frames.length) return;
-  knight.src = characterAssets.knight.idle;
+  if (knight && characterAssets.knight?.idle) knight.src = characterAssets.knight.idle;
   picture.src = frames[0];
   const setSize = (variable, value) => {
     if (Number.isFinite(value) && value > 0 && value < 1200)
       stage.style.setProperty(variable, value + "px");
   };
-  setSize("--knight-width", characterAssets.knight.width);
-  setSize("--knight-height", characterAssets.knight.height);
+  if (knight && characterAssets.knight) {
+    setSize("--knight-width", characterAssets.knight.width);
+    setSize("--knight-height", characterAssets.knight.height);
+  }
   setSize("--dex-width", characterAssets.dex.width);
   setSize("--dex-height", characterAssets.dex.height);
   stage.style.setProperty("--knight-x", (characterAssets.knight.offsetX || 0) + "px");
