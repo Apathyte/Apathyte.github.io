@@ -1,0 +1,25 @@
+# Dependencies, staging, logs and local state
+node_modules/
+dist/
+coverage/
+artifacts/
+*.log
+*.tsbuildinfo
+.env
+.env.*
+.npmrc
+.dev.vars*
+*.pem
+*.key
+*.p12
+*.pfx
+*.sqlite*
+*.db
+.openai/
+.sites*/
+.wrangler/
+*workspace*.json
+private/
+exports/
+.DS_Store
+# index.html and assets/ are intentionally versioned Pages output.

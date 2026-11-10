@@ -1,0 +1,32 @@
+name: DemoKit public release checks
+on:
+  push:
+    branches: [main]
+    paths: ['demokit/**', '.github/workflows/demokit-public.yml']
+  pull_request:
+    paths: ['demokit/**', '.github/workflows/demokit-public.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  public-lab:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: demokit
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: demokit/package-lock.json
+      - run: npm ci --ignore-scripts
+      - run: npm test
+      - run: npm audit --audit-level=high
+      - run: npm run build
+      - run: node scripts/release.mjs
+      - run: npm run audit:release
+      - name: Verify committed build matches source
+        run: git diff --exit-code -- index.html assets THIRD_PARTY_NOTICES.txt

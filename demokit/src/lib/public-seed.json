@@ -1,0 +1,761 @@
+{
+  "schemaVersion": 1,
+  "zones": [
+    {
+      "id": "receiving",
+      "code": "01",
+      "name": "Inbound receiving",
+      "short": "Receiving",
+      "kind": "dock",
+      "group": "material",
+      "x": -18,
+      "z": -11,
+      "w": 10,
+      "d": 9,
+      "role": "Check arriving deliveries against expected identity and condition.",
+      "owner": "Receiving team",
+      "assets": ["Dock", "Pallet scan", "Inspection bay"],
+      "systems": [
+        ["Devices", 1],
+        ["Supervision", 2],
+        ["Operations", 3],
+        ["Business planning", 4]
+      ],
+      "events": ["receiving.state.observed"],
+      "decision": "Who accepts damaged or unidentified stock?",
+      "boundary": "A scanned delivery still needs acceptance."
+    },
+    {
+      "id": "storage",
+      "code": "02",
+      "name": "Material store",
+      "short": "Material store",
+      "kind": "racks",
+      "group": "material",
+      "x": -6,
+      "z": -11,
+      "w": 10,
+      "d": 9,
+      "role": "Hold lots with explicit identity, location and availability.",
+      "owner": "Warehouse team",
+      "assets": ["Storage racks", "Lot labels", "Picking bay"],
+      "systems": [
+        ["Devices", 1],
+        ["Supervision", 2],
+        ["Operations", 3],
+        ["Business planning", 4]
+      ],
+      "events": ["storage.state.observed"],
+      "decision": "Which stock is eligible for this order?",
+      "boundary": "Physical presence does not establish availability for use."
+    },
+    {
+      "id": "dosing",
+      "code": "03",
+      "name": "Preparation and dosing",
+      "short": "Preparation",
+      "kind": "weigh",
+      "group": "production",
+      "x": 6,
+      "z": -11,
+      "w": 10,
+      "d": 9,
+      "role": "Select and measure ingredients for a fictional batch.",
+      "owner": "Preparation operator",
+      "assets": ["Weigh scale", "Staging bins", "Verification station"],
+      "systems": [
+        ["Devices", 1],
+        ["Supervision", 2],
+        ["Operations", 3],
+        ["Business planning", 4]
+      ],
+      "events": ["dosing.state.observed"],
+      "decision": "What prevents the wrong lot from entering the process?",
+      "boundary": "A measured quantity must belong to the approved material and task."
+    },
+    {
+      "id": "lineA",
+      "code": "04",
+      "name": "Processing line A",
+      "short": "Line A",
+      "kind": "process",
+      "group": "production",
+      "x": 18,
+      "z": -11,
+      "w": 10,
+      "d": 9,
+      "role": "Transform a fictional product using an ordered sequence.",
+      "owner": "Line team",
+      "assets": ["Mixing vessel", "Transfer pump", "Temperature sensor"],
+      "systems": [
+        ["Devices", 1],
+        ["Supervision", 2],
+        ["Operations", 3],
+        ["Business planning", 4]
+      ],
+      "events": ["lineA.state.observed"],
+      "decision": "What evidence supports operation completion?",
+      "boundary": "Device completion alone does not close the production order."
+    },
+    {
+      "id": "utilities",
+      "code": "05",
+      "name": "Shared utilities",
+      "short": "Utilities",
+      "kind": "utilities",
+      "group": "support",
+      "x": -18,
+      "z": 1,
+      "w": 10,
+      "d": 9,
+      "role": "Provide the services needed by multiple work centres.",
+      "owner": "Utilities team",
+      "assets": ["Service tanks", "Pumps", "Meter"],
+      "systems": [
+        ["Devices", 1],
+        ["Supervision", 2],
+        ["Operations", 3],
+        ["Business planning", 4]
+      ],
+      "events": ["utilities.state.observed"],
+      "decision": "Which orders are affected by a service constraint?",
+      "boundary": "A shared resource can limit several lines at once."
+    },
+    {
+      "id": "workshop",
+      "code": "06",
+      "name": "Maintenance workshop",
+      "short": "Maintenance",
+      "kind": "workshop",
+      "group": "support",
+      "x": -6,
+      "z": 1,
+      "w": 10,
+      "d": 9,
+      "role": "Assess faults and return equipment through a controlled handover.",
+      "owner": "Maintenance team",
+      "assets": ["Work bench", "Tools", "Spare parts"],
+      "systems": [
+        ["Devices", 1],
+        ["Supervision", 2],
+        ["Operations", 3],
+        ["Business planning", 4]
+      ],
+      "events": ["workshop.state.observed"],
+      "decision": "Who confirms the equipment can return to service?",
+      "boundary": "Repair completion and production release are separate decisions."
+    },
+    {
+      "id": "quality",
+      "code": "07",
+      "name": "Quality review",
+      "short": "Quality",
+      "kind": "lab",
+      "group": "support",
+      "x": 6,
+      "z": 1,
+      "w": 10,
+      "d": 9,
+      "role": "Evaluate samples and record a disposition for a fictional lot.",
+      "owner": "Quality team",
+      "assets": ["Sample bench", "Test instrument", "Hold area"],
+      "systems": [
+        ["Devices", 1],
+        ["Supervision", 2],
+        ["Operations", 3],
+        ["Business planning", 4]
+      ],
+      "events": ["quality.state.observed"],
+      "decision": "Who can release the lot and on what basis?",
+      "boundary": "A test result is evidence for an authorised disposition."
+    },
+    {
+      "id": "lineB",
+      "code": "08",
+      "name": "Processing line B",
+      "short": "Line B",
+      "kind": "process",
+      "group": "production",
+      "x": 18,
+      "z": 1,
+      "w": 10,
+      "d": 9,
+      "role": "Show an alternative route with its own capability and capacity.",
+      "owner": "Line team",
+      "assets": ["Process vessel", "Transfer belt", "State sensor"],
+      "systems": [
+        ["Devices", 1],
+        ["Supervision", 2],
+        ["Operations", 3],
+        ["Business planning", 4]
+      ],
+      "events": ["lineB.state.observed"],
+      "decision": "Can the work move here without changing its requirements?",
+      "boundary": "An alternative route needs capability and resource confirmation."
+    },
+    {
+      "id": "control",
+      "code": "09",
+      "name": "Operations coordination",
+      "short": "Operations",
+      "kind": "control",
+      "group": "support",
+      "x": -18,
+      "z": 13,
+      "w": 10,
+      "d": 9,
+      "role": "Coordinate the current shift and investigate exceptions.",
+      "owner": "Shift coordinator",
+      "assets": ["Status wall", "Work queue", "Exception log"],
+      "systems": [
+        ["Devices", 1],
+        ["Supervision", 2],
+        ["Operations", 3],
+        ["Business planning", 4]
+      ],
+      "events": ["control.state.observed"],
+      "decision": "Which person or system may act on this exception?",
+      "boundary": "Visibility across a site does not grant every command permission."
+    },
+    {
+      "id": "planning",
+      "code": "10",
+      "name": "Planning and demand",
+      "short": "Planning",
+      "kind": "office",
+      "group": "support",
+      "x": -6,
+      "z": 13,
+      "w": 10,
+      "d": 9,
+      "role": "Translate business demand into an achievable production commitment.",
+      "owner": "Planning team",
+      "assets": ["Demand queue", "Resource calendar", "Order list"],
+      "systems": [
+        ["Devices", 1],
+        ["Supervision", 2],
+        ["Operations", 3],
+        ["Business planning", 4]
+      ],
+      "events": ["planning.state.observed"],
+      "decision": "What must be checked before committing the sequence?",
+      "boundary": "A desired due date does not prove that execution is feasible."
+    },
+    {
+      "id": "packing",
+      "code": "11",
+      "name": "Packing and identification",
+      "short": "Packing",
+      "kind": "pack",
+      "group": "production",
+      "x": 6,
+      "z": 13,
+      "w": 10,
+      "d": 9,
+      "role": "Pack released material and preserve its identity.",
+      "owner": "Packing team",
+      "assets": ["Packaging cell", "Label printer", "Check station"],
+      "systems": [
+        ["Devices", 1],
+        ["Supervision", 2],
+        ["Operations", 3],
+        ["Business planning", 4]
+      ],
+      "events": ["packing.state.observed"],
+      "decision": "Which identity leaves the line on each pack?",
+      "boundary": "Labels must refer to the right released lot and pack specification."
+    },
+    {
+      "id": "finished",
+      "code": "12",
+      "name": "Finished stock",
+      "short": "Finished stock",
+      "kind": "racks",
+      "group": "material",
+      "x": 18,
+      "z": 13,
+      "w": 10,
+      "d": 9,
+      "role": "Stage traceable finished goods for outbound allocation.",
+      "owner": "Distribution team",
+      "assets": ["Finished racks", "Allocation queue", "Pallet labels"],
+      "systems": [
+        ["Devices", 1],
+        ["Supervision", 2],
+        ["Operations", 3],
+        ["Business planning", 4]
+      ],
+      "events": ["finished.state.observed"],
+      "decision": "Is the selected pallet eligible for this shipment?",
+      "boundary": "Stock status, reservation and location are distinct facts."
+    },
+    {
+      "id": "shipping",
+      "code": "13",
+      "name": "Outbound dispatch",
+      "short": "Dispatch",
+      "kind": "dock",
+      "group": "material",
+      "x": 30,
+      "z": 13,
+      "w": 10,
+      "d": 9,
+      "role": "Verify an outbound load and record the handover.",
+      "owner": "Dispatch team",
+      "assets": ["Loading dock", "Shipment check", "Handover record"],
+      "systems": [
+        ["Devices", 1],
+        ["Supervision", 2],
+        ["Operations", 3],
+        ["Business planning", 4]
+      ],
+      "events": ["shipping.state.observed"],
+      "decision": "Which record confirms what was actually shipped?",
+      "boundary": "A vehicle leaving is not by itself a reconciled goods issue."
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "order",
+      "title": "Order to dispatch",
+      "tag": "Synthetic teaching example",
+      "summary": "Follow a fictional order through planning, execution, quality and delivery.",
+      "steps": [
+        {
+          "zone": "planning",
+          "level": 4,
+          "title": "Demand becomes a commitment",
+          "text": "Check feasibility before confirming the order and due date.",
+          "event": "order.proposed",
+          "actor": "Planner",
+          "claim": "Illustration only; no execution claim"
+        },
+        {
+          "zone": "storage",
+          "level": 3,
+          "title": "Allocate an eligible lot",
+          "text": "Check identity, status and reservation before picking stock.",
+          "event": "lot.allocated",
+          "actor": "Warehouse team",
+          "claim": "Illustration only; no execution claim"
+        },
+        {
+          "zone": "dosing",
+          "level": 1,
+          "title": "Verify the addition",
+          "text": "Compare the scan and measured quantity with the authorised task.",
+          "event": "addition.observed",
+          "actor": "Operator",
+          "claim": "Illustration only; no execution claim"
+        },
+        {
+          "zone": "lineA",
+          "level": 2,
+          "title": "Execute within limits",
+          "text": "The controller runs the permitted sequence; supervision retains context.",
+          "event": "operation.observed",
+          "actor": "Control system",
+          "claim": "Illustration only; no execution claim"
+        },
+        {
+          "zone": "quality",
+          "level": 3,
+          "title": "Make the disposition",
+          "text": "The quality role interprets results and records release or hold.",
+          "event": "lot.dispositioned",
+          "actor": "Quality team",
+          "claim": "Illustration only; no execution claim"
+        },
+        {
+          "zone": "packing",
+          "level": 3,
+          "title": "Preserve identity",
+          "text": "Link packs to the released lot and the required specification.",
+          "event": "pack.identified",
+          "actor": "Packing team",
+          "claim": "Illustration only; no execution claim"
+        },
+        {
+          "zone": "shipping",
+          "level": 4,
+          "title": "Reconcile the handover",
+          "text": "Confirm what left and reconcile the business transaction.",
+          "event": "shipment.confirmed",
+          "actor": "Dispatch team",
+          "claim": "Illustration only; no execution claim"
+        }
+      ]
+    },
+    {
+      "id": "wrong",
+      "title": "Wrong material scan",
+      "tag": "Synthetic teaching example",
+      "summary": "A convincing screen must still show where an addition is stopped.",
+      "steps": [
+        {
+          "zone": "storage",
+          "level": 3,
+          "title": "A task specifies material",
+          "text": "The task names an eligible material and lot.",
+          "event": "task.issued",
+          "actor": "Operations",
+          "claim": "Illustration only; no execution claim"
+        },
+        {
+          "zone": "dosing",
+          "level": 1,
+          "title": "A different identity appears",
+          "text": "A synthetic scan does not match the task.",
+          "event": "scan.mismatch",
+          "actor": "Scanner",
+          "claim": "Illustration only; no execution claim"
+        },
+        {
+          "zone": "control",
+          "level": 3,
+          "title": "Resolve before continuing",
+          "text": "Hold the addition and ask the authorised role to investigate.",
+          "event": "exception.opened",
+          "actor": "Shift coordinator",
+          "claim": "Illustration only; no execution claim"
+        }
+      ]
+    },
+    {
+      "id": "quality",
+      "title": "Quality hold",
+      "tag": "Synthetic teaching example",
+      "summary": "Explore how a hold crosses the physical and business views.",
+      "steps": [
+        {
+          "zone": "lineA",
+          "level": 2,
+          "title": "The operation ends",
+          "text": "Equipment reports the end of its sequence.",
+          "event": "operation.ended",
+          "actor": "Controller",
+          "claim": "Illustration only; no execution claim"
+        },
+        {
+          "zone": "quality",
+          "level": 3,
+          "title": "Disposition remains pending",
+          "text": "A missing or unacceptable result prevents release.",
+          "event": "lot.held",
+          "actor": "Quality team",
+          "claim": "Illustration only; no execution claim"
+        },
+        {
+          "zone": "finished",
+          "level": 3,
+          "title": "Prevent allocation",
+          "text": "Keep the lot unavailable until an authorised disposition changes.",
+          "event": "allocation.blocked",
+          "actor": "Warehouse system",
+          "claim": "Illustration only; no execution claim"
+        }
+      ]
+    },
+    {
+      "id": "outage",
+      "title": "Shared resource outage",
+      "tag": "Synthetic teaching example",
+      "summary": "Trace the consequences of one unavailable service.",
+      "steps": [
+        {
+          "zone": "utilities",
+          "level": 1,
+          "title": "A service becomes unavailable",
+          "text": "A synthetic observation indicates the required utility is unavailable.",
+          "event": "utility.unavailable",
+          "actor": "Service sensor",
+          "claim": "Illustration only; no execution claim"
+        },
+        {
+          "zone": "lineA",
+          "level": 2,
+          "title": "Move to a defined state",
+          "text": "The engineered response governs the line; the viewer merely describes it.",
+          "event": "line.waiting",
+          "actor": "Controller",
+          "claim": "Illustration only; no execution claim"
+        },
+        {
+          "zone": "planning",
+          "level": 3,
+          "title": "Review commitments",
+          "text": "Assess affected work and a feasible recovery sequence.",
+          "event": "plan.review.requested",
+          "actor": "Planner",
+          "claim": "Illustration only; no execution claim"
+        },
+        {
+          "zone": "workshop",
+          "level": 3,
+          "title": "Return through handover",
+          "text": "Record the repair and confirm readiness before restarting work.",
+          "event": "return.reviewed",
+          "actor": "Maintenance team",
+          "claim": "Illustration only; no execution claim"
+        }
+      ]
+    },
+    {
+      "id": "agent",
+      "title": "Agent proposes a change",
+      "tag": "Synthetic teaching example",
+      "summary": "Keep recommendation, authorisation and execution distinguishable.",
+      "steps": [
+        {
+          "zone": "planning",
+          "level": 3,
+          "title": "A recommendation appears",
+          "text": "An advisory agent proposes a sequence using a synthetic capacity constraint.",
+          "event": "proposal.created",
+          "actor": "Advisory agent",
+          "claim": "Illustration only; no execution claim"
+        },
+        {
+          "zone": "control",
+          "level": 3,
+          "title": "A person reviews the consequences",
+          "text": "Check quality, resources and affected commitments.",
+          "event": "proposal.reviewed",
+          "actor": "Authorised reviewer",
+          "claim": "Illustration only; no execution claim"
+        },
+        {
+          "zone": "lineB",
+          "level": 2,
+          "title": "A command needs a separate path",
+          "text": "Only the authorised control path may request execution. This lab sends no command.",
+          "event": "intent.illustrated",
+          "actor": "Control owner",
+          "claim": "Illustration only; no execution claim"
+        }
+      ]
+    }
+  ],
+  "materialLinks": [
+    ["receiving", "storage"],
+    ["storage", "dosing"],
+    ["dosing", "lineA"],
+    ["dosing", "lineB"],
+    ["lineA", "quality"],
+    ["lineB", "quality"],
+    ["quality", "packing"],
+    ["packing", "finished"],
+    ["finished", "shipping"]
+  ],
+  "eventLinks": [
+    ["lineA", "control"],
+    ["lineB", "control"],
+    ["quality", "control"],
+    ["utilities", "control"],
+    ["control", "planning"]
+  ],
+  "work": [
+    {
+      "id": "w-model",
+      "title": "Extend a work unit",
+      "type": "Experiment",
+      "status": "Next",
+      "branch": "proposed/model-extension",
+      "detail": "Add a named asset with equipment context, flows and authority.",
+      "next": "Define one synthetic example and validate its links.",
+      "url": "https://github.com/Apathyte/Apathyte.github.io/tree/main/demokit"
+    },
+    {
+      "id": "w-scenes",
+      "title": "Compare Blender and OIP",
+      "type": "Experiment",
+      "status": "Next",
+      "branch": "proposed/scene-comparison",
+      "detail": "Use the same fictional task and acceptance criteria for each candidate.",
+      "next": "Record the exact OIP project/version and licence before including any code or assets.",
+      "url": "https://github.com/Apathyte/Apathyte.github.io/tree/main/demokit"
+    },
+    {
+      "id": "w-tests",
+      "title": "Public acceptance record",
+      "type": "Documentation",
+      "status": "Review",
+      "branch": "public release",
+      "detail": "Attach reproducible public checks to the matching revision.",
+      "next": "Publish browser evidence without importing private run reports.",
+      "url": "https://github.com/Apathyte/Apathyte.github.io/tree/main/demokit"
+    },
+    {
+      "id": "w-schema",
+      "title": "Import and export contract",
+      "type": "Documentation",
+      "status": "Retained",
+      "branch": "public release",
+      "detail": "Validated JSON carries zones, flows, scenarios, work items and decisions.",
+      "next": "Keep schema migrations explicit as the model evolves.",
+      "url": "https://github.com/Apathyte/Apathyte.github.io/tree/main/demokit"
+    },
+    {
+      "id": "w-clean",
+      "title": "Unused asset review",
+      "type": "Cleanup",
+      "status": "Next",
+      "branch": "proposed/asset-review",
+      "detail": "Check geometry, bundle size, accessibility and third-party notices.",
+      "next": "Remove unused public assets after checking references.",
+      "url": "https://github.com/Apathyte/Apathyte.github.io/tree/main/demokit"
+    },
+    {
+      "id": "w-pr",
+      "title": "Review a contribution",
+      "type": "Pull request",
+      "status": "Next",
+      "branch": "proposed/contribution",
+      "detail": "This card describes a workflow; it is not an open pull request.",
+      "next": "Open a public PR with purpose, provenance and validation.",
+      "url": "https://github.com/Apathyte/Apathyte.github.io/tree/main/demokit"
+    }
+  ],
+  "checks": [
+    {
+      "id": "offline",
+      "title": "Offline model checks",
+      "scope": "Public lab / data",
+      "command": "npm test",
+      "environment": "Node.js; synthetic fixtures",
+      "limit": "Schema checks do not establish controller or physical behaviour.",
+      "status": "Not run",
+      "result": "No revision-linked public run attached. Run and record this gate independently.",
+      "date": "",
+      "revision": "",
+      "url": ""
+    },
+    {
+      "id": "browser",
+      "title": "Browser interaction and layout",
+      "scope": "Public lab / browser",
+      "command": "Open the public lab; select, edit, save, reload and exercise each view",
+      "environment": "Desktop and mobile browser",
+      "limit": "WebGL support varies; record the renderer and viewport.",
+      "status": "Not run",
+      "result": "No revision-linked public run attached. Run and record this gate independently.",
+      "date": "",
+      "revision": "",
+      "url": ""
+    },
+    {
+      "id": "physics",
+      "title": "Physical-simulation acceptance",
+      "scope": "Future adapter / simulation",
+      "command": "Define a deterministic fixture and negative controls",
+      "environment": "No physics adapter included",
+      "limit": "Animation is not a dynamics or collision test.",
+      "status": "Not run",
+      "result": "No revision-linked public run attached. Run and record this gate independently.",
+      "date": "",
+      "revision": "",
+      "url": ""
+    },
+    {
+      "id": "opc",
+      "title": "OPC UA startup and restart",
+      "scope": "Future adapter / connectivity",
+      "command": "Specify startup, loss, reconnect and stale-quality assertions",
+      "environment": "No endpoint configured",
+      "limit": "This static app opens no OPC UA session and performs no writes.",
+      "status": "Not run",
+      "result": "No revision-linked public run attached. Run and record this gate independently.",
+      "date": "",
+      "revision": "",
+      "url": ""
+    },
+    {
+      "id": "replay",
+      "title": "Replay validation",
+      "scope": "Future adapter / trace",
+      "command": "Attach a synthetic trace, expected sequence and content hash",
+      "environment": "Walkthroughs only; replay adapter not included",
+      "limit": "A guided sequence is not evidence of a recorded execution.",
+      "status": "Not run",
+      "result": "No revision-linked public run attached. Run and record this gate independently.",
+      "date": "",
+      "revision": "",
+      "url": ""
+    },
+    {
+      "id": "hardware",
+      "title": "Real equipment acceptance",
+      "scope": "Physical equipment",
+      "command": "Require a separate authorised test plan",
+      "environment": "No hardware connected",
+      "limit": "No machine, plant or customer acceptance is claimed.",
+      "status": "Not run",
+      "result": "No revision-linked public run attached. Run and record this gate independently.",
+      "date": "",
+      "revision": "",
+      "url": ""
+    }
+  ],
+  "decisions": [
+    {
+      "id": "assets",
+      "title": "Blender assets or OIP simulation?",
+      "status": "Open",
+      "context": "Asset authoring and simulated behaviour solve different teaching needs.",
+      "choice": "Keep procedural Three.js geometry for the public baseline. Evaluate Blender as an optional asset pipeline and OIP as a candidate simulation environment.",
+      "evidence": "The public lab renders procedural meshes and an SVG fallback. No equal-scene comparison is published here.",
+      "limit": "No Blender or OIP code, model, licence or runtime is bundled. The exact OIP project/version and reuse terms must be recorded before integration.",
+      "risk": "A richer picture may imply physical accuracy that has not been demonstrated.",
+      "next": "Define an equivalent scene, acceptance criteria, authoring effort and runtime budget. Record each candidate’s provenance and licence.",
+      "url": "https://github.com/Apathyte/Apathyte.github.io/blob/main/demokit/docs/DECISIONS.md"
+    },
+    {
+      "id": "authority",
+      "title": "One scenario, distinct responsibilities",
+      "status": "Bounded decision",
+      "context": "A shared event can have several consumers with different authority.",
+      "choice": "Keep the viewer and teaching simulator observational. No machine commands or business transactions leave this application.",
+      "evidence": "The public source has no runtime connector, endpoint configuration or command API.",
+      "limit": "Synthetic event delivery illustrates routing; it does not test a real broker or guarantee delivery.",
+      "risk": "Visitors may confuse a plausible animation with an observed or accepted operation.",
+      "next": "Require a versioned observation contract and independent acceptance before adding any adapter.",
+      "url": "https://github.com/Apathyte/Apathyte.github.io/blob/main/demokit/docs/BOUNDARIES.md"
+    },
+    {
+      "id": "model",
+      "title": "Data before bespoke scenes",
+      "status": "Proposed",
+      "context": "The same lesson should survive changes to layout and rendering.",
+      "choice": "Represent zones, ownership, flows and scenarios as validated data, with geometry as a projection.",
+      "evidence": "The editable JSON and schema are published with the lab.",
+      "limit": "This is a teaching schema, not an ISA-95 conformance implementation. Parent hierarchy and interchange importers need further design.",
+      "risk": "A site hierarchy can hide shared resources and routes if treated as the complete model.",
+      "next": "Review one work-centre extension and its shared resources with practitioners.",
+      "url": "https://github.com/Apathyte/Apathyte.github.io/tree/main/demokit/src/lib"
+    },
+    {
+      "id": "public",
+      "title": "Public website, local workspaces",
+      "status": "Bounded decision",
+      "context": "Anyone should be able to open the lab without an account.",
+      "choice": "Serve static files on GitHub Pages. Store visitor edits in browser local storage. Share reviewed changes through a public pull request.",
+      "evidence": "The app has no authentication, backend, telemetry or remote save operation. Source and dependency notices are included.",
+      "limit": "Local saves are specific to this browser and device. Clearing browser data can remove them; export JSON for a portable copy.",
+      "risk": "An exported workspace can contain whatever a visitor typed. It must be reviewed before publication.",
+      "next": "Keep the release allowlist, content review and licence checks in the contribution workflow.",
+      "url": "https://github.com/Apathyte/Apathyte.github.io/blob/main/demokit/CONTRIBUTING.md"
+    },
+    {
+      "id": "licensing",
+      "title": "Open source with an explicit boundary",
+      "status": "Bounded decision",
+      "context": "Publishing a teaching vehicle must not imply that other software or business material is licensed with it.",
+      "choice": "Apply MIT to the public lab’s original code, synthetic content and documentation. Retain third-party licence notices separately.",
+      "evidence": "Scoped LICENSE, THIRD_PARTY_NOTICES.txt, dependency lockfile and public release review are included.",
+      "limit": "The licence covers this directory only; it grants no rights to trademarks, customer material or software outside it.",
+      "risk": "A future contribution may bring material its author has no right to publish.",
+      "next": "Require authors to identify origins and confirm permission to contribute; review both source and generated output.",
+      "url": "https://github.com/Apathyte/Apathyte.github.io/blob/main/demokit/LICENSE"
+    }
+  ]
+}

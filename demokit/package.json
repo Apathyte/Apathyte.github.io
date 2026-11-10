@@ -1,0 +1,31 @@
+{
+  "name": "demokit-factory-lab",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "tsc --noEmit && vite build && node scripts/notices.mjs",
+    "test": "node --experimental-strip-types --test scripts/model.test.mjs",
+    "audit:release": "python3 scripts/audit_release.py",
+    "release": "npm run build && node scripts/release.mjs && npm run audit:release"
+  },
+  "dependencies": {
+    "react": "19.2.6",
+    "react-dom": "19.2.6",
+    "three": "0.180.0",
+    "lucide-react": "1.31.0",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "typescript": "5.9.3",
+    "vite": "8.3.7",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "@types/three": "0.180.0"
+  }
+}
