@@ -1,7 +1,22 @@
 # Learning studio validation — 10 November 2026
 
-Implementation release: 1.1.0. Exact published code revision and CI links will be
-recorded after publication. This document does not certify any plant operation.
+Implementation release: 1.1.0. Published on 11 November 2026 at code revision
+[`69f6d3255a5b981968075d8d23efd107232f33f5`](https://github.com/Apathyte/Apathyte.github.io/commit/69f6d3255a5b981968075d8d23efd107232f33f5).
+This document does not certify any plant operation.
+
+## Publication verification — 11 November 2026
+
+- [Public release checks](https://github.com/Apathyte/Apathyte.github.io/actions/runs/42977249414): passed, including the reproducible build check.
+- [GitHub Pages deployment](https://github.com/Apathyte/Apathyte.github.io/actions/runs/42977248778): passed.
+- [Website Visual QA](https://github.com/Apathyte/Apathyte.github.io/actions/runs/42977249413): passed. This does not close the separate GPU verification gap below.
+- Live public site opened without authentication. The shortage lesson requires a
+  response before consequences; a bounded proposal explicitly retains blocked
+  handovers and unverified prerequisites. Shared-resource and authority boundary
+  entries are visible. All five main views open; the workboard links this project
+  plan and remains labelled as manually maintained.
+- Release audit covered 39 allowlisted files, including generated assets, with
+  no flagged credentials, private addresses or restricted-source references.
+  This is a scoped review, not a guarantee of ownership or exhaustive detection.
 
 ## Executed checks
 

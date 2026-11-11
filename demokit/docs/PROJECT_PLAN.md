@@ -77,10 +77,10 @@ small screen. Imported slice proposals cannot silently overwrite the workspace.
 - [x] Test primary browser journeys, keyboard access, mobile layout and SVG fallback.
 - [ ] Exercise WebGL if the environment supports it; otherwise keep that gap open.
 - [x] Re-run release allowlist/disclosure checks, dependency audit and build checks.
-- [ ] Publish only reviewed source/assets and record the exact source revision,
+- [x] Publish only reviewed source/assets and record the exact source revision,
   environment, date and limitations for evidence.
 - [x] Update the workboard as manually maintained; never imply live GitHub sync.
-- [ ] Confirm Pages deployment and inspect the live experience.
+- [x] Confirm Pages deployment and inspect the live experience.
 
 Gate: tests/build/release checks pass; browser verification is reported honestly;
 the site is public at https://apathyte.github.io/demokit/ without account access.
@@ -168,8 +168,17 @@ customer workspaces. B3 is the bounded contract first, not those integrations.
   vulnerabilities. Desktop/fallback, narrow layout and local save/import reviewed.
   GPU verification remains open. P4 publication and CI are next.
 
+- 2026-11-11: Released 1.1.0 at code revision
+  `69f6d3255a5b981968075d8d23efd107232f33f5`. Release checks, Pages deployment and
+  Website Visual QA passed. Public live smoke verified the lesson response gate,
+  blocked proposed handovers, shared-resource boundaries and all five main views.
+  Exact run links and limitations are in [REWORK_VALIDATION.md](REWORK_VALIDATION.md).
+  P4 publication is complete; GPU verification remains explicitly open.
+
 ## Next action
 
-Publish the reviewed 1.1 increment, confirm CI and Pages, then record its exact
-code revision and live smoke result. After release, the next useful evidence is a
-facilitated teaching trial and a GPU-capable browser run, not extra feature scope.
+Run the four lessons with a facilitator and capture misunderstood assumptions,
+decision ownership and visual ambiguity. Separately verify WebGL rendering,
+step-follow camera transitions, comparison pose retention and reduced motion in
+a GPU-capable browser. Record environment and revision with that evidence.
+The bounded release is complete; expand features only in response to evidence.
