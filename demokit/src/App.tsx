@@ -30,6 +30,8 @@ import {
   AlertTriangle,
 } from "lucide-react";
 import FactoryScene from "./components/factory-scene";
+import LearningStudio from "./components/learning-studio";
+import { evidenceFreshness } from "./lib/learning";
 import {
   seed,
   LabData,
@@ -302,6 +304,7 @@ function Editor({
 export default function Lab() {
   const [tab, setTab] = useState("atlas"),
     [data, setData] = useState<LabData>(seed),
+    [explorerOpen, setExplorerOpen] = useState(false),
     [revision, setRevision] = useState(0),
     [ready, setReady] = useState(false),
     [dirty, setDirty] = useState(false),
@@ -387,7 +390,8 @@ export default function Lab() {
     return () => clearInterval(t);
   }, [playing, scenarioId, scenario.steps.length]);
   useEffect(() => {
-    if (playing) setSelected(current.zone);
+    setSelected(current.zone);
+    setFocus("Area");
   }, [playing, step, current.zone]);
   function go(id: string) {
     setTab(id);
@@ -552,6 +556,7 @@ export default function Lab() {
           {NAV.map((n) => (
             <button
               key={n.id}
+              aria-label={n.name}
               className={tab === n.id ? "active" : ""}
               onClick={() => go(n.id)}
             >
@@ -659,7 +664,7 @@ export default function Lab() {
                 {
                   {
                     atlas:
-                      "Explore the equipment, follow the flows, question the authority.",
+                      "A reusable factory learning environment. Explore a slice, introduce a constraint, and question the response.",
                     board:
                       "Independent experiments, explicit next steps and evidence worth keeping.",
                     validation:
@@ -735,306 +740,329 @@ export default function Lab() {
           )}
           {tab === "atlas" && (
             <>
-              <div className="metrics">
-                <div>
-                  <span className="metric-icon">
-                    <Box size={19} />
-                  </span>
-                  <strong>
-                    {data.zones.length}
-                    <small>operational zones</small>
-                  </strong>
-                </div>
-                <div>
-                  <span className="metric-icon">
-                    <Layers size={19} />
-                  </span>
-                  <strong>
-                    5<small>ISA-95 activity levels</small>
-                  </strong>
-                </div>
-                <div>
-                  <span className="metric-icon">
-                    <Split size={19} />
-                  </span>
-                  <strong>
-                    {data.scenarios.length}
-                    <small>teaching scenarios</small>
-                  </strong>
-                </div>
-                <div>
-                  <span className="metric-icon amber">
-                    <Activity size={19} />
-                  </span>
-                  <strong className="textmetric">
-                    Synthetic model<small>No live plant connection</small>
-                  </strong>
-                </div>
-              </div>
-              <section className="atlas-panel">
-                <div className="panel-toolbar">
-                  <div>
-                    <i className="purple-dot" />
-                    <strong>Factory Atlas</strong>
-                    <Badge>Experimental</Badge>
-                  </div>
-                  <div className="segmented">
-                    {["Site", "Area", "Line / assets"].map((f) => (
-                      <button
-                        key={f}
-                        className={focus === f ? "selected" : ""}
-                        onClick={() => setFocus(f)}
-                      >
-                        {f}
-                      </button>
-                    ))}
-                  </div>
-                  <button
-                    className="iconbtn"
-                    aria-label="Reset camera"
-                    onClick={() => {
-                      setFocus("Site");
-                      setReset((s) => s + 1);
-                    }}
-                  >
-                    <Maximize2 size={16} />
-                  </button>
-                </div>
-                <div className="atlas-body">
-                  <div className="map-area">
-                    <FactoryScene
-                      zones={data.zones}
-                      selected={zone.id}
-                      onSelect={setSelected}
-                      layer={layer}
-                      links={
-                        layer === "Events"
-                          ? data.eventLinks
-                          : data.materialLinks
-                      }
-                      focus={focus}
-                      reset={reset}
-                    />
-                    <div className="map-top">
-                      <span className="mono">SYNTHETIC / SITE 01</span>
-                      <span className="map-hint">
-                        Drag to orbit · scroll to zoom
-                      </span>
-                    </div>
-                    <div className="flow-switch">
-                      <span>OVERLAY</span>
-                      {["Material", "Events", "None"].map((l) => (
-                        <button
-                          key={l}
-                          className={layer === l ? "selected" : ""}
-                          onClick={() => setLayer(l)}
-                        >
-                          <i
-                            style={{
-                              background:
-                                l === "Material"
-                                  ? "#e6b170"
-                                  : l === "Events"
-                                    ? "#b799ec"
-                                    : "#788292",
-                            }}
-                          />
-                          {l}
-                        </button>
-                      ))}
-                    </div>
-                    <div className="map-caption">
-                      <span>SCHEMATIC GEOMETRY · THREE.JS</span>
-                      <span>Visualisation ≠ physical proof</span>
-                    </div>
-                  </div>
-                  <aside className="inspector">
-                    <div className="eyebrow">
-                      SELECTED ZONE <span>{zone.code}</span>
-                    </div>
-                    <select
-                      aria-label="Select factory zone"
-                      value={zone.id}
-                      onChange={(e) => setSelected(e.target.value)}
-                    >
-                      {data.zones.map((z) => (
-                        <option key={z.id} value={z.id}>
-                          {z.code} · {z.name}
-                        </option>
-                      ))}
-                    </select>
-                    <div className="inspect-heading">
-                      <h2>{zone.name}</h2>
-                      <button
-                        aria-label="Edit selected zone"
-                        className="iconbtn"
-                        onClick={() => setEditor({ kind: "zones", item: zone })}
-                      >
-                        <Pencil size={15} />
-                      </button>
-                    </div>
-                    <p>{zone.role}</p>
-                    <dl>
-                      <dt>OPERATIONAL OWNER</dt>
-                      <dd>{zone.owner}</dd>
-                      <dt>ASSETS / WORK UNITS</dt>
-                      <dd className="asset-tags">
-                        {zone.assets.map((a) => (
-                          <span key={a}>{a}</span>
-                        ))}
-                      </dd>
-                    </dl>
-                    <div className="boundary">
-                      <span>
-                        <LockKeyhole size={13} />
-                        AUTHORITY BOUNDARY
-                      </span>
-                      <p>{zone.boundary}</p>
-                    </div>
-                    <div className="system-row">
-                      {zone.systems.map(([s, l]) => (
-                        <span key={s}>
-                          <b>L{l}</b>
-                          {s}
+              <LearningStudio data={data} />
+              <details
+                className="model-explorer"
+                onToggle={(e) => setExplorerOpen(e.currentTarget.open)}
+              >
+                <summary>
+                  Explore and edit the full factory model · original
+                  walkthroughs
+                </summary>
+                {explorerOpen && (
+                  <>
+                    <div className="metrics">
+                      <div>
+                        <span className="metric-icon">
+                          <Box size={19} />
                         </span>
-                      ))}
+                        <strong>
+                          {data.zones.length}
+                          <small>operational zones</small>
+                        </strong>
+                      </div>
+                      <div>
+                        <span className="metric-icon">
+                          <Layers size={19} />
+                        </span>
+                        <strong>
+                          5<small>ISA-95 activity levels</small>
+                        </strong>
+                      </div>
+                      <div>
+                        <span className="metric-icon">
+                          <Split size={19} />
+                        </span>
+                        <strong>
+                          {data.scenarios.length}
+                          <small>teaching scenarios</small>
+                        </strong>
+                      </div>
+                      <div>
+                        <span className="metric-icon amber">
+                          <Activity size={19} />
+                        </span>
+                        <strong className="textmetric">
+                          Synthetic model<small>No live plant connection</small>
+                        </strong>
+                      </div>
                     </div>
-                    <button className="textbutton" onClick={() => go("teach")}>
-                      Explore operational meaning
-                      <ChevronRight size={14} />
-                    </button>
-                  </aside>
-                </div>
-                <div className="hierarchy-bar">
-                  <span>Equipment hierarchy</span>
-                  <b>Enterprise</b>
-                  <ChevronRight size={12} />
-                  <b>Site 01</b>
-                  <ChevronRight size={12} />
-                  <b>{zone.group} area</b>
-                  <ChevronRight size={12} />
-                  <b>{zone.short}</b>
-                  <span className="hierarchy-note">
-                    Proposed mapping · zones may span work centres
-                  </span>
-                </div>
-              </section>
-              <section className="scenario-panel">
-                <div className="scenario-intro">
-                  <div className="eyebrow">GUIDED WALKTHROUGH</div>
-                  <select
-                    aria-label="Choose teaching scenario"
-                    value={scenarioId}
-                    onChange={(e) => {
-                      setScenarioId(e.target.value);
-                      setStep(0);
-                      setPlaying(false);
-                    }}
-                  >
-                    {data.scenarios.map((s) => (
-                      <option key={s.id} value={s.id}>
-                        {s.title}
-                      </option>
-                    ))}
-                  </select>
-                  <p>{scenario.summary}</p>
-                  <Badge tone="amber">
-                    Synthetic sequence · no runtime actions
-                  </Badge>
-                </div>
-                <div className="scenario-content">
-                  <div className="scenario-steps">
-                    {scenario.steps.map((s, i) => (
-                      <button
-                        key={i}
-                        title={s.title}
-                        className={
-                          i === step ? "selected" : i < step ? "done" : ""
-                        }
-                        onClick={() => {
-                          setStep(i);
-                          setSelected(s.zone);
-                          setPlaying(false);
-                        }}
-                      >
-                        <span>{String(i + 1).padStart(2, "0")}</span>
-                        <i />
-                      </button>
-                    ))}
-                  </div>
-                  <div className="step-detail">
-                    <span className="level-pill">L{current.level}</span>
-                    <div>
-                      <h3>{current.title}</h3>
-                      <p>{current.text}</p>
-                      <code>{current.event}</code>
-                      <span className="step-actor">{current.actor}</span>
+                    <section className="atlas-panel">
+                      <div className="panel-toolbar">
+                        <div>
+                          <i className="purple-dot" />
+                          <strong>Factory Atlas</strong>
+                          <Badge>Experimental</Badge>
+                        </div>
+                        <div className="segmented">
+                          {["Site", "Area", "Line / assets"].map((f) => (
+                            <button
+                              key={f}
+                              className={focus === f ? "selected" : ""}
+                              onClick={() => setFocus(f)}
+                            >
+                              {f}
+                            </button>
+                          ))}
+                        </div>
+                        <button
+                          className="iconbtn"
+                          aria-label="Reset camera"
+                          onClick={() => {
+                            setFocus("Site");
+                            setReset((s) => s + 1);
+                          }}
+                        >
+                          <Maximize2 size={16} />
+                        </button>
+                      </div>
+                      <div className="atlas-body">
+                        <div className="map-area">
+                          <FactoryScene
+                            zones={data.zones}
+                            selected={zone.id}
+                            onSelect={setSelected}
+                            layer={layer}
+                            links={
+                              layer === "Events"
+                                ? data.eventLinks
+                                : data.materialLinks
+                            }
+                            focus={focus}
+                            reset={reset}
+                          />
+                          <div className="map-top">
+                            <span className="mono">SYNTHETIC / SITE 01</span>
+                            <span className="map-hint">
+                              Drag to orbit · scroll to zoom
+                            </span>
+                          </div>
+                          <div className="flow-switch">
+                            <span>OVERLAY</span>
+                            {["Material", "Events", "None"].map((l) => (
+                              <button
+                                key={l}
+                                className={layer === l ? "selected" : ""}
+                                onClick={() => setLayer(l)}
+                              >
+                                <i
+                                  style={{
+                                    background:
+                                      l === "Material"
+                                        ? "#e6b170"
+                                        : l === "Events"
+                                          ? "#b799ec"
+                                          : "#788292",
+                                  }}
+                                />
+                                {l}
+                              </button>
+                            ))}
+                          </div>
+                          <div className="map-caption">
+                            <span>SCHEMATIC GEOMETRY · THREE.JS</span>
+                            <span>Visualisation ≠ physical proof</span>
+                          </div>
+                        </div>
+                        <aside className="inspector">
+                          <div className="eyebrow">
+                            SELECTED ZONE <span>{zone.code}</span>
+                          </div>
+                          <select
+                            aria-label="Select factory zone"
+                            value={zone.id}
+                            onChange={(e) => setSelected(e.target.value)}
+                          >
+                            {data.zones.map((z) => (
+                              <option key={z.id} value={z.id}>
+                                {z.code} · {z.name}
+                              </option>
+                            ))}
+                          </select>
+                          <div className="inspect-heading">
+                            <h2>{zone.name}</h2>
+                            <button
+                              aria-label="Edit selected zone"
+                              className="iconbtn"
+                              onClick={() =>
+                                setEditor({ kind: "zones", item: zone })
+                              }
+                            >
+                              <Pencil size={15} />
+                            </button>
+                          </div>
+                          <p>{zone.role}</p>
+                          <dl>
+                            <dt>OPERATIONAL OWNER</dt>
+                            <dd>{zone.owner}</dd>
+                            <dt>ASSETS / WORK UNITS</dt>
+                            <dd className="asset-tags">
+                              {zone.assets.map((a) => (
+                                <span key={a}>{a}</span>
+                              ))}
+                            </dd>
+                          </dl>
+                          <div className="boundary">
+                            <span>
+                              <LockKeyhole size={13} />
+                              AUTHORITY BOUNDARY
+                            </span>
+                            <p>{zone.boundary}</p>
+                          </div>
+                          <div className="system-row">
+                            {zone.systems.map(([s, l]) => (
+                              <span key={s}>
+                                <b>L{l}</b>
+                                {s}
+                              </span>
+                            ))}
+                          </div>
+                          <button
+                            className="textbutton"
+                            onClick={() => go("teach")}
+                          >
+                            Explore operational meaning
+                            <ChevronRight size={14} />
+                          </button>
+                        </aside>
+                      </div>
+                      <div className="hierarchy-bar">
+                        <span>Equipment hierarchy</span>
+                        <b>Enterprise</b>
+                        <ChevronRight size={12} />
+                        <b>Site 01</b>
+                        <ChevronRight size={12} />
+                        <b>{zone.group} area</b>
+                        <ChevronRight size={12} />
+                        <b>{zone.short}</b>
+                        <span className="hierarchy-note">
+                          Proposed mapping · zones may span work centres
+                        </span>
+                      </div>
+                    </section>
+                    <section className="scenario-panel">
+                      <div className="scenario-intro">
+                        <div className="eyebrow">GUIDED WALKTHROUGH</div>
+                        <select
+                          aria-label="Choose teaching scenario"
+                          value={scenarioId}
+                          onChange={(e) => {
+                            setScenarioId(e.target.value);
+                            setStep(0);
+                            setPlaying(false);
+                          }}
+                        >
+                          {data.scenarios.map((s) => (
+                            <option key={s.id} value={s.id}>
+                              {s.title}
+                            </option>
+                          ))}
+                        </select>
+                        <p>{scenario.summary}</p>
+                        <Badge tone="amber">
+                          Synthetic sequence · no runtime actions
+                        </Badge>
+                      </div>
+                      <div className="scenario-content">
+                        <div className="scenario-steps">
+                          {scenario.steps.map((s, i) => (
+                            <button
+                              key={i}
+                              title={s.title}
+                              className={
+                                i === step ? "selected" : i < step ? "done" : ""
+                              }
+                              onClick={() => {
+                                setStep(i);
+                                setSelected(s.zone);
+                                setPlaying(false);
+                              }}
+                            >
+                              <span>{String(i + 1).padStart(2, "0")}</span>
+                              <i />
+                            </button>
+                          ))}
+                        </div>
+                        <div className="step-detail">
+                          <span className="level-pill">L{current.level}</span>
+                          <div>
+                            <h3>{current.title}</h3>
+                            <p>{current.text}</p>
+                            <code>{current.event}</code>
+                            <span className="step-actor">{current.actor}</span>
+                          </div>
+                        </div>
+                        <div className="play-controls">
+                          <button
+                            aria-label="Previous scenario step"
+                            className="iconbtn"
+                            disabled={step === 0}
+                            onClick={() => {
+                              setStep((s) => s - 1);
+                              setSelected(scenario.steps[step - 1].zone);
+                              setPlaying(false);
+                            }}
+                          >
+                            <ChevronLeft size={17} />
+                          </button>
+                          <button
+                            className="primary small-btn"
+                            onClick={() => {
+                              if (step === scenario.steps.length - 1)
+                                setStep(0);
+                              setPlaying(!playing);
+                            }}
+                          >
+                            {playing ? <Pause size={14} /> : <Play size={14} />}{" "}
+                            {playing ? "Pause" : "Play walkthrough"}
+                          </button>
+                          <button
+                            aria-label="Next scenario step"
+                            className="iconbtn"
+                            disabled={step >= scenario.steps.length - 1}
+                            onClick={() => {
+                              setStep((s) => s + 1);
+                              setSelected(scenario.steps[step + 1].zone);
+                              setPlaying(false);
+                            }}
+                          >
+                            <ChevronRight size={17} />
+                          </button>
+                          <span>
+                            {step + 1} / {scenario.steps.length}
+                          </span>
+                        </div>
+                      </div>
+                    </section>
+                    <div className="lower-grid">
+                      <article className="mini-card">
+                        <span className="eyebrow">OPEN TEACHING VEHICLE</span>
+                        <h3>ISA-95 Factory Atlas</h3>
+                        <p>
+                          Public synthetic model. Extend the geometry, lessons
+                          and evidence through reviewed contributions.
+                        </p>
+                        <Source url={LAB} label="Source & contributions" />
+                      </article>
+                      <article className="mini-card">
+                        <span className="eyebrow">NEXT DESIGN QUESTION</span>
+                        <h3>Where does an event become evidence?</h3>
+                        <p>
+                          Trace the difference between an observed state, a
+                          workflow result and an authorised release.
+                        </p>
+                        <button
+                          className="textbutton"
+                          onClick={() => go("teach")}
+                        >
+                          Enter teaching room
+                          <ArrowUpRight size={14} />
+                        </button>
+                      </article>
                     </div>
-                  </div>
-                  <div className="play-controls">
-                    <button
-                      aria-label="Previous scenario step"
-                      className="iconbtn"
-                      disabled={step === 0}
-                      onClick={() => {
-                        setStep((s) => s - 1);
-                        setSelected(scenario.steps[step - 1].zone);
-                        setPlaying(false);
-                      }}
-                    >
-                      <ChevronLeft size={17} />
-                    </button>
-                    <button
-                      className="primary small-btn"
-                      onClick={() => {
-                        if (step === scenario.steps.length - 1) setStep(0);
-                        setPlaying(!playing);
-                      }}
-                    >
-                      {playing ? <Pause size={14} /> : <Play size={14} />}{" "}
-                      {playing ? "Pause" : "Play walkthrough"}
-                    </button>
-                    <button
-                      aria-label="Next scenario step"
-                      className="iconbtn"
-                      disabled={step >= scenario.steps.length - 1}
-                      onClick={() => {
-                        setStep((s) => s + 1);
-                        setSelected(scenario.steps[step + 1].zone);
-                        setPlaying(false);
-                      }}
-                    >
-                      <ChevronRight size={17} />
-                    </button>
-                    <span>
-                      {step + 1} / {scenario.steps.length}
-                    </span>
-                  </div>
-                </div>
-              </section>
-              <div className="lower-grid">
-                <article className="mini-card">
-                  <span className="eyebrow">OPEN TEACHING VEHICLE</span>
-                  <h3>ISA-95 Factory Atlas</h3>
-                  <p>
-                    Public synthetic model. Extend the geometry, lessons and
-                    evidence through reviewed contributions.
-                  </p>
-                  <Source url={LAB} label="Source & contributions" />
-                </article>
-                <article className="mini-card">
-                  <span className="eyebrow">NEXT DESIGN QUESTION</span>
-                  <h3>Where does an event become evidence?</h3>
-                  <p>
-                    Trace the difference between an observed state, a workflow
-                    result and an authorised release.
-                  </p>
-                  <button className="textbutton" onClick={() => go("teach")}>
-                    Enter teaching room
-                    <ArrowUpRight size={14} />
-                  </button>
-                </article>
-              </div>
+                  </>
+                )}
+              </details>
             </>
           )}
           {tab === "board" && (
@@ -1047,10 +1075,16 @@ export default function Lab() {
                   <strong>Apathyte / public factory lab</strong>
                   <p>
                     <code>demokit/</code>
-                    <span>Proposed public work · no live repository sync</span>
+                    <span>
+                      Manually maintained workboard · no live repository sync
+                    </span>
                   </p>
                 </div>
                 <Source url={REPO} label="Open repository" />
+                <Source
+                  url={REPO + "/blob/main/demokit/docs/PROJECT_PLAN.md"}
+                  label="Project plan"
+                />
               </div>
               <div className="filterbar">
                 <div className="chips">
@@ -1147,9 +1181,9 @@ export default function Lab() {
               </div>
               <div className="footnote">
                 <LockKeyhole size={15} />
-                Local planning workboard: proposed branch names are examples.
-                Moving a card does not create a branch, merge a PR or run a
-                test. Open GitHub for current repository state.
+                Manually maintained workboard: proposed branch names are
+                examples. Moving a card does not create a branch, merge a PR or
+                run a test. Open GitHub for current repository state.
               </div>
             </>
           )}
@@ -1253,6 +1287,13 @@ export default function Lab() {
                       </summary>
                       <div className="evidence-detail">
                         <h4>{c.result}</h4>
+                        <p className="evidence-freshness">
+                          {c.date
+                            ? evidenceFreshness(c.date)
+                            : "No dated evidence"}
+                          . A recorded pass does not automatically apply to the
+                          current release or local edits.
+                        </p>
                         <div className="evidence-grid">
                           {[
                             ["REVISION", c.revision || "Not recorded"],

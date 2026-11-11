@@ -12,6 +12,7 @@ export default function FactoryScene({
   links,
   focus,
   reset,
+  blockedZone = "",
 }: {
   zones: Zone[];
   selected: string;
@@ -20,10 +21,19 @@ export default function FactoryScene({
   links: string[][];
   focus: string;
   reset: number;
+  blockedZone?: string;
 }) {
   const host = useRef<HTMLDivElement>(null),
     cb = useRef(onSelect),
     [fallback, setFallback] = useState(false);
+  const pose = useRef<{
+    position: THREE.Vector3;
+    target: THREE.Vector3;
+    zoom: number;
+    selected: string;
+    focus: string;
+    reset: number;
+  } | null>(null);
   cb.current = onSelect;
   useEffect(() => {
     const el = host.current;
@@ -225,8 +235,15 @@ export default function FactoryScene({
         const f = zones.find((z) => z.id === a),
           t = zones.find((z) => z.id === b);
         if (!f || !t) return;
-        const h = layer === "Events" ? 5 : 0.5,
-          color = layer === "Events" ? 0xba9df3 : 0xe8b269,
+        const blocked = layer === "Material" && b === blockedZone;
+        const h = layer === "Authority" ? 8 : layer === "Events" ? 5 : 0.5,
+          color = blocked
+            ? 0xfb887c
+            : layer === "Authority"
+              ? 0xc4afff
+              : layer === "Events"
+                ? 0x75d8e7
+                : 0xe8b269,
           curve = new THREE.CatmullRomCurve3([
             new THREE.Vector3(f.x, h, f.z),
             new THREE.Vector3(
@@ -236,16 +253,29 @@ export default function FactoryScene({
             ),
             new THREE.Vector3(t.x, h, t.z),
           ]);
+        const line = new THREE.Line(
+          new THREE.BufferGeometry().setFromPoints(curve.getPoints(60)),
+          layer === "Material" && !blocked
+            ? new THREE.LineBasicMaterial({ color })
+            : new THREE.LineDashedMaterial({
+                color,
+                dashSize: layer === "Authority" ? 0.16 : 0.65,
+                gapSize: 0.4,
+              }),
+        );
+        line.computeLineDistances();
+        scene.add(line);
         scene.add(
-          new THREE.Mesh(
-            new THREE.TubeGeometry(curve, 24, 0.045, 5, false),
-            new THREE.MeshBasicMaterial({
-              color,
-              transparent: true,
-              opacity: 0.6,
-            }),
+          new THREE.ArrowHelper(
+            curve.getTangent(0.9).normalize(),
+            curve.getPoint(0.9),
+            1.2,
+            color,
+            0.9,
+            0.6,
           ),
         );
+        if (blocked) return;
         const mesh = new THREE.Mesh(
           new THREE.SphereGeometry(0.16, 8, 8),
           new THREE.MeshBasicMaterial({ color }),
@@ -254,14 +284,58 @@ export default function FactoryScene({
         particles.push({ mesh, curve, offset: i * 0.17 });
       });
     const chosen = zones.find((z) => z.id === selected);
-    if (chosen && focus !== "Site") {
-      ctrl.target.set(chosen.x, 0, chosen.z);
-      cam.position.set(chosen.x + 35, 42, chosen.z + 40);
-      cam.zoom = focus === "Area" ? 1.65 : 2.8;
+    let reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const previous = pose.current;
+    const needsFocus =
+      !previous ||
+      previous.focus !== focus ||
+      previous.reset !== reset ||
+      (focus !== "Site" && previous.selected !== selected);
+    const target =
+      chosen && focus !== "Site"
+        ? new THREE.Vector3(chosen.x, 0, chosen.z)
+        : new THREE.Vector3(5, 0, 4);
+    const position =
+      chosen && focus !== "Site"
+        ? new THREE.Vector3(chosen.x + 35, 42, chosen.z + 40)
+        : new THREE.Vector3(62, 65, 72);
+    const zoom =
+      chosen && focus !== "Site" ? (focus === "Area" ? 1.65 : 2.8) : 1;
+    if (previous) {
+      cam.position.copy(previous.position);
+      ctrl.target.copy(previous.target);
+      cam.zoom = previous.zoom;
     }
+    let moving = needsFocus && !reduced && !!previous;
+    if (needsFocus && !moving) {
+      cam.position.copy(position);
+      ctrl.target.copy(target);
+      cam.zoom = zoom;
+    }
+    const stopMoving = () => {
+      moving = false;
+    };
+    ctrl.addEventListener("start", stopMoving);
+    const media = matchMedia("(prefers-reduced-motion: reduce)");
+    const motionChange = () => {
+      reduced = media.matches;
+      if (reduced && moving) {
+        cam.position.copy(position);
+        ctrl.target.copy(target);
+        cam.zoom = zoom;
+        cam.updateProjectionMatrix();
+        moving = false;
+      }
+    };
+    media.addEventListener("change", motionChange);
+    const contextLost = (e: Event) => {
+      e.preventDefault();
+      setFallback(true);
+    };
+    renderer.domElement.addEventListener("webglcontextlost", contextLost);
     const resize = () => {
-      const w = el.clientWidth,
-        h = el.clientHeight;
+      const w = Math.max(1, el.clientWidth),
+        h = Math.max(1, el.clientHeight);
       renderer.setSize(w, h);
       cam.left = (-28.5 * w) / h;
       cam.right = (28.5 * w) / h;
@@ -292,9 +366,22 @@ export default function FactoryScene({
     renderer.domElement.addEventListener("pointerdown", onDown);
     renderer.domElement.addEventListener("pointerup", onUp);
     let frame = 0;
-    const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
     function render(t: number) {
       frame = requestAnimationFrame(render);
+      if (moving) {
+        cam.position.lerp(position, 0.12);
+        ctrl.target.lerp(target, 0.12);
+        cam.zoom += (zoom - cam.zoom) * 0.12;
+        cam.updateProjectionMatrix();
+        if (cam.position.distanceTo(position) < 0.01) {
+          cam.position.copy(position);
+          ctrl.target.copy(target);
+          cam.zoom = zoom;
+          cam.updateProjectionMatrix();
+          moving = false;
+        }
+      }
       ctrl.update();
       particles.forEach((p) =>
         p.mesh.position.copy(
@@ -307,9 +394,19 @@ export default function FactoryScene({
     return () => {
       cancelAnimationFrame(frame);
       ro.disconnect();
+      pose.current = {
+        position: cam.position.clone(),
+        target: ctrl.target.clone(),
+        zoom: cam.zoom,
+        selected,
+        focus,
+        reset,
+      };
+      media.removeEventListener("change", motionChange);
+      renderer.domElement.removeEventListener("webglcontextlost", contextLost);
       ctrl.dispose();
       scene.traverse((o) => {
-        if (o instanceof THREE.Mesh || o instanceof THREE.LineSegments) {
+        if (o instanceof THREE.Mesh || o instanceof THREE.Line) {
           o.geometry.dispose();
           const mats = Array.isArray(o.material) ? o.material : [o.material];
           mats.forEach((m) => m.dispose());
@@ -323,7 +420,7 @@ export default function FactoryScene({
       renderer.dispose();
       renderer.domElement.remove();
     };
-  }, [zones, selected, layer, links, focus, reset]);
+  }, [zones, selected, layer, links, focus, reset, blockedZone]);
   return (
     <div className="scene" ref={host}>
       {fallback && (
@@ -335,6 +432,7 @@ export default function FactoryScene({
             layer={layer}
             links={links}
             focus={focus}
+            blockedZone={blockedZone}
           />
           <span className="fallback-label">
             ISOMETRIC VIEW · WEBGL UNAVAILABLE

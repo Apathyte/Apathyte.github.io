@@ -14,14 +14,32 @@
       "d": 9,
       "role": "Check arriving deliveries against expected identity and condition.",
       "owner": "Receiving team",
-      "assets": ["Dock", "Pallet scan", "Inspection bay"],
-      "systems": [
-        ["Devices", 1],
-        ["Supervision", 2],
-        ["Operations", 3],
-        ["Business planning", 4]
+      "assets": [
+        "Dock",
+        "Pallet scan",
+        "Inspection bay"
       ],
-      "events": ["receiving.state.observed"],
+      "systems": [
+        [
+          "Devices",
+          1
+        ],
+        [
+          "Supervision",
+          2
+        ],
+        [
+          "Operations",
+          3
+        ],
+        [
+          "Business planning",
+          4
+        ]
+      ],
+      "events": [
+        "receiving.state.observed"
+      ],
       "decision": "Who accepts damaged or unidentified stock?",
       "boundary": "A scanned delivery still needs acceptance."
     },
@@ -38,14 +56,32 @@
       "d": 9,
       "role": "Hold lots with explicit identity, location and availability.",
       "owner": "Warehouse team",
-      "assets": ["Storage racks", "Lot labels", "Picking bay"],
-      "systems": [
-        ["Devices", 1],
-        ["Supervision", 2],
-        ["Operations", 3],
-        ["Business planning", 4]
+      "assets": [
+        "Storage racks",
+        "Lot labels",
+        "Picking bay"
       ],
-      "events": ["storage.state.observed"],
+      "systems": [
+        [
+          "Devices",
+          1
+        ],
+        [
+          "Supervision",
+          2
+        ],
+        [
+          "Operations",
+          3
+        ],
+        [
+          "Business planning",
+          4
+        ]
+      ],
+      "events": [
+        "storage.state.observed"
+      ],
       "decision": "Which stock is eligible for this order?",
       "boundary": "Physical presence does not establish availability for use."
     },
@@ -62,14 +98,32 @@
       "d": 9,
       "role": "Select and measure ingredients for a fictional batch.",
       "owner": "Preparation operator",
-      "assets": ["Weigh scale", "Staging bins", "Verification station"],
-      "systems": [
-        ["Devices", 1],
-        ["Supervision", 2],
-        ["Operations", 3],
-        ["Business planning", 4]
+      "assets": [
+        "Weigh scale",
+        "Staging bins",
+        "Verification station"
       ],
-      "events": ["dosing.state.observed"],
+      "systems": [
+        [
+          "Devices",
+          1
+        ],
+        [
+          "Supervision",
+          2
+        ],
+        [
+          "Operations",
+          3
+        ],
+        [
+          "Business planning",
+          4
+        ]
+      ],
+      "events": [
+        "dosing.state.observed"
+      ],
       "decision": "What prevents the wrong lot from entering the process?",
       "boundary": "A measured quantity must belong to the approved material and task."
     },
@@ -86,14 +140,32 @@
       "d": 9,
       "role": "Transform a fictional product using an ordered sequence.",
       "owner": "Line team",
-      "assets": ["Mixing vessel", "Transfer pump", "Temperature sensor"],
-      "systems": [
-        ["Devices", 1],
-        ["Supervision", 2],
-        ["Operations", 3],
-        ["Business planning", 4]
+      "assets": [
+        "Mixing vessel",
+        "Transfer pump",
+        "Temperature sensor"
       ],
-      "events": ["lineA.state.observed"],
+      "systems": [
+        [
+          "Devices",
+          1
+        ],
+        [
+          "Supervision",
+          2
+        ],
+        [
+          "Operations",
+          3
+        ],
+        [
+          "Business planning",
+          4
+        ]
+      ],
+      "events": [
+        "lineA.state.observed"
+      ],
       "decision": "What evidence supports operation completion?",
       "boundary": "Device completion alone does not close the production order."
     },
@@ -110,14 +182,32 @@
       "d": 9,
       "role": "Provide the services needed by multiple work centres.",
       "owner": "Utilities team",
-      "assets": ["Service tanks", "Pumps", "Meter"],
-      "systems": [
-        ["Devices", 1],
-        ["Supervision", 2],
-        ["Operations", 3],
-        ["Business planning", 4]
+      "assets": [
+        "Service tanks",
+        "Pumps",
+        "Meter"
       ],
-      "events": ["utilities.state.observed"],
+      "systems": [
+        [
+          "Devices",
+          1
+        ],
+        [
+          "Supervision",
+          2
+        ],
+        [
+          "Operations",
+          3
+        ],
+        [
+          "Business planning",
+          4
+        ]
+      ],
+      "events": [
+        "utilities.state.observed"
+      ],
       "decision": "Which orders are affected by a service constraint?",
       "boundary": "A shared resource can limit several lines at once."
     },
@@ -134,14 +224,32 @@
       "d": 9,
       "role": "Assess faults and return equipment through a controlled handover.",
       "owner": "Maintenance team",
-      "assets": ["Work bench", "Tools", "Spare parts"],
-      "systems": [
-        ["Devices", 1],
-        ["Supervision", 2],
-        ["Operations", 3],
-        ["Business planning", 4]
+      "assets": [
+        "Work bench",
+        "Tools",
+        "Spare parts"
       ],
-      "events": ["workshop.state.observed"],
+      "systems": [
+        [
+          "Devices",
+          1
+        ],
+        [
+          "Supervision",
+          2
+        ],
+        [
+          "Operations",
+          3
+        ],
+        [
+          "Business planning",
+          4
+        ]
+      ],
+      "events": [
+        "workshop.state.observed"
+      ],
       "decision": "Who confirms the equipment can return to service?",
       "boundary": "Repair completion and production release are separate decisions."
     },
@@ -158,14 +266,32 @@
       "d": 9,
       "role": "Evaluate samples and record a disposition for a fictional lot.",
       "owner": "Quality team",
-      "assets": ["Sample bench", "Test instrument", "Hold area"],
-      "systems": [
-        ["Devices", 1],
-        ["Supervision", 2],
-        ["Operations", 3],
-        ["Business planning", 4]
+      "assets": [
+        "Sample bench",
+        "Test instrument",
+        "Hold area"
       ],
-      "events": ["quality.state.observed"],
+      "systems": [
+        [
+          "Devices",
+          1
+        ],
+        [
+          "Supervision",
+          2
+        ],
+        [
+          "Operations",
+          3
+        ],
+        [
+          "Business planning",
+          4
+        ]
+      ],
+      "events": [
+        "quality.state.observed"
+      ],
       "decision": "Who can release the lot and on what basis?",
       "boundary": "A test result is evidence for an authorised disposition."
     },
@@ -182,14 +308,32 @@
       "d": 9,
       "role": "Show an alternative route with its own capability and capacity.",
       "owner": "Line team",
-      "assets": ["Process vessel", "Transfer belt", "State sensor"],
-      "systems": [
-        ["Devices", 1],
-        ["Supervision", 2],
-        ["Operations", 3],
-        ["Business planning", 4]
+      "assets": [
+        "Process vessel",
+        "Transfer belt",
+        "State sensor"
       ],
-      "events": ["lineB.state.observed"],
+      "systems": [
+        [
+          "Devices",
+          1
+        ],
+        [
+          "Supervision",
+          2
+        ],
+        [
+          "Operations",
+          3
+        ],
+        [
+          "Business planning",
+          4
+        ]
+      ],
+      "events": [
+        "lineB.state.observed"
+      ],
       "decision": "Can the work move here without changing its requirements?",
       "boundary": "An alternative route needs capability and resource confirmation."
     },
@@ -206,14 +350,32 @@
       "d": 9,
       "role": "Coordinate the current shift and investigate exceptions.",
       "owner": "Shift coordinator",
-      "assets": ["Status wall", "Work queue", "Exception log"],
-      "systems": [
-        ["Devices", 1],
-        ["Supervision", 2],
-        ["Operations", 3],
-        ["Business planning", 4]
+      "assets": [
+        "Status wall",
+        "Work queue",
+        "Exception log"
       ],
-      "events": ["control.state.observed"],
+      "systems": [
+        [
+          "Devices",
+          1
+        ],
+        [
+          "Supervision",
+          2
+        ],
+        [
+          "Operations",
+          3
+        ],
+        [
+          "Business planning",
+          4
+        ]
+      ],
+      "events": [
+        "control.state.observed"
+      ],
       "decision": "Which person or system may act on this exception?",
       "boundary": "Visibility across a site does not grant every command permission."
     },
@@ -230,14 +392,32 @@
       "d": 9,
       "role": "Translate business demand into an achievable production commitment.",
       "owner": "Planning team",
-      "assets": ["Demand queue", "Resource calendar", "Order list"],
-      "systems": [
-        ["Devices", 1],
-        ["Supervision", 2],
-        ["Operations", 3],
-        ["Business planning", 4]
+      "assets": [
+        "Demand queue",
+        "Resource calendar",
+        "Order list"
       ],
-      "events": ["planning.state.observed"],
+      "systems": [
+        [
+          "Devices",
+          1
+        ],
+        [
+          "Supervision",
+          2
+        ],
+        [
+          "Operations",
+          3
+        ],
+        [
+          "Business planning",
+          4
+        ]
+      ],
+      "events": [
+        "planning.state.observed"
+      ],
       "decision": "What must be checked before committing the sequence?",
       "boundary": "A desired due date does not prove that execution is feasible."
     },
@@ -254,14 +434,32 @@
       "d": 9,
       "role": "Pack released material and preserve its identity.",
       "owner": "Packing team",
-      "assets": ["Packaging cell", "Label printer", "Check station"],
-      "systems": [
-        ["Devices", 1],
-        ["Supervision", 2],
-        ["Operations", 3],
-        ["Business planning", 4]
+      "assets": [
+        "Packaging cell",
+        "Label printer",
+        "Check station"
       ],
-      "events": ["packing.state.observed"],
+      "systems": [
+        [
+          "Devices",
+          1
+        ],
+        [
+          "Supervision",
+          2
+        ],
+        [
+          "Operations",
+          3
+        ],
+        [
+          "Business planning",
+          4
+        ]
+      ],
+      "events": [
+        "packing.state.observed"
+      ],
       "decision": "Which identity leaves the line on each pack?",
       "boundary": "Labels must refer to the right released lot and pack specification."
     },
@@ -278,14 +476,32 @@
       "d": 9,
       "role": "Stage traceable finished goods for outbound allocation.",
       "owner": "Distribution team",
-      "assets": ["Finished racks", "Allocation queue", "Pallet labels"],
-      "systems": [
-        ["Devices", 1],
-        ["Supervision", 2],
-        ["Operations", 3],
-        ["Business planning", 4]
+      "assets": [
+        "Finished racks",
+        "Allocation queue",
+        "Pallet labels"
       ],
-      "events": ["finished.state.observed"],
+      "systems": [
+        [
+          "Devices",
+          1
+        ],
+        [
+          "Supervision",
+          2
+        ],
+        [
+          "Operations",
+          3
+        ],
+        [
+          "Business planning",
+          4
+        ]
+      ],
+      "events": [
+        "finished.state.observed"
+      ],
       "decision": "Is the selected pallet eligible for this shipment?",
       "boundary": "Stock status, reservation and location are distinct facts."
     },
@@ -302,14 +518,32 @@
       "d": 9,
       "role": "Verify an outbound load and record the handover.",
       "owner": "Dispatch team",
-      "assets": ["Loading dock", "Shipment check", "Handover record"],
-      "systems": [
-        ["Devices", 1],
-        ["Supervision", 2],
-        ["Operations", 3],
-        ["Business planning", 4]
+      "assets": [
+        "Loading dock",
+        "Shipment check",
+        "Handover record"
       ],
-      "events": ["shipping.state.observed"],
+      "systems": [
+        [
+          "Devices",
+          1
+        ],
+        [
+          "Supervision",
+          2
+        ],
+        [
+          "Operations",
+          3
+        ],
+        [
+          "Business planning",
+          4
+        ]
+      ],
+      "events": [
+        "shipping.state.observed"
+      ],
       "decision": "Which record confirms what was actually shipped?",
       "boundary": "A vehicle leaving is not by itself a reconciled goods issue."
     }
@@ -537,24 +771,76 @@
     }
   ],
   "materialLinks": [
-    ["receiving", "storage"],
-    ["storage", "dosing"],
-    ["dosing", "lineA"],
-    ["dosing", "lineB"],
-    ["lineA", "quality"],
-    ["lineB", "quality"],
-    ["quality", "packing"],
-    ["packing", "finished"],
-    ["finished", "shipping"]
+    [
+      "receiving",
+      "storage"
+    ],
+    [
+      "storage",
+      "dosing"
+    ],
+    [
+      "dosing",
+      "lineA"
+    ],
+    [
+      "dosing",
+      "lineB"
+    ],
+    [
+      "lineA",
+      "quality"
+    ],
+    [
+      "lineB",
+      "quality"
+    ],
+    [
+      "quality",
+      "packing"
+    ],
+    [
+      "packing",
+      "finished"
+    ],
+    [
+      "finished",
+      "shipping"
+    ]
   ],
   "eventLinks": [
-    ["lineA", "control"],
-    ["lineB", "control"],
-    ["quality", "control"],
-    ["utilities", "control"],
-    ["control", "planning"]
+    [
+      "lineA",
+      "control"
+    ],
+    [
+      "lineB",
+      "control"
+    ],
+    [
+      "quality",
+      "control"
+    ],
+    [
+      "utilities",
+      "control"
+    ],
+    [
+      "control",
+      "planning"
+    ]
   ],
   "work": [
+    {
+      "id": "w-learning",
+      "title": "Learning studio: approved rework",
+      "type": "Documentation",
+      "status": "Retained",
+      "branch": "main \u00b7 public learning lab",
+      "detail": "Four fictional branching lessons, comparison views, boundaries, presentation mode and a bounded slice-mapping preview. This card is manually maintained.",
+      "next": "Use the project plan and validation record; GPU verification and facilitated teaching feedback remain open.",
+      "url": "https://github.com/Apathyte/Apathyte.github.io/blob/main/demokit/docs/PROJECT_PLAN.md"
+    },
     {
       "id": "w-model",
       "title": "Extend a work unit",
@@ -706,7 +992,7 @@
       "evidence": "The public lab renders procedural meshes and an SVG fallback. No equal-scene comparison is published here.",
       "limit": "No Blender or OIP code, model, licence or runtime is bundled. The exact OIP project/version and reuse terms must be recorded before integration.",
       "risk": "A richer picture may imply physical accuracy that has not been demonstrated.",
-      "next": "Define an equivalent scene, acceptance criteria, authoring effort and runtime budget. Record each candidate’s provenance and licence.",
+      "next": "Define an equivalent scene, acceptance criteria, authoring effort and runtime budget. Record each candidate\u2019s provenance and licence.",
       "url": "https://github.com/Apathyte/Apathyte.github.io/blob/main/demokit/docs/DECISIONS.md"
     },
     {
@@ -750,12 +1036,24 @@
       "title": "Open source with an explicit boundary",
       "status": "Bounded decision",
       "context": "Publishing a teaching vehicle must not imply that other software or business material is licensed with it.",
-      "choice": "Apply MIT to the public lab’s original code, synthetic content and documentation. Retain third-party licence notices separately.",
+      "choice": "Apply MIT to the public lab\u2019s original code, synthetic content and documentation. Retain third-party licence notices separately.",
       "evidence": "Scoped LICENSE, THIRD_PARTY_NOTICES.txt, dependency lockfile and public release review are included.",
       "limit": "The licence covers this directory only; it grants no rights to trademarks, customer material or software outside it.",
       "risk": "A future contribution may bring material its author has no right to publish.",
       "next": "Require authors to identify origins and confirm permission to contribute; review both source and generated output.",
       "url": "https://github.com/Apathyte/Apathyte.github.io/blob/main/demokit/LICENSE"
+    },
+    {
+      "id": "learning",
+      "title": "A proposed response is not a released handover",
+      "status": "Bounded decision",
+      "context": "An acceptable decision may still have prerequisites and unresolved material restrictions.",
+      "choice": "Keep constrained handovers blocked in proposed view. Separate the reference assumption from the evidence needed to release an actual hold.",
+      "evidence": "The scripted lesson engine retains the block for every proposed response; tests cover all branches.",
+      "limit": "Qualitative teaching only. No physical effect, execution or acceptance is inferred.",
+      "risk": "Visitors could read an attractive proposed state as a completed operational change.",
+      "next": "Review the four lessons with a facilitator and validate GPU rendering separately.",
+      "url": "https://github.com/Apathyte/Apathyte.github.io/blob/main/demokit/docs/DESIGN.md"
     }
   ]
 }

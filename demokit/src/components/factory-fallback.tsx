@@ -1,4 +1,5 @@
 "use client";
+import { useId } from "react";
 import type { Zone } from "../lib/lab-data";
 export default function FactoryFallback({
   zones,
@@ -7,6 +8,7 @@ export default function FactoryFallback({
   layer,
   links,
   focus,
+  blockedZone = "",
 }: {
   zones: Zone[];
   selected: string;
@@ -14,7 +16,9 @@ export default function FactoryFallback({
   layer: string;
   links: string[][];
   focus: string;
+  blockedZone?: string;
 }) {
+  const uid = useId().replace(/:/g, "");
   const project = (x: number, z: number, y = 0) => [
       440 + (x - z) * 8.4,
       185 + (x + z) * 3.8 - y * 10,
@@ -81,8 +85,19 @@ export default function FactoryFallback({
       aria-label="Interactive isometric factory model; WebGL-free fallback"
     >
       <defs>
+        <marker
+          id={uid + "arrow"}
+          viewBox="0 0 10 10"
+          refX="9"
+          refY="5"
+          markerWidth="5"
+          markerHeight="5"
+          orient="auto-start-reverse"
+        >
+          <path d="M 0 0 L 10 5 L 0 10 z" fill="context-stroke" />
+        </marker>
         <pattern
-          id="sitegrid"
+          id={uid + "grid"}
           width="24"
           height="24"
           patternUnits="userSpaceOnUse"
@@ -94,7 +109,7 @@ export default function FactoryFallback({
             strokeWidth=".6"
           />
         </pattern>
-        <filter id="softshadow">
+        <filter id={uid + "shadow"}>
           <feDropShadow dx="0" dy="7" stdDeviation="8" floodOpacity=".35" />
         </filter>
       </defs>
@@ -103,9 +118,9 @@ export default function FactoryFallback({
         y="-1000"
         width="4000"
         height="4000"
-        fill="url(#sitegrid)"
+        fill={`url(#${uid}grid)`}
       />
-      <g filter="url(#softshadow)">
+      <g filter={`url(#${uid}shadow)`}>
         {box(5, 4, 65, 46, 0.7, ["#252d3e", "#171e2d", "#202638"], -1)}
         {box(5, 23, 61, 2.5, 0.1, ["#131c29", "#131c29", "#131c29"])}
       </g>
@@ -127,12 +142,28 @@ export default function FactoryFallback({
           return (
             <path
               key={i}
-              d={`M${p1} Q${(p1[0] + p2[0]) / 2} ${(p1[1] + p2[1]) / 2 - (layer === "Events" ? 65 : 0)} ${p2}`}
-              stroke={layer === "Events" ? "#bea1f5" : "#d8ab70"}
-              strokeWidth="1.3"
-              strokeDasharray={layer === "Events" ? "5 4" : "none"}
+              d={`M${p1} Q${(p1[0] + p2[0]) / 2} ${(p1[1] + p2[1]) / 2 - (layer === "Authority" ? 85 : layer === "Events" ? 65 : 0)} ${p2}`}
+              stroke={
+                layer === "Material" && b === blockedZone
+                  ? "#fb887c"
+                  : layer === "Authority"
+                    ? "#c4afff"
+                    : layer === "Events"
+                      ? "#75d8e7"
+                      : "#e8b269"
+              }
+              strokeWidth="2.2"
+              strokeDasharray={
+                layer === "Authority"
+                  ? "1 4"
+                  : layer === "Events" ||
+                      (layer === "Material" && b === blockedZone)
+                    ? "5 4"
+                    : "none"
+              }
+              markerEnd={`url(#${uid}arrow)`}
               fill="none"
-              opacity=".8"
+              opacity="1"
             />
           );
         })}

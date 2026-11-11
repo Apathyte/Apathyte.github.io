@@ -12,3 +12,20 @@ Each gate needs public evidence identifying revision, environment, command, expe
 | Hardware | Authorised machine and operator acceptance | No real equipment is included or controlled. |
 
 Run `npm test` and the build locally. Public CI records repeatable checks against the public commit. Browser verification is described in `PUBLIC_RELEASE_REVIEW.md`.
+
+## Learning studio regression
+
+`npm test` includes all response branches, required-choice gates, rejected
+transitions, comparison invariants, legacy workspace preservation, proposal
+validation and separate presentation preferences. Browser review must exercise:
+
+1. Reference → disruption → response → consequence → evidence → reset.
+2. A bounded response and a rejected shortcut; neither releases held material.
+3. Comparison keeps selection/viewpoint; overview and follow controls work.
+4. Material/event/authority legends, endpoint lists and boundary dependencies.
+5. Presentation entry/exit, keyboard selection and a 390px viewport.
+6. Invalid JSON rejection, edited v1 import, save/reload and baseline restoration.
+7. Slice-mapping preview resolves known IDs and labels unknown mappings.
+8. Existing workboard, teaching, decisions and six local integrity checks.
+
+Record GPU and reduced-motion camera acceptance separately from the SVG fallback.

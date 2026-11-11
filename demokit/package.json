@@ -1,6 +1,6 @@
 {
   "name": "demokit-factory-lab",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "type": "module",
   "license": "MIT",
@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "build": "tsc --noEmit && vite build && node scripts/notices.mjs",
-    "test": "node --experimental-strip-types --test scripts/model.test.mjs",
+    "test": "node --experimental-strip-types --test scripts/*.test.mjs",
     "audit:release": "python3 scripts/audit_release.py",
     "release": "npm run build && node scripts/release.mjs && npm run audit:release"
   },

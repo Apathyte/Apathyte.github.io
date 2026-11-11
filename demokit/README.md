@@ -31,3 +31,16 @@ The lockfile is committed. Vite compiles the client into `dist/`; the release sc
 The original code, synthetic data and documentation in **this `demokit/` directory only** are MIT-licensed. See [LICENSE](LICENSE). The rest of the website is outside this grant. Bundled dependencies retain their licences in [THIRD_PARTY_NOTICES.txt](THIRD_PARTY_NOTICES.txt). The lockfile also identifies development dependencies, which are not shipped as browser code.
 
 This independent project is not an official ATS Global product or website. Names of standards and third-party tools identify concepts or candidates; no trademark rights or endorsement are granted. No other repository, employer or customer material is licensed by this release.
+
+## Learning studio rework
+
+Start with [the approved project plan](docs/PROJECT_PLAN.md). Four fictional
+lessons cover shortage, quality hold, changeover and controlled workaround. Each
+has six stages, branching responses, authority boundaries and debrief questions.
+Compare reference/current/proposed assumptions on the same slice. Use presentation
+mode for guided sessions, or expand the full model for the original walkthroughs.
+
+The [design direction](docs/DESIGN.md), [mapping contract](docs/SLICE_CONTRACT.md)
+and [validation record](docs/REWORK_VALIDATION.md) document implementation and
+limits. New catalogue/presentation schemas are separate from existing workspace
+JSON. The workboard is manually maintained, not a live repository dashboard.

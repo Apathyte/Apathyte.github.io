@@ -25,20 +25,20 @@ required. Explicitly deferred capabilities remain deferred.
 ### P0 — Lock the scope and establish a recoverable baseline
 
 - [x] Record approved scope, boundaries, sequence and acceptance criteria here.
-- [ ] Commit this plan to the public repository with the release allowlist updated.
-- [ ] Check current source and preserve existing browser-local workspaces.
+- [x] Commit this plan to the public repository with the release allowlist updated.
+- [x] Check current source and preserve existing browser-local workspaces.
 
 Gate: the plan is durable in GitHub; no private discussion transcript or customer
 identifiers are included. Existing working content remains available.
 
 ### P1 — Story and visual direction (S1–S4, V1)
 
-- [ ] Write the purpose and first lesson before adapting the renderer.
-- [ ] Establish a six-part lesson: situation, reference, disruption, response,
+- [x] Write the purpose and first lesson before adapting the renderer.
+- [x] Establish a six-part lesson: situation, reference, disruption, response,
   consequences, evidence/debrief.
-- [ ] Specify four fictional scenarios: shortage, quality hold, changeover and
+- [x] Specify four fictional scenarios: shortage, quality hold, changeover and
   controlled workaround. Name authority, assumptions and residual risk in each.
-- [ ] Record a design spike: layout, colour roles, typography, mobile and
+- [x] Record a design spike: layout, colour roles, typography, mobile and
   accessibility choices. Apply a coherent direction without adding remote fonts.
 
 Gate: one lesson can be facilitated without a 3D model; the design supports that
@@ -46,14 +46,14 @@ lesson. No source customer process or real operational figures are published.
 
 ### P2 — First complete lesson: material shortage (V2–V5, F1–F2, B1–B2)
 
-- [ ] Separate versioned learning definitions, model data, presentation state and
+- [x] Separate versioned learning definitions, model data, presentation state and
   evidence. Keep legacy workspace import/save supported.
-- [ ] Build explicit disruption/response transitions and reset behaviour.
-- [ ] Compare reference, current constraints and proposed change on the same slice.
-- [ ] Show material, event and authority overlays with labels and distinct styles.
-- [ ] Focus the camera/selection per step, with overview and reduced-motion support.
-- [ ] Show upstream/downstream/shared-resource/authority boundary connections.
-- [ ] Display consequences and questions, including unresolved or unsafe responses.
+- [x] Build explicit disruption/response transitions and reset behaviour.
+- [x] Compare reference, current constraints and proposed change on the same slice.
+- [x] Show material, event and authority overlays with labels and distinct styles.
+- [x] Focus the camera/selection per step, with overview and reduced-motion support.
+- [x] Show upstream/downstream/shared-resource/authority boundary connections.
+- [x] Display consequences and questions, including unresolved or unsafe responses.
 
 Gate: a visitor can follow the reference, introduce a shortage, choose a response,
 explain downstream effects and reset. Viewpoint survives comparison changes.
@@ -61,25 +61,25 @@ These are deterministic teaching branches, explicitly not physical simulation.
 
 ### P3 — Extend and facilitate (S3–S4, F3, B3)
 
-- [ ] Reuse the same engine for quality hold, changeover and controlled workaround.
-- [ ] Add presentation mode, accessible navigation and optional facilitator notes.
-- [ ] Define a bounded factory-slice JSON contract and mapping preview; document
+- [x] Reuse the same engine for quality hold, changeover and controlled workaround.
+- [x] Add presentation mode, accessible navigation and optional facilitator notes.
+- [x] Define a bounded factory-slice JSON contract and mapping preview; document
   unsupported formats. Do not build arbitrary UML/document interpretation.
-- [ ] Keep existing workboard, acceptance register, teaching room and decision log.
+- [x] Keep existing workboard, acceptance register, teaching room and decision log.
 
 Gate: lessons remain data-authored; a presenter can use the lab on a projector and
 small screen. Imported slice proposals cannot silently overwrite the workspace.
 
 ### P4 — Verify, publish and record (M1–M3)
 
-- [ ] Test transitions, invalid actions, reference/current/proposed consistency,
+- [x] Test transitions, invalid actions, reference/current/proposed consistency,
   legacy saves/import migration and broken references.
-- [ ] Test primary browser journeys, keyboard access, mobile layout and SVG fallback.
+- [x] Test primary browser journeys, keyboard access, mobile layout and SVG fallback.
 - [ ] Exercise WebGL if the environment supports it; otherwise keep that gap open.
-- [ ] Re-run release allowlist/disclosure checks, dependency audit and build checks.
+- [x] Re-run release allowlist/disclosure checks, dependency audit and build checks.
 - [ ] Publish only reviewed source/assets and record the exact source revision,
   environment, date and limitations for evidence.
-- [ ] Update the workboard as manually maintained; never imply live GitHub sync.
+- [x] Update the workboard as manually maintained; never imply live GitHub sync.
 - [ ] Confirm Pages deployment and inspect the live experience.
 
 Gate: tests/build/release checks pass; browser verification is reported honestly;
@@ -158,7 +158,18 @@ customer workspaces. B3 is the bounded contract first, not those integrations.
 - 2026-11-10: Scope approved. Baseline source recovered and public GitHub head
   confirmed. P0 started; existing static/local-save architecture retained.
 
+- 2026-11-10: P0–P3 implemented. Four original fictional lessons use the same
+  transition engine. Existing v1 model workspaces are preserved; slice proposals
+  are preview-only. Design direction and schema boundaries recorded.
+- 2026-11-10: Browser review caught a misleading proposed flow: a reasonable
+  response must not clear a held handover. Corrected the comparison, retained
+  blocks and added branch regression coverage. See DESIGN.md.
+- 2026-11-10: 24 tests, TypeScript/build and release scan pass. No known dependency
+  vulnerabilities. Desktop/fallback, narrow layout and local save/import reviewed.
+  GPU verification remains open. P4 publication and CI are next.
+
 ## Next action
 
-Commit the plan, then write the shortage lesson and design specification. Implement
-and verify that complete lesson before extending the engine to the other three.
+Publish the reviewed 1.1 increment, confirm CI and Pages, then record its exact
+code revision and live smoke result. After release, the next useful evidence is a
+facilitated teaching trial and a GPU-capable browser run, not extra feature scope.

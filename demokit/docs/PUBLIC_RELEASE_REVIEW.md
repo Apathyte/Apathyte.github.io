@@ -23,3 +23,11 @@ The public evidence register deliberately inherits no run counts or pass claims.
 ## Maintaining the boundary
 
 Publish only `release-files.json` entries. Rebuild, scan and review outputs as well as source. Contributors must identify origins and have permission to publish. Keep confidential evidence and exports outside the public repository. The MIT grant covers this directory's original work only; bundled dependencies retain notices. It does not cover trademarks, employer/customer material or the rest of the website.
+
+## Learning studio extension
+
+The 1.1 rework adds original fictional lessons, a pure transition engine,
+versioned presentation preferences, a non-mutating mapping preview, and revised
+visuals. It adds no runtime dependency, remote service, customer model or private
+source. See `REWORK_VALIDATION.md` for current verification; the ten-test account
+above describes the original port, not the expanded suite.

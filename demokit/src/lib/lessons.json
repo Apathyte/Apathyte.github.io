@@ -1,0 +1,282 @@
+{
+  "schemaVersion": 1,
+  "provenance": "Original fictional teaching examples. No customer layouts, recipes, production traces or measured performance.",
+  "lessons": [
+    {
+      "id": "shortage",
+      "title": "The material is here. Can we use it?",
+      "question": "How do you keep the order moving when eligible material is short?",
+      "slice": [
+        "storage",
+        "dosing",
+        "lineA",
+        "quality",
+        "planning",
+        "packing"
+      ],
+      "zones": [
+        "lineA",
+        "storage",
+        "dosing",
+        "planning",
+        "lineA",
+        "quality"
+      ],
+      "situation": "The next order is due on line A. The warehouse has material, the team is ready, and the schedule says start. But physical stock and eligible stock are different things.",
+      "reference": "Planning allocates an eligible lot. Warehouse confirms identity and quantity. Preparation verifies the addition before execution. Each handover carries a material identity and an accountable owner.",
+      "disruption": "The allocated lot cannot cover the order. A similar material is nearby, but it is not approved for this product. Starting now could turn a scheduling problem into a product disposition problem.",
+      "signal": "material.eligible_quantity_short",
+      "owner": "The planner coordinates; quality owns substitution eligibility; operations confirms line readiness.",
+      "assumption": "Fictional discrete order. No real recipe, inventory quantity, duration or physical machine behaviour.",
+      "referenceState": "Eligible lot allocated \u2192 verified addition \u2192 authorised execution.",
+      "currentState": "Insufficient eligible material \u2192 preparation blocked \u2192 line start waits; packing needs a revised commitment.",
+      "evidence": [
+        "Material identity, eligible quantity and allocation revision",
+        "Approved substitution criteria if an alternative is proposed",
+        "Revised sequence and acceptance of the changed commitment"
+      ],
+      "prompts": [
+        "Who may change the sequence, and who may approve a substitute?",
+        "Which event reports the shortage without authorising a workaround?",
+        "Who must know before the changed plan is executable?"
+      ],
+      "facilitator": "Distinguish \u201cwe have it\u201d from \u201cwe may use it\u201d. Invite a fourth response, then require its owner, evidence and consequences.",
+      "choices": [
+        {
+          "id": "resequence",
+          "title": "Resequence eligible work",
+          "action": "Propose another eligible order; verify setup and readiness before starting.",
+          "authority": "Planner changes sequence; operations confirms readiness.",
+          "material": "The short order remains unconsumed; another eligible lot can be allocated.",
+          "information": "Publish revised sequence, order identity and delivery commitment.",
+          "people": "Warehouse, line and packing teams coordinate the changed handover.",
+          "risk": "Another order may need a changeover and delay the original commitment.",
+          "verdict": "Bounded response"
+        },
+        {
+          "id": "substitute",
+          "title": "Request an authorised substitute",
+          "action": "Hold the start while quality evaluates the alternative against approved criteria.",
+          "authority": "Quality authorises eligibility; planning and operations agree the executable plan.",
+          "material": "Keep the alternative segregated until approved and preserve its identity.",
+          "information": "Retain approval basis and revised allocation before release to execution.",
+          "people": "Quality needs evidence and time; the operator cannot approve by appearance.",
+          "risk": "Approval can be refused or arrive too late. This branch assumes a valid review process exists.",
+          "verdict": "Bounded response"
+        },
+        {
+          "id": "shortcut",
+          "title": "Use the nearby material anyway",
+          "action": "Treat similar material as equivalent without an eligibility decision.",
+          "authority": "The line team has no substitution authority in this lesson.",
+          "material": "Unapproved input may require hold and assessment of affected output.",
+          "information": "A completion event would conceal an unresolved eligibility gap.",
+          "people": "Quality must investigate the affected scope.",
+          "risk": "Unacceptable shortcut: similarity is not evidence of suitability. Do not infer release.",
+          "verdict": "Unacceptable shortcut"
+        }
+      ]
+    },
+    {
+      "id": "hold",
+      "title": "Finished does not mean released.",
+      "question": "What happens when a quality hold arrives after processing?",
+      "slice": [
+        "lineA",
+        "quality",
+        "packing",
+        "finished",
+        "planning"
+      ],
+      "zones": [
+        "lineA",
+        "quality",
+        "quality",
+        "quality",
+        "packing",
+        "finished"
+      ],
+      "situation": "Processing is complete and packing expects the lot. An outstanding result still determines whether it can proceed.",
+      "reference": "Completion produces a traceable lot. Quality evaluates the evidence and records a disposition. Packing acts on the permitted state, not completion alone.",
+      "disruption": "A result needs investigation. Quality holds the lot while scope and disposition are reviewed. Packing has already prepared for it.",
+      "signal": "lot.quality_hold",
+      "owner": "Quality owns disposition; operations preserves segregation; planning revises commitments.",
+      "assumption": "Fictional hold with no actual test limits or product specification. No automated release.",
+      "referenceState": "Process complete \u2192 evidence reviewed \u2192 authorised release \u2192 packing.",
+      "currentState": "Process complete \u2192 hold active \u2192 packing eligibility blocked; investigation open.",
+      "evidence": [
+        "Lot genealogy and hold scope",
+        "Reviewed result and investigation record",
+        "Authorised disposition and evidence that affected consumers received it"
+      ],
+      "prompts": [
+        "Which physical movements remain permitted on hold?",
+        "How would you find a consumer that missed the hold event?",
+        "What evidence closes the hold rather than hiding it?"
+      ],
+      "facilitator": "Ask who means machine completion, order completion or product release when they say \u201cfinished\u201d.",
+      "choices": [
+        {
+          "id": "segregate",
+          "title": "Segregate and replan",
+          "action": "Preserve lot identity in controlled hold storage and revise packing sequence.",
+          "authority": "Quality retains disposition; operations manages permitted movement.",
+          "material": "Held stock stays identifiable and separate from releasable stock.",
+          "information": "Hold scope reaches packing, stock and planning; receipt needs evidence.",
+          "people": "Packing considers other work while quality investigates.",
+          "risk": "The hold may expand; revised packing may introduce additional setup.",
+          "verdict": "Bounded response"
+        },
+        {
+          "id": "ship",
+          "title": "Release on machine completion",
+          "action": "Use machine completion as permission to pack and dispatch.",
+          "authority": "Equipment completion grants no quality-release authority.",
+          "material": "Held product may lose segregation and reach dispatch.",
+          "information": "A valid event is incorrectly interpreted as disposition.",
+          "people": "Operators inherit a decision they are not authorised to make.",
+          "risk": "Unacceptable shortcut: release is unsupported and affected output needs containment.",
+          "verdict": "Unacceptable shortcut"
+        }
+      ]
+    },
+    {
+      "id": "changeover",
+      "title": "The next order needs a different line.",
+      "question": "Which readiness conditions must survive a changeover?",
+      "slice": [
+        "lineA",
+        "workshop",
+        "quality",
+        "storage",
+        "planning",
+        "packing"
+      ],
+      "zones": [
+        "lineA",
+        "planning",
+        "lineA",
+        "workshop",
+        "lineA",
+        "quality"
+      ],
+      "situation": "The next order uses a different format. Planning sees available time; the line still carries the previous setup and identifiers.",
+      "reference": "Confirm sequence, clear previous material and labels, complete setup, verify first output and authorise the start under the local procedure.",
+      "disruption": "A required setup part is unavailable. The planned start is not feasible, and labels from the previous order remain at the station.",
+      "signal": "line.readiness_incomplete",
+      "owner": "Operations owns readiness; maintenance verifies setup; quality owns required first-output disposition.",
+      "assumption": "Illustrative readiness gates. No cleaning validation, safety procedure or measured changeover duration.",
+      "referenceState": "Clearance + setup + verification \u2192 authorised start.",
+      "currentState": "Missing setup part and unresolved clearance \u2192 next-order start blocked.",
+      "evidence": [
+        "Line-clearance record including remaining labels and material",
+        "Verified configuration and availability of required parts",
+        "First-output verification and authorised readiness decision"
+      ],
+      "prompts": [
+        "Does a released schedule prove readiness?",
+        "Who can approve a changed setup?",
+        "What makes the first unit traceable to the correct configuration?"
+      ],
+      "facilitator": "Ask which readiness evidence this operation requires; avoid presenting a universal checklist.",
+      "choices": [
+        {
+          "id": "delay",
+          "title": "Complete readiness before starting",
+          "action": "Delay the start, obtain the correct part and complete clearance and verification.",
+          "authority": "Operations coordinates; maintenance and quality confirm their gates.",
+          "material": "Separate previous material and avoid premature consumption.",
+          "information": "Publish revised readiness and schedule; retain configuration history.",
+          "people": "Planning communicates delay while the line team closes outstanding conditions.",
+          "risk": "The commitment moves; waiting does not itself solve the missing part.",
+          "verdict": "Bounded response"
+        },
+        {
+          "id": "skip",
+          "title": "Start and verify later",
+          "action": "Begin the next order with incomplete setup and clearance.",
+          "authority": "Schedule pressure does not waive readiness gates.",
+          "material": "Incorrect format or mixed identifiers may affect output.",
+          "information": "The order appears running while readiness remains unproven.",
+          "people": "The team absorbs unapproved risk and may need to contain output.",
+          "risk": "Unacceptable shortcut: later inspection cannot be assumed to repair lost identity.",
+          "verdict": "Unacceptable shortcut"
+        }
+      ]
+    },
+    {
+      "id": "workaround",
+      "title": "The scanner is down. The boundary stays.",
+      "question": "What makes a workaround controlled rather than convenient?",
+      "slice": [
+        "dosing",
+        "lineA",
+        "quality",
+        "control",
+        "planning"
+      ],
+      "zones": [
+        "dosing",
+        "dosing",
+        "dosing",
+        "control",
+        "lineA",
+        "quality"
+      ],
+      "situation": "Preparation normally verifies material by scanning. The scanner is unavailable, but material and order are present.",
+      "reference": "Verify material against the authorised order and record identity, quantity and accountable handover before addition.",
+      "disruption": "The normal identity check cannot be recorded. Verbal confirmation would keep work moving but removes expected evidence.",
+      "signal": "identity.verification_unavailable",
+      "owner": "Operations authorises a temporary procedure within its mandate; quality defines identity evidence and restrictions.",
+      "assumption": "The controlled branch assumes a reviewed manual fallback procedure exists. Without one, that branch is unavailable in a real operation.",
+      "referenceState": "Identity verified and recorded \u2192 authorised addition.",
+      "currentState": "Verification unavailable \u2192 addition blocked; temporary procedure not yet activated.",
+      "evidence": [
+        "Approved temporary procedure, scope, owner and expiry",
+        "Traceable independent identity checks",
+        "Reconciliation against the order and confirmation of restored normal operation"
+      ],
+      "prompts": [
+        "Who authorises the fallback, for which orders and until when?",
+        "What evidence must survive restoration?",
+        "What prevents the workaround becoming permanent?"
+      ],
+      "facilitator": "Ask what makes the controlled branch unavailable. \u201cNo approved fallback\u201d is a valid reason to stop.",
+      "choices": [
+        {
+          "id": "controlled",
+          "title": "Activate the approved fallback",
+          "action": "Authorise the scoped procedure, independently verify identity and retain reconciliation records.",
+          "authority": "The procedure owner authorises scope and expiry; operators perform its checks.",
+          "material": "Material remains blocked until the required identity checks are complete.",
+          "information": "Record degraded mode, verification evidence and later reconciliation.",
+          "people": "Assign checking and restoration responsibilities explicitly.",
+          "risk": "Manual checks add effort and error exposure; the fallback cannot waive eligibility rules.",
+          "verdict": "Bounded response"
+        },
+        {
+          "id": "stop",
+          "title": "Stop until verification is restored",
+          "action": "Hold the addition and restore normal verification.",
+          "authority": "Operations protects the gate and escalates the delivery impact.",
+          "material": "No unverified addition; material identity remains intact.",
+          "information": "Expose the blocked state and revised commitment.",
+          "people": "Support restores verification; planning manages delay.",
+          "risk": "Production waits; restoration timing is unknown.",
+          "verdict": "Bounded response"
+        },
+        {
+          "id": "verbal",
+          "title": "Take a verbal confirmation",
+          "action": "Proceed without the required procedure and retained evidence.",
+          "authority": "Verbal assurance does not establish approval or a record.",
+          "material": "An unverified addition may make genealogy uncertain.",
+          "information": "No reliable record remains to reconcile after restoration.",
+          "people": "Responsibility becomes ambiguous and investigation harder.",
+          "risk": "Unacceptable shortcut: the missing check is concealed rather than controlled.",
+          "verdict": "Unacceptable shortcut"
+        }
+      ]
+    }
+  ]
+}
