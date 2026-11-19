@@ -17,6 +17,7 @@ with sync_playwright() as pw:
     def click(name):page.get_by_role("button",name=name,exact=True).click()
     def phase(name):expect(page.get_by_test_id("run-phase")).to_have_text(name)
     def shot(name):
+        page.evaluate("() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)))")
         page.locator(".event-scene").screenshot(path=str(out/(name+".png")),animations="disabled")
     try:
         page.goto(args.url);expect(page.get_by_role("heading",name="Factory overview.")).to_be_visible()
@@ -56,6 +57,10 @@ with sync_playwright() as pw:
         expect(page.get_by_test_id("scenario-results")).not_to_contain_text("FAIL")
         click("Scenario lab");phase("complete");click("Reset event run");phase("idle")
         expect(page.get_by_test_id("event-trace").locator("details")).to_have_count(0)
+        click("Test suite");click("Watch complete test journey")
+        expect(page.get_by_test_id("run-phase")).to_have_text("complete",timeout=25000)
+        expect(page.get_by_test_id("event-trace").locator("details")).to_have_count(9)
+        click("Reset event run");phase("idle")
         page.set_viewport_size({"width":390,"height":844})
         assert page.evaluate("document.documentElement.scrollWidth <= document.documentElement.clientWidth"),"Mobile horizontal overflow"
         page.screenshot(path=str(out/"06-mobile.png"),full_page=True)
