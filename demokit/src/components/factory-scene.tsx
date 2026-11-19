@@ -13,6 +13,7 @@ export default function FactoryScene({
   focus,
   reset,
   blockedZone = "",
+  zoneStates,
 }: {
   zones: Zone[];
   selected: string;
@@ -22,6 +23,7 @@ export default function FactoryScene({
   focus: string;
   reset: number;
   blockedZone?: string;
+  zoneStates?: Record<string,string>;
 }) {
   const host = useRef<HTMLDivElement>(null),
     cb = useRef(onSelect),
@@ -210,10 +212,12 @@ export default function FactoryScene({
       cv.width = 512;
       cv.height = 80;
       const ctx = cv.getContext("2d")!;
-      ctx.fillStyle = active ? "#c8afff" : "#d4d8e8";
+      const status = zoneStates?.[z.id];
+      ctx.fillStyle = status ? /HELD|BLOCKED|HOLD/.test(status) ? "#fb887c" : /PROPOSED|REPLAN/.test(status) ? "#e8b269" : /RUNNING|AUTHORIZED|ALLOCATED|COMPLETE|READY/.test(status) ? "#8ed1b5" : "#d4d8e8" : active ? "#c8afff" : "#d4d8e8";
       ctx.font = "500 30px system-ui";
       ctx.textAlign = "center";
-      ctx.fillText(z.code + "  " + z.short, 256, 48);
+      ctx.fillText(z.code + "  " + z.short, 256, status ? 30 : 48);
+      if (status) { ctx.font = "bold 28px system-ui"; ctx.fillText(status,256,62); }
       const sp = new THREE.Sprite(
         new THREE.SpriteMaterial({
           map: new THREE.CanvasTexture(cv),
@@ -420,7 +424,7 @@ export default function FactoryScene({
       renderer.dispose();
       renderer.domElement.remove();
     };
-  }, [zones, selected, layer, links, focus, reset, blockedZone]);
+  }, [zones, selected, layer, links, focus, reset, blockedZone, zoneStates]);
   return (
     <div className="scene" ref={host}>
       {fallback && (
@@ -433,6 +437,7 @@ export default function FactoryScene({
             links={links}
             focus={focus}
             blockedZone={blockedZone}
+            zoneStates={zoneStates}
           />
           <span className="fallback-label">
             ISOMETRIC VIEW · WEBGL UNAVAILABLE
