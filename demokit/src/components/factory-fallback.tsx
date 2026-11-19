@@ -9,6 +9,7 @@ export default function FactoryFallback({
   links,
   focus,
   blockedZone = "",
+  zoneStates,
 }: {
   zones: Zone[];
   selected: string;
@@ -17,6 +18,7 @@ export default function FactoryFallback({
   links: string[][];
   focus: string;
   blockedZone?: string;
+  zoneStates?: Record<string,string>;
 }) {
   const uid = useId().replace(/:/g, "");
   const project = (x: number, z: number, y = 0) => [
@@ -317,6 +319,7 @@ export default function FactoryFallback({
                 strokeWidth={selected === zone.id ? 1.8 : 0.5}
               />
               {assets}
+              {zoneStates?.[zone.id] && <text x={lx} y={ly+24} textAnchor="middle" fontSize="10" fontWeight="bold" paintOrder="stroke" stroke="#131827" strokeWidth="3" fill={/HELD|BLOCKED|HOLD/.test(zoneStates[zone.id])?"#fb887c":/PROPOSED|REPLAN/.test(zoneStates[zone.id])?"#e8b269":"#8ed1b5"}>{zoneStates[zone.id]}</text>}
               <text
                 x={lx}
                 y={ly + 13}
