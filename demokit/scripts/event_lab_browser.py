@@ -35,6 +35,7 @@ with sync_playwright() as pw:
         click("Proposed");expect(page.get_by_test_id("alternative-state")).to_have_text("proposed")
         shot("03-proposed")
         click("Reference");expect(page.get_by_test_id("original-state")).to_have_text("allocated")
+        shot("03a-same-layer-reference")
         click("Operational");phase("proposed")
         click("Authorize B readiness");phase("authorized")
         click("Start order B");phase("running");shot("04-running")
@@ -45,12 +46,12 @@ with sync_playwright() as pw:
         shot("05-complete-hold")
         renderer="WebGL" if page.locator(".event-scene canvas").count()==1 else "SVG fallback"
         diffs={}
-        for first,second in [("01-reference","02-shortage"),("02-shortage","03-proposed"),("03-proposed","04-running"),("04-running","05-complete-hold")]:
+        for first,second in [("01-reference","02-shortage"),("02-shortage","03-proposed"),("03a-same-layer-reference","03-proposed"),("03-proposed","04-running"),("04-running","05-complete-hold")]:
             a=Image.open(out/(first+".png")).convert("RGB");b=Image.open(out/(second+".png")).convert("RGB")
             assert a.size==b.size,(first,second,a.size,b.size)
             change=ImageChops.difference(a,b).convert("L").point(lambda p:255 if p>12 else 0).histogram()[255]
             diffs[first+" -> "+second]=change
-            assert change>100,(first,second,"Scene visually unchanged",change)
+            assert change>2500,(first,second,"Scene changes fall below visibility smoke threshold",change)
         click("Event explorer");expect(page.get_by_test_id("event-trace").locator("details")).to_have_count(9)
         click("Test suite");click("Run scenario tests")
         expect(page.get_by_test_id("scenario-results").locator("p")).to_have_count(8)
