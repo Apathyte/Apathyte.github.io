@@ -265,31 +265,19 @@ def main():
                     path=str(output / (name + "-full.png")),
                     animations="disabled", full_page=True,
                 )
-                # Site integration only; LinkedIn's actual media availability is external.
+                # The appearance must share the existing grid rails, not a separate width cap.
+                appearance = page.locator("#appearances")
+                original_url = "https://www.linkedin.com/feed/update/urn:li:activity:7528778037061144578/"
+                checks["appearance_direct_link"] = page.locator("#bidfolk-original").get_attribute("href") == original_url
+                checks["appearance_in_work_grid"] = page.locator("#work .media-layout > #appearances.work-tile").count() == 1
+                checks["appearance_no_embed"] = appearance.locator("iframe, details, button").count() == 0 and page.locator("#bidfolk-player, #bidfolk-frame").count() == 0
+                checks["appearance_alignment"] = page.evaluate("""() => {
+                    const card = document.querySelector('#appearances').getBoundingClientRect();
+                    const sibling = document.querySelector('#work .work-tile:not(#appearances)').getBoundingClientRect();
+                    return Math.abs(card.left-sibling.left)<=2 && Math.abs(card.right-sibling.right)<=2;
+                }""")
                 if not args.skip_interactions and name in ("desktop", "mobile", "small-mobile"):
-                    embed_url = "https://www.linkedin.com/embed/feed/update/urn:li:activity:7528778037061144578"
-                    original_url = "https://www.linkedin.com/feed/update/urn:li:activity:7528778037061144578/"
-                    player = page.locator("#bidfolk-player")
-                    checks["appearance_fallback_link"] = page.locator("#bidfolk-original").get_attribute("href") == original_url
-                    checks["appearance_opt_in"] = player.locator("iframe").count() == 0
-                    hits = []
-                    def stub_embed(route):
-                        hits.append(route.request.url)
-                        route.fulfill(status=200, content_type="text/html", body="<html><body>LinkedIn player test stub; no media playback tested.</body></html>")
-                    page.route(embed_url, stub_embed)
-                    player.locator("summary").click()
-                    frame = player.locator("iframe")
-                    frame.wait_for(state="visible", timeout=10000)
-                    frame.scroll_into_view_if_needed()
-                    page.wait_for_function("document.querySelector('#bidfolk-player iframe')?.getBoundingClientRect().width > 0")
-                    page.frame_locator("#bidfolk-player iframe").locator("body").wait_for(timeout=10000)
-                    checks["appearance_embed_requested"] = frame.get_attribute("src") == embed_url and hits == [embed_url]
-                    checks["appearance_no_overflow"] = page.evaluate("document.documentElement.scrollWidth <= innerWidth + 2")
-                    page.locator("#appearances").screenshot(path=str(output / (name + "-appearance-stub.png")))
-                    player.locator("summary").click()
-                    frame.wait_for(state="detached", timeout=10000)
-                    checks["appearance_player_unloads"] = frame.count() == 0
-                    page.unroute(embed_url, stub_embed)
+                    appearance.screenshot(path=str(output / (name + "-appearance.png")))
                 if name == "desktop" and not args.skip_interactions:
                     page.locator("#dex-patrol").scroll_into_view_if_needed()
                     page.locator("#dex-patrol").click(timeout=10000)
