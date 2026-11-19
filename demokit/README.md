@@ -44,3 +44,13 @@ The [design direction](docs/DESIGN.md), [mapping contract](docs/SLICE_CONTRACT.m
 and [validation record](docs/REWORK_VALIDATION.md) document implementation and
 limits. New catalogue/presentation schemas are separate from existing workspace
 JSON. The workboard is manually maintained, not a live repository dashboard.
+
+## Event lab candidate (19 November)
+
+See [event lab plan](docs/EVENT_LAB_PLAN.md) for the approved scope and release gates. The source candidate adds separated Atlas navigation, a synthetic material-shortage journey and message explorer, a browser-only test runner and optional replay. Its in-memory transport is explicitly not MQTT. For local MQTT evidence, install Mosquitto plus mosquitto_pub and mosquitto_sub and run:
+
+```sh
+node --experimental-strip-types scripts/mqtt-smoke.mjs
+```
+
+This uses an isolated disposable loopback broker and checks independently received messages, duplicates and state projection. It requires no plant connection. Candidate CI also executes a headless Chromium journey with software WebGL, screenshots and a trace. Software WebGL, live-site deployment and actual device usability are separate gates. No new pass is claimed until run evidence is recorded. A live MQTT adapter to the public browser remains out of scope.
