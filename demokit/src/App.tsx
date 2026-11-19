@@ -31,6 +31,8 @@ import {
 } from "lucide-react";
 import FactoryScene from "./components/factory-scene";
 import LearningStudio from "./components/learning-studio";
+import EventLab, { EventChecks } from "./components/event-lab";
+import { dispatch, initialRun } from "./lib/event-lab";
 import { evidenceFreshness } from "./lib/learning";
 import {
   seed,
@@ -42,9 +44,11 @@ import {
 } from "./lib/lab-data";
 import { LEVELS } from "./lib/levels";
 const NAV = [
-  { id: "atlas", name: "Factory atlas", icon: Box },
+  { id: "atlas", name: "Factory overview", icon: Box },
+  { id: "scenario", name: "Scenario lab", icon: Play },
+  { id: "events", name: "Event explorer", icon: Activity },
   { id: "board", name: "Workboard", icon: GitBranch },
-  { id: "validation", name: "Regression & acceptance", icon: FlaskConical },
+  { id: "validation", name: "Test suite", icon: FlaskConical },
   { id: "teach", name: "Teaching room", icon: BookOpen },
   { id: "decisions", name: "Decision log", icon: Split },
 ];
@@ -304,7 +308,7 @@ function Editor({
 export default function Lab() {
   const [tab, setTab] = useState("atlas"),
     [data, setData] = useState<LabData>(seed),
-    [explorerOpen, setExplorerOpen] = useState(false),
+    [eventRun, setEventRun] = useState(initialRun),
     [revision, setRevision] = useState(0),
     [ready, setReady] = useState(false),
     [dirty, setDirty] = useState(false),
@@ -553,11 +557,12 @@ export default function Lab() {
         </a>
         <div className="workspace-label">DEVELOP · EXPLAIN · VERIFY</div>
         <nav aria-label="Main navigation">
+          <div className="atlas-nav-label">Factory Atlas</div>
           {NAV.map((n) => (
             <button
               key={n.id}
               aria-label={n.name}
-              className={tab === n.id ? "active" : ""}
+              className={(["atlas","scenario","events"].includes(n.id) ? "atlas-nav-child " : "") + (tab === n.id ? "active" : "")}
               onClick={() => go(n.id)}
             >
               <n.icon size={18} />
@@ -642,6 +647,8 @@ export default function Lab() {
                 {
                   {
                     atlas: "THE OPERATIONAL MODEL",
+                    scenario: "EXECUTE AND OBSERVE",
+                    events: "FOLLOW THE MESSAGE",
                     board: "FROM EXPERIMENT TO BASELINE",
                     validation: "EVIDENCE BEFORE CONFIDENCE",
                     teach: "MAKE THE BOUNDARIES VISIBLE",
@@ -652,7 +659,9 @@ export default function Lab() {
               <h1>
                 {
                   {
-                    atlas: "A factory, made legible.",
+                    atlas: "Factory overview.",
+                    scenario: "Scenario lab.",
+                    events: "Event explorer.",
                     board: "Build with a clear baseline.",
                     validation: "What have we actually proven?",
                     teach: "Follow the meaning.",
@@ -664,7 +673,9 @@ export default function Lab() {
                 {
                   {
                     atlas:
-                      "A reusable factory learning environment. Explore a slice, introduce a constraint, and question the response.",
+                      "Explore and edit the complete fictional factory, its equipment and relationships.",
+                    scenario: "Execute an operational journey or explore a facilitated lesson. The whole factory remains the context.",
+                    events: "Inspect messages emitted by the current browser-local event journey.",
                     board:
                       "Independent experiments, explicit next steps and evidence worth keeping.",
                     validation:
@@ -677,7 +688,7 @@ export default function Lab() {
                 }
               </p>
             </div>
-            {tab !== "teach" && (
+            {!["teach","scenario","events"].includes(tab) && (
               <div className="heading-actions">
                 {tab === "atlas" ? (
                   <button
@@ -738,19 +749,14 @@ export default function Lab() {
               Nothing is uploaded.
             </div>
           )}
+          {(tab === "scenario" || tab === "events") && (
+            <>
+              <EventLab key={tab} mode={tab} data={data} run={eventRun} onCommand={command=>setEventRun(previous=>dispatch(previous,command))} onReset={()=>setEventRun(initialRun())}/>
+              {tab === "scenario" && <details className="model-explorer"><summary>Facilitated lessons · four scripted teaching examples (separate from the event run)</summary><LearningStudio data={data}/></details>}
+            </>
+          )}
           {tab === "atlas" && (
             <>
-              <LearningStudio data={data} />
-              <details
-                className="model-explorer"
-                onToggle={(e) => setExplorerOpen(e.currentTarget.open)}
-              >
-                <summary>
-                  Explore and edit the full factory model · original
-                  walkthroughs
-                </summary>
-                {explorerOpen && (
-                  <>
                     <div className="metrics">
                       <div>
                         <span className="metric-icon">
@@ -851,7 +857,7 @@ export default function Lab() {
                                       l === "Material"
                                         ? "#e6b170"
                                         : l === "Events"
-                                          ? "#b799ec"
+                                          ? "#75d8e7"
                                           : "#788292",
                                   }}
                                 />
@@ -1060,9 +1066,6 @@ export default function Lab() {
                         </button>
                       </article>
                     </div>
-                  </>
-                )}
-              </details>
             </>
           )}
           {tab === "board" && (
@@ -1189,6 +1192,7 @@ export default function Lab() {
           )}
           {tab === "validation" && (
             <>
+              <EventChecks />
               <div className="validation-summary">
                 {["Recorded pass", "Needs evidence", "Not run", "Failed"].map(
                   (s, i) => (
