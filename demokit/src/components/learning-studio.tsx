@@ -29,7 +29,6 @@ export default function LearningStudio({ data }: { data: LabData }) {
   const [lessonId, setLessonId] = useState("shortage"),
     [state, setState] = useState(initialLessonState),
     [view, setView] = useState<string>(VIEWS[0]),
-    [scope, setScope] = useState("Lesson slice"),
     [layer, setLayer] = useState("Material"),
     [selected, setSelected] = useState("lineA"),
     [follow, setFollow] = useState(true),
@@ -47,14 +46,8 @@ export default function LearningStudio({ data }: { data: LabData }) {
   const lesson =
     catalogue.lessons.find((l) => l.id === lessonId) || catalogue.lessons[0];
   const ids = useMemo(() => data.zones.map((z) => z.id), [data.zones]);
-  const activeIds = useMemo(
-    () => (scope === "Whole site" ? ids : lesson.slice),
-    [scope, ids, lesson],
-  );
-  const shownZones = useMemo(
-    () => data.zones.filter((z) => activeIds.includes(z.id)),
-    [data.zones, activeIds],
-  );
+  const activeIds = lesson.slice;
+  const shownZones = data.zones;
   const allLinks = useMemo(
     () =>
       layer === "Events"
@@ -69,9 +62,9 @@ export default function LearningStudio({ data }: { data: LabData }) {
   const links = useMemo(
     () =>
       allLinks.filter(
-        ([a, b]) => activeIds.includes(a) && activeIds.includes(b),
+        ([a, b]) => ids.includes(a) && ids.includes(b) && (activeIds.includes(a) || activeIds.includes(b) || (layer === "Events" && (a === "control" || b === "control"))),
       ),
-    [allLinks, activeIds],
+    [allLinks, activeIds, ids, layer],
   );
   const boundaries = useMemo(
     () =>
@@ -106,7 +99,6 @@ export default function LearningStudio({ data }: { data: LabData }) {
         const p = presentationSchema.parse(JSON.parse(raw));
         if (catalogue.lessons.some((l) => l.id === p.lessonId))
           setLessonId(p.lessonId);
-        setScope(p.scope);
         setView(p.view);
         setFollow(p.follow);
         setNotes(p.notes);
@@ -126,7 +118,7 @@ export default function LearningStudio({ data }: { data: LabData }) {
         JSON.stringify({
           schemaVersion: 1,
           lessonId,
-          scope,
+          scope: "Whole site",
           view,
           follow,
           notes,
@@ -135,15 +127,15 @@ export default function LearningStudio({ data }: { data: LabData }) {
     } catch {
       setNotice("Presentation preferences could not be saved in this browser.");
     }
-  }, [loaded, lessonId, scope, view, follow, notes]);
+  }, [loaded, lessonId, view, follow, notes]);
   useEffect(() => {
     if (follow) {
       setSelected(stageZone);
       setFocus("Area");
-    } else if (!activeIds.includes(selected)) {
+    } else if (!ids.includes(selected)) {
       setSelected(stageZone);
     }
-  }, [stageZone, follow, activeIds]);
+  }, [stageZone, follow, ids]);
   useEffect(() => {
     document.body.classList.toggle("lesson-presenting", present);
     return () => document.body.classList.remove("lesson-presenting");
@@ -225,17 +217,7 @@ export default function LearningStudio({ data }: { data: LabData }) {
             ))}
           </select>
         </label>
-        <label>
-          Scope
-          <select
-            aria-label="Scope"
-            value={scope}
-            onChange={(e) => setScope(e.target.value)}
-          >
-            <option>Lesson slice</option>
-            <option>Whole site</option>
-          </select>
-        </label>
+        <p>Lesson focus · full factory and dependencies remain visible.</p>
         <label className="toggle-label">
           <input
             type="checkbox"
@@ -274,8 +256,7 @@ export default function LearningStudio({ data }: { data: LabData }) {
             <div className="learning-model">
               <div className="model-heading">
                 <span>
-                  SITE 01 /{" "}
-                  {scope === "Whole site" ? "ALL ZONES" : "SELECTED SLICE"}
+                  SITE 01 / LESSON FOCUS IN FULL FACTORY
                 </span>
                 <label className="toggle-label">
                   <input
