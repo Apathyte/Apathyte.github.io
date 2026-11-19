@@ -239,7 +239,7 @@ export default function FactoryScene({
         const f = zones.find((z) => z.id === a),
           t = zones.find((z) => z.id === b);
         if (!f || !t) return;
-        const blocked = layer === "Material" && b === blockedZone;
+        const blocked = layer === "Material" && blockedZone.split(",").includes(b);
         const h = layer === "Authority" ? 8 : layer === "Events" ? 5 : 0.5,
           color = blocked
             ? 0xfb887c
