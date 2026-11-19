@@ -128,15 +128,7 @@
     .work-tile .work-label{display:block}
     .work-tile h3{font-size:1.45rem}
     .work-tile p{margin:0 0 18px}
-    .appearance-card{margin-top:18px;max-width:730px}
     .appearance-card .appearance-credit{font-size:.85rem;color:var(--muted)}
-    .appearance-player{border-top:1px solid var(--line);margin:20px 0 16px;padding-top:15px}
-    .appearance-player summary{cursor:pointer;color:var(--text);font:600 .95rem/1.5 var(--heading)}
-    .appearance-player summary:hover{color:var(--accent)}
-    .appearance-player p{font-size:.82rem;margin:10px 0 12px}
-    .appearance-frame{display:block;width:100%;max-width:504px;height:720px;max-height:85vh;margin:12px auto;border:0;background:var(--bg);border-radius:4px}
-    .appearance-player:not([open]) .appearance-frame{display:none}
-    @media(max-width:430px){.appearance-frame{height:650px;max-height:none}}
     .quote-stage{margin:0;min-height:195px;display:flex;flex-direction:column;justify-content:center;gap:18px;padding:29px 32px;border:1px solid var(--line);background:linear-gradient(125deg,var(--surface2),var(--surface))}
     .quote-provenance{display:block;color:var(--accent);font:500 .72rem/1.5 var(--mono);letter-spacing:.1em;text-transform:uppercase}
     .quote-stage blockquote{margin:0;max-width:760px;color:var(--text);font:500 clamp(1.5rem,3.25vw,2.5rem)/1.35 var(--heading);letter-spacing:-.03em;text-wrap:balance}
@@ -317,19 +309,14 @@
               <p>A practical governance model for deciding what assistant context may persist, expire, or acquire authority. Classification is not authorisation.</p>
               <a href="https://github.com/Apathyte/ai-memory-operating-model" target="_blank" rel="noopener noreferrer">Explore the public repository ↗</a>
             </article>
+            <article class="work-tile appearance-card" id="appearances" aria-labelledby="bidfolk-title">
+              <span class="work-label">Selected appearances / bidfolk Chats</span>
+              <h3 id="bidfolk-title">When AI writes the bid — and judges it</h3>
+              <p>What happens when two bidders use AI to write their RFP responses, and the buyer uses AI to evaluate them?</p>
+              <p class="appearance-credit">Heather Melton · bidfolk Chats · 18 November 2026</p>
+              <a id="bidfolk-original" href="https://www.linkedin.com/feed/update/urn:li:activity:7528778037061144578/" target="_blank" rel="noopener noreferrer">Watch the short on LinkedIn ↗</a>
+            </article>
           </div>
-          <article class="work-tile appearance-card" id="appearances" aria-labelledby="bidfolk-title">
-            <span class="work-label">Selected appearances / bidfolk Chats</span>
-            <h3 id="bidfolk-title">When AI writes the bid — and judges it</h3>
-            <p>What happens when two bidders use AI to write their RFP responses, and the buyer uses AI to evaluate them? A short excerpt from my conversation with Heather Melton about digital transformation, bid promises and operational reality.</p>
-            <p class="appearance-credit">Published by Heather Melton · 18 November 2026 · LinkedIn</p>
-            <details class="appearance-player" id="bidfolk-player" data-embed-src="https://www.linkedin.com/embed/feed/update/urn:li:activity:7528778037061144578">
-              <summary>Play the short here</summary>
-              <p>Loads the original LinkedIn post and player. LinkedIn may require sign-in or restrict playback in some browsers.</p>
-              <div id="bidfolk-frame"></div>
-            </details>
-            <a id="bidfolk-original" href="https://www.linkedin.com/feed/update/urn:li:activity:7528778037061144578/" target="_blank" rel="noopener noreferrer">Watch and join the original discussion on LinkedIn ↗</a>
-          </article>
         </div>
       </section>
       <section class="sections" id="evidence" aria-labelledby="evidence-title">
@@ -379,24 +366,5 @@
   <script defer src="/characters.js"></script>
   <script defer src="/nightwatch.js"></script>
   <script defer src="/mischief-carousel.js?v=20261105"></script>
-  <script>
-    (() => {
-      const player = document.getElementById('bidfolk-player');
-      const host = document.getElementById('bidfolk-frame');
-      if (!player || !host) return;
-      player.addEventListener('toggle', () => {
-        if (!player.open) { host.replaceChildren(); return; }
-        if (host.firstChild) return;
-        const frame = document.createElement('iframe');
-        frame.className = 'appearance-frame';
-        frame.title = 'Heather Melton — bidfolk Chats short on AI in bidding';
-        frame.loading = 'lazy';
-        frame.referrerPolicy = 'strict-origin-when-cross-origin';
-        frame.allowFullscreen = true;
-        frame.src = player.dataset.embedSrc;
-        host.append(frame);
-      });
-    })();
-  </script>
 </body>
 </html>
