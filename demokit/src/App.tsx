@@ -32,7 +32,7 @@ import {
 import FactoryScene from "./components/factory-scene";
 import LearningStudio from "./components/learning-studio";
 import EventLab, { EventChecks } from "./components/event-lab";
-import { dispatch, initialRun } from "./lib/event-lab";
+import { allowed, dispatch, initialRun, journey } from "./lib/event-lab";
 import { evidenceFreshness } from "./lib/learning";
 import {
   seed,
@@ -309,6 +309,7 @@ export default function Lab() {
   const [tab, setTab] = useState("atlas"),
     [data, setData] = useState<LabData>(seed),
     [eventRun, setEventRun] = useState(initialRun),
+    [eventReplay, setEventReplay] = useState(false),
     [revision, setRevision] = useState(0),
     [ready, setReady] = useState(false),
     [dirty, setDirty] = useState(false),
@@ -397,7 +398,16 @@ export default function Lab() {
     setSelected(current.zone);
     setFocus("Area");
   }, [playing, step, current.zone]);
+  useEffect(() => {
+    if (!eventReplay || tab !== "scenario") return;
+    const command = journey.find(c => allowed(eventRun,c));
+    if (!command) {setEventReplay(false);return;}
+    const timer = setTimeout(()=>setEventRun(previous=>allowed(previous,command)?dispatch(previous,command):previous),1600);
+    return ()=>clearTimeout(timer);
+  },[eventReplay,eventRun,tab]);
   function go(id: string) {
+    setEventReplay(false);
+    setPlaying(false);
     setTab(id);
     setFilter("All");
     setQuery("");
@@ -751,7 +761,7 @@ export default function Lab() {
           )}
           {(tab === "scenario" || tab === "events") && (
             <>
-              <EventLab key={tab} mode={tab} data={data} run={eventRun} onCommand={command=>setEventRun(previous=>dispatch(previous,command))} onReset={()=>setEventRun(initialRun())}/>
+              <EventLab key={tab} mode={tab} data={data} run={eventRun} onCommand={command=>setEventRun(previous=>allowed(previous,command)?dispatch(previous,command):previous)} onReset={()=>{setEventReplay(false);setEventRun(initialRun());}} playing={eventReplay} onPlay={()=>{setEventRun(initialRun());setEventReplay(true);}} onPause={()=>setEventReplay(false)}/>
               {tab === "scenario" && <details className="model-explorer"><summary>Facilitated lessons · four scripted teaching examples (separate from the event run)</summary><LearningStudio data={data}/></details>}
             </>
           )}
@@ -1192,7 +1202,7 @@ export default function Lab() {
           )}
           {tab === "validation" && (
             <>
-              <EventChecks />
+              <EventChecks onReplay={()=>{go("scenario");setEventRun(initialRun());setEventReplay(true);}} canReplay={["storage","dosing","lineA","control","planning","quality","packing"].every(id=>data.zones.some(z=>z.id===id))}/>
               <div className="validation-summary">
                 {["Recorded pass", "Needs evidence", "Not run", "Failed"].map(
                   (s, i) => (
