@@ -141,7 +141,19 @@ export default function FactoryScene({
       scene.add(g);
       const active = selected === z.id,
         c = active ? 0xb39ade : colors[z.group];
+      const status = zoneStates?.[z.id];
+      const signal = status && (/HELD|BLOCKED|HOLD/.test(status) ? 0xff6666 : /PROPOSED|REPLAN/.test(status) ? 0xffca56 : /RUNNING|AUTHORIZED|ALLOCATED|COMPLETE|B READY/.test(status) ? 0x54e5a4 : undefined);
       box(g, 0, 0.02, 0, z.w, 0.22, z.d, active ? 0x625080 : 0x343b4d);
+      if (signal) {
+        const floor = new THREE.Mesh(new THREE.PlaneGeometry(z.w-.35,z.d-.35), new THREE.MeshBasicMaterial({color:signal,transparent:true,opacity:.34,depthWrite:false}));
+        floor.rotation.x=-Math.PI/2; floor.position.y=.155; g.add(floor);
+        for (const [px,pz,w,d] of [[0,-z.d/2,z.w,.28],[0,z.d/2,z.w,.28],[-z.w/2,0,.28,z.d],[z.w/2,0,.28,z.d]]) {
+          const rim = new THREE.Mesh(new THREE.BoxGeometry(w,.12,d),new THREE.MeshBasicMaterial({color:signal}));
+          rim.position.set(px,.25,pz);g.add(rim);
+        }
+        const beacon = new THREE.Mesh(new THREE.SphereGeometry(.58,12,10),new THREE.MeshBasicMaterial({color:signal,depthTest:false}));
+        beacon.position.set(z.w/2-.75,3.8,z.d/2-.75);beacon.renderOrder=5;g.add(beacon);
+      }
       box(g, 0, 0.55, -z.d / 2, z.w, 1.1, 0.16, c);
       box(g, -z.w / 2, 0.55, 0, 0.16, 1.1, z.d, c);
       if (z.kind === "racks") {
@@ -210,14 +222,14 @@ export default function FactoryScene({
       });
       const cv = document.createElement("canvas");
       cv.width = 512;
-      cv.height = 80;
+      cv.height = status ? 112 : 80;
       const ctx = cv.getContext("2d")!;
-      const status = zoneStates?.[z.id];
+      if(status){ctx.fillStyle="rgba(16,19,31,.92)";ctx.fillRect(12,4,488,102);if(signal){ctx.strokeStyle="#"+signal.toString(16).padStart(6,"0");ctx.lineWidth=5;ctx.strokeRect(15,7,482,96);}}
       ctx.fillStyle = status ? /HELD|BLOCKED|HOLD/.test(status) ? "#fb887c" : /PROPOSED|REPLAN/.test(status) ? "#e8b269" : /RUNNING|AUTHORIZED|ALLOCATED|COMPLETE|READY/.test(status) ? "#8ed1b5" : "#d4d8e8" : active ? "#c8afff" : "#d4d8e8";
       ctx.font = "500 30px system-ui";
       ctx.textAlign = "center";
-      ctx.fillText(z.code + "  " + z.short, 256, status ? 30 : 48);
-      if (status) { ctx.font = "bold 28px system-ui"; ctx.fillText(status,256,62); }
+      ctx.fillText(z.code + "  " + z.short, 256, status ? 38 : 48);
+      if (status) { ctx.font = "bold 38px system-ui"; ctx.fillText(status,256,84); }
       const sp = new THREE.Sprite(
         new THREE.SpriteMaterial({
           map: new THREE.CanvasTexture(cv),
@@ -225,8 +237,8 @@ export default function FactoryScene({
           transparent: true,
         }),
       );
-      sp.position.set(z.x, 4.5, z.z);
-      sp.scale.set(9, 1.4, 1);
+      sp.position.set(z.x, status ? 5.8 : 4.5, z.z);
+      sp.scale.set(status ? 11.5 : 9, status ? 2.5 : 1.4, 1);sp.renderOrder=6;
       scene.add(sp);
     }
     const particles: {
@@ -240,7 +252,7 @@ export default function FactoryScene({
           t = zones.find((z) => z.id === b);
         if (!f || !t) return;
         const blocked = layer === "Material" && blockedZone.split(",").includes(b);
-        const h = layer === "Authority" ? 8 : layer === "Events" ? 5 : 0.5,
+        const h = layer === "Authority" ? 8 : layer === "Events" ? 5 : zoneStates ? 2.2 : 0.5,
           color = blocked
             ? 0xfb887c
             : layer === "Authority"
@@ -269,19 +281,31 @@ export default function FactoryScene({
         );
         line.computeLineDistances();
         scene.add(line);
+        // Bright, elevated segments are actual projected routes, not decorative links.
+        if (zoneStates) {
+          const mat = new THREE.MeshBasicMaterial({color,depthTest:false});
+          const dashed = blocked || layer !== "Material";
+          for(let j=0;j<20;j++){
+            if(dashed && j%2===1)continue;
+            const start=curve.getPoint(j/20),end=curve.getPoint((j+1)/20),direction=end.clone().sub(start);
+            const segment=new THREE.Mesh(new THREE.CylinderGeometry(.19,.19,direction.length(),8),mat);
+            segment.position.copy(start.clone().add(end).multiplyScalar(.5));
+            segment.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),direction.normalize());segment.renderOrder=4;scene.add(segment);
+          }
+        }
         scene.add(
           new THREE.ArrowHelper(
             curve.getTangent(0.9).normalize(),
             curve.getPoint(0.9),
-            1.2,
+            zoneStates ? 2.5 : 1.2,
             color,
-            0.9,
-            0.6,
+            zoneStates ? 1.6 : 0.9,
+            zoneStates ? 1.2 : 0.6,
           ),
         );
         if (blocked) return;
         const mesh = new THREE.Mesh(
-          new THREE.SphereGeometry(0.16, 8, 8),
+          new THREE.SphereGeometry(zoneStates ? .48 : .16, 12, 8),
           new THREE.MeshBasicMaterial({ color }),
         );
         scene.add(mesh);
