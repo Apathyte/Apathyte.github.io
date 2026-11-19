@@ -154,7 +154,7 @@ export default function FactoryFallback({
                       ? "#75d8e7"
                       : "#e8b269"
               }
-              strokeWidth="2.2"
+              strokeWidth={zoneStates?4.5:2.2}
               strokeDasharray={
                 layer === "Authority"
                   ? "1 4"
@@ -172,6 +172,8 @@ export default function FactoryFallback({
       {[...zones]
         .sort((a, b) => a.x + a.z - b.x - b.z)
         .map((zone) => {
+          const status=zoneStates?.[zone.id];
+          const signal=status&&(/HELD|BLOCKED|HOLD/.test(status)?"#ff6666":/PROPOSED|REPLAN/.test(status)?"#ffca56":/RUNNING|AUTHORIZED|ALLOCATED|COMPLETE|B READY/.test(status)?"#54e5a4":undefined);
           const c =
               selected === zone.id
                 ? ["#d1b7f4", "#7b5a9f", "#a183bf"]
@@ -314,12 +316,13 @@ export default function FactoryFallback({
               )}
               <polygon
                 points={`${pt(x - zone.w / 2, z - zone.d / 2, 0.2)} ${pt(x + zone.w / 2, z - zone.d / 2, 0.2)} ${pt(x + zone.w / 2, z + zone.d / 2, 0.2)} ${pt(x - zone.w / 2, z + zone.d / 2, 0.2)}`}
-                fill="none"
-                stroke={selected === zone.id ? "#d2b0ff" : "#536075"}
-                strokeWidth={selected === zone.id ? 1.8 : 0.5}
+                fill={signal||"none"}
+                fillOpacity={signal?.length ? .25 : 0}
+                stroke={signal||(selected === zone.id ? "#d2b0ff" : "#536075")}
+                strokeWidth={signal?3:selected === zone.id ? 1.8 : 0.5}
               />
               {assets}
-              {zoneStates?.[zone.id] && <text x={lx} y={ly+24} textAnchor="middle" fontSize="10" fontWeight="bold" paintOrder="stroke" stroke="#131827" strokeWidth="3" fill={/HELD|BLOCKED|HOLD/.test(zoneStates[zone.id])?"#fb887c":/PROPOSED|REPLAN/.test(zoneStates[zone.id])?"#e8b269":"#8ed1b5"}>{zoneStates[zone.id]}</text>}
+              {status && <g><rect x={lx-42} y={ly+16} width="84" height="16" rx="3" fill="#10131f" stroke={signal||"#536075"}/><text x={lx} y={ly+28} textAnchor="middle" fontSize="10" fontWeight="bold" fill={signal||"#d4d8e8"}>{status}</text></g>}
               <text
                 x={lx}
                 y={ly + 13}
