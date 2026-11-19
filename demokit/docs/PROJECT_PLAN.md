@@ -182,3 +182,9 @@ decision ownership and visual ambiguity. Separately verify WebGL rendering,
 step-follow camera transitions, comparison pose retention and reduced motion in
 a GPU-capable browser. Record environment and revision with that evidence.
 The bounded release is complete; expand features only in response to evidence.
+
+## 19 November — event-driven factory candidate (N1–N3)
+
+The owner approved a new bounded run after finding the default lesson event overlay absent and the visual comparisons too similar. See [event lab plan](EVENT_LAB_PLAN.md). The candidate separates Factory overview / Scenario lab / Event explorer, keeps dependencies visible, and adds an independently authored synthetic event contract and repeatable shortage journey. Browser memory pub/sub and a local isolated MQTT subscriber verification share the event corpus and projection rules. No physical simulation or live-broker claim is inherited.
+
+The branch is a source candidate, not a new public release. Run domain tests, reproducible build and disclosure scan, independent MQTT test, then headless browser/visual checks. Review actual screenshots/trace and generated assets before publication. Original four facilitated lessons remain separate. Delegated usability and actual hardware graphics acceptance still require observed evidence.

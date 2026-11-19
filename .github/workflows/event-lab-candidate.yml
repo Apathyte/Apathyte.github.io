@@ -1,0 +1,73 @@
+name: Factory Event Lab Candidate
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'demokit/**'
+      - '.github/workflows/event-lab-candidate.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  candidate:
+    name: Build, MQTT and browser candidate
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Deterministic tests and candidate build
+        working-directory: demokit
+        run: |
+          npm ci --ignore-scripts
+          npm test
+          npm run build
+          node scripts/release.mjs
+          npm run audit:release
+      - name: Install isolated MQTT test tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y mosquitto mosquitto-clients
+      - name: Independent broker subscriber
+        working-directory: demokit
+        run: node --experimental-strip-types scripts/mqtt-smoke.mjs
+      - name: Install browser verification tools
+        run: |
+          python -m pip install --disable-pip-version-check "playwright==1.64.1" "Pillow>=11.0,<12.0"
+          python -m playwright install --with-deps chromium
+      - name: Headless event and visual regression
+        run: |
+          python -m http.server 8766 --bind 127.0.0.1 --directory demokit/dist > "$RUNNER_TEMP/event-lab-server.log" 2>&1 &
+          pid=$!
+          trap 'kill "$pid" 2>/dev/null || true' EXIT
+          for i in $(seq 1 30); do curl -fsS http://127.0.0.1:8766/ >/dev/null && break; sleep 1; done
+          curl -fsS http://127.0.0.1:8766/ >/dev/null
+          python demokit/scripts/event_lab_browser.py --url http://127.0.0.1:8766/ --output artifacts/event-lab
+      - name: Candidate browser evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: event-lab-browser-evidence
+          path: artifacts/event-lab/
+          if-no-files-found: warn
+          retention-days: 21
+      - name: Candidate build (not deployed)
+        if: success()
+        uses: actions/upload-artifact@v7
+        with:
+          name: event-lab-static-candidate
+          path: |
+            demokit/dist/
+            demokit/THIRD_PARTY_NOTICES.txt
+          if-no-files-found: error
+          retention-days: 21
