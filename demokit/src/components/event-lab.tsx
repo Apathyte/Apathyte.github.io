@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import FactoryScene from "./factory-scene";
 import type { LabData } from "../lib/schema";
-import { allowed, initialRun, replay, scenarioChecks } from "../lib/event-lab";
+import { allowed, replay, scenarioChecks } from "../lib/event-lab";
 import type { Command, Run } from "../lib/event-lab";
 const buttons: [Command,string][]=[["allocate","Allocate order A"],["shortage","Inject material shortage"],["shortcut","Attempt unauthorized shortcut"],["propose","Propose eligible order B"],["authorize","Authorize B readiness"],["start","Start order B"],["complete","Complete processing B"]];
 const views=["Reference","Operational","Proposed"] as const;
@@ -19,7 +19,7 @@ export default function EventLab({data,run,onCommand,onReset,mode}:{data:LabData
   packing:snapshot.alternative==="complete"?"B BLOCKED":"WAITING"
  }),[snapshot]);
  const links=useMemo<string[][]>(()=>{
-  if(layer==="Events")return last?[[last.from,last.to]]:[];
+  if(layer==="Events")return snapshot.events.filter(e=>e.sequence>=snapshot.events.length-1).map(e=>[e.from,e.to]);
   if(layer==="Material")return [...(snapshot.original==="allocated"||snapshot.original==="held"?[["storage","dosing"]]:[]),...(snapshot.alternative==="running"?[["dosing","lineA"]]:[]),...(snapshot.alternative==="complete"?[["lineA","quality"],["quality","packing"]]:[])];
   return [];
  },[last,layer,snapshot]);
@@ -33,7 +33,7 @@ export default function EventLab({data,run,onCommand,onReset,mode}:{data:LabData
    <div className="event-actions" role="group" aria-label="Scenario commands">{buttons.map(([command,title])=><button key={command} disabled={!allowed(run,command)} onClick={()=>{onCommand(command);setView("Operational");setLayer(command==="allocate"||command==="start"||command==="complete"?"Material":"Events");}}>{title}</button>)}</div>
    <div className="comparison-bar" role="group" aria-label="Compare event states">{views.map(v=><button key={v} aria-pressed={view===v} onClick={()=>setView(v)}>{v}</button>)}<span>{view==="Reference"?"Assumed normal allocation":view==="Proposed"?"Hypothetical alternative; no authorization implied":"Actual browser run"}</span></div>
    <div className="event-state" aria-live="polite"><div><small>Original order A</small><strong data-testid="original-state">{snapshot.original}</strong></div><div><small>Alternative order B</small><strong data-testid="alternative-state">{snapshot.alternative}</strong></div><div><small>Phase</small><strong data-testid="run-phase">{snapshot.phase}</strong></div></div>
-   <div className="event-scene"><FactoryScene zones={data.zones} selected={zone} onSelect={setZone} layer={layer} links={links} focus="Site" reset={reset} blockedZone={snapshot.alternative==="complete"?"packing":snapshot.original==="held"?"dosing":""} zoneStates={states}/></div>
+   <div className="event-scene"><FactoryScene zones={data.zones} selected={zone} onSelect={setZone} layer={layer} links={links} focus="Site" reset={reset} blockedZone={[snapshot.original==="held"?"dosing":"",snapshot.alternative==="complete"?"packing":""].filter(Boolean).join(",")} zoneStates={states}/></div>
    <div className="event-actions" role="group" aria-label="Event scenario overlay">{["Events","Material","None"].map(l=><button key={l} aria-pressed={layer===l} onClick={()=>setLayer(l)}>{l}</button>)}</div>
    <p role="status" data-testid="active-route">{last?label(last.from)+" → "+label(last.to)+" · "+last.kind.replaceAll("_"," "):"No event yet; execute an available command."}</p>
    <div className="event-zone-register">{Object.entries(states).map(([id,state])=><div key={id}><small>{label(id)}</small><strong>{state}</strong></div>)}</div>
