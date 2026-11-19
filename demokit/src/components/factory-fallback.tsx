@@ -146,7 +146,7 @@ export default function FactoryFallback({
               key={i}
               d={`M${p1} Q${(p1[0] + p2[0]) / 2} ${(p1[1] + p2[1]) / 2 - (layer === "Authority" ? 85 : layer === "Events" ? 65 : 0)} ${p2}`}
               stroke={
-                layer === "Material" && b === blockedZone
+                layer === "Material" && blockedZone.split(",").includes(b)
                   ? "#fb887c"
                   : layer === "Authority"
                     ? "#c4afff"
@@ -159,7 +159,7 @@ export default function FactoryFallback({
                 layer === "Authority"
                   ? "1 4"
                   : layer === "Events" ||
-                      (layer === "Material" && b === blockedZone)
+                      (layer === "Material" && blockedZone.split(",").includes(b))
                     ? "5 4"
                     : "none"
               }
